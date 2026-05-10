@@ -275,7 +275,7 @@ function saveScore(){
 }
 
 
-// ================= EDIT
+// ================= EDIT PLAYER
 function editPlayer(nama,score){
 
   document.getElementById("nama").value =
@@ -287,7 +287,7 @@ function editPlayer(nama,score){
 }
 
 
-// ================= DELETE
+// ================= DELETE PLAYER
 function hapusPlayer(nama){
 
   if(!cekPass()){
@@ -319,8 +319,14 @@ function resetGame(){
   db.ref("game").set({
 
     clicked:false,
+
     player:"",
-    time:""
+
+    firstPlayer:"",
+
+    time:"",
+
+    waktu:""
 
   });
 
@@ -350,15 +356,25 @@ db.ref("game").on("value", snap => {
 
   }
 
+  // SUPPORT SCRIPT LAMA + BARU
+  const namaPlayer =
+  data.player ||
+  data.firstPlayer ||
+  "Tidak diketahui";
+
+  const waktuPlayer =
+  data.time ||
+  data.waktu ||
+  "-";
+
   if(data.clicked){
 
     document.getElementById("fastName")
-    .innerHTML =
-    data.player || "Tidak diketahui";
+    .innerHTML = namaPlayer;
 
     document.getElementById("fastTime")
     .innerHTML =
-    "⏰ " + (data.time || "-");
+    "⏰ " + waktuPlayer;
 
     document.getElementById("statusJawab")
     .innerHTML =
