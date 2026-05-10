@@ -276,8 +276,8 @@ html+=`
 </div>
 
 <div class="btn-group">
-<button class="edit" onclick="editPlayer('${item.nama}',${item.score})">EDIT</button>
-<button class="delete" onclick="hapusPlayer('${item.nama}')">HAPUS</button>
+<button class="edit" onclick='editPlayer(${JSON.stringify(item.nama)},${item.score})'>EDIT</button>
+<button class="delete" onclick='hapusPlayer(${JSON.stringify(item.nama)})'>HAPUS</button>
 </div>
 
 </div>
