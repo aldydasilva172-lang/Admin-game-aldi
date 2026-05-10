@@ -196,7 +196,7 @@ alert("Berhasil disimpan!");
 function resetGame(){
 if(!cekPass()) return alert("Password salah!");
 
-db.ref("game").set({clicked:false});
+db.ref("game").remove();
 alert("Ronde direset!");
 }
 
