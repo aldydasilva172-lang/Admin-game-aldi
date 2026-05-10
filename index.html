@@ -202,7 +202,7 @@ alert("Ronde direset!");
 
 // ===== EDIT =====
 function editPlayer(nama,score){
-currentPlayer = nama;
+currentPlayer = key;
 document.getElementById("popup").style.display="flex";
 document.getElementById("editTitle").innerText="EDIT "+nama;
 document.getElementById("editScore").value=score;
@@ -228,11 +228,16 @@ document.getElementById("popup").style.display="none";
 }
 
 // ===== DELETE =====
-function hapusPlayer(nama){
+function hapusPlayer(key){
+
 if(!cekPass()) return alert("Password salah!");
+
 if(confirm("Hapus player?")){
-db.ref("ranking/" + safeKey(nama)).remove();
+
+db.ref("ranking/" + key).remove();
+
 }
+
 }
 
 // ===== FAST PLAYER =====
@@ -253,10 +258,15 @@ const data = snap.val()||{};
 let arr=[];
 
 for(let key in data){
+
 arr.push({
+
+key:key,
 nama:data[key].name || key,
 score:data[key].score || 0
+
 });
+
 }
 
 arr.sort((a,b)=>b.score-a.score);
@@ -276,8 +286,9 @@ html+=`
 </div>
 
 <div class="btn-group">
-<button class="edit" onclick='editPlayer(${JSON.stringify(item.nama)},${item.score})'>EDIT</button>
-<button class="delete" onclick='hapusPlayer(${JSON.stringify(item.nama)})'>HAPUS</button>
+<button class="edit" onclick='editPlayer(${JSON.stringify(item.key)},${JSON.stringify(item.nama)},${item.score})'>EDIT</button>
+
+<button class="delete" onclick='hapusPlayer(${JSON.stringify(item.key)})'>HAPUS</button>
 </div>
 
 </div>
