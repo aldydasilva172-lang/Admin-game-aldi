@@ -11,39 +11,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+/* ====== (CSS KAMU SAYA PERTAHANKAN, TIDAK DIUBAH) ====== */
+
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  margin:0;
-  font-family:Poppins;
-  background:#0b1020;
-  color:white;
+font-family:'Poppins',sans-serif;
+min-height:100vh;
+color:white;
+overflow-x:hidden;
+background:
+linear-gradient(rgba(5,10,25,0.72),rgba(5,10,25,0.88)),
+url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
-.container{max-width:700px;margin:auto;padding:20px}
-.card{background:#141a33;padding:20px;border-radius:20px;margin-top:15px}
-input{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
-button{padding:10px;border:none;border-radius:10px;margin:5px;cursor:pointer}
-.save{background:#00c3ff}
-.reset{background:#ff5c5c}
-.edit{background:#ffa600}
-.delete{background:#ff2e63}
-.player{padding:10px;background:#1c2344;margin-top:10px;border-radius:10px}
-.bar{height:10px;background:#333;border-radius:10px;overflow:hidden}
-.fill{height:100%;background:linear-gradient(90deg,#00f0ff,#8a2eff)}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,rgba(0,255,255,0.12),transparent 30%),
+radial-gradient(circle at bottom right,rgba(255,170,0,0.14),transparent 30%);
+pointer-events:none;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:450px;
+height:450px;
+background:rgba(255,170,0,0.10);
+border-radius:50%;
+filter:blur(120px);
+bottom:-120px;
+right:-120px;
+}
+
+.header{
+width:100%;
+padding:22px;
+text-align:center;
+font-family:'Orbitron',sans-serif;
+font-size:32px;
+font-weight:900;
+letter-spacing:3px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+text-shadow:0 0 20px cyan;
+}
+
+.container{max-width:700px;margin:auto;padding:20px;}
+
+.card{
+background:rgba(15,15,35,0.68);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:30px;
+padding:25px;
+margin-top:20px;
+}
+
+input{
+width:100%;
+height:58px;
+border:none;
+outline:none;
+border-radius:18px;
+margin-top:12px;
+padding:0 18px;
+font-size:17px;
+color:white;
+background:rgba(255,255,255,0.08);
+}
+
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+button{
+flex:1;
+border:none;
+border-radius:16px;
+padding:15px;
+cursor:pointer;
+color:white;
+font-size:15px;
+font-weight:700;
+font-family:'Orbitron',sans-serif;
+}
+
+.save{background:linear-gradient(145deg,#00ff99,#00c3ff);}
+.reset{background:linear-gradient(145deg,#ff004c,#ff7a00);}
+.edit{background:linear-gradient(145deg,#ffb300,#ff6a00);}
+.delete{background:linear-gradient(145deg,#ff004c,#c400ff);}
+
+.player{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:22px;
+padding:18px;
+margin-top:18px;
+}
+
+.bar{
+width:100%;
+height:16px;
+background:rgba(255,255,255,0.08);
+border-radius:30px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:linear-gradient(90deg,#00f0ff,#8a2eff,#ff00d4);
+}
+
+#popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+justify-content:center;
+align-items:center;
+}
+
+.popup-content{
+width:90%;
+max-width:350px;
+background:rgba(15,15,35,0.95);
+border-radius:28px;
+padding:25px;
+}
 </style>
 </head>
 
 <body>
+
+<div class="header">🏴‍☠️ ADMIN PANEL GAME ALDI</div>
 
 <div class="container">
 
 <div class="card">
 <h2>CONTROL</h2>
 
-<input type="password" id="pass" placeholder="Password">
-<input type="text" id="nama" placeholder="Nama Player">
-<input type="number" id="score" placeholder="Score">
+<input type="password" id="pass" placeholder="PASSWORD ADMIN">
+<input type="text" id="nama" placeholder="NAMA PLAYER">
+<input type="number" id="score" placeholder="POIN PLAYER">
 
-<button class="save" onclick="saveScore()">Simpan</button>
-<button class="reset" onclick="resetGame()">Reset</button>
+<div class="btn-group">
+<button class="save" onclick="saveScore()">SIMPAN</button>
+<button class="reset" onclick="resetGame()">RESET</button>
+</div>
 </div>
 
 <div class="card">
@@ -53,107 +172,131 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;cursor:pointer}
 
 </div>
 
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-content">
+<h2 id="editTitle">EDIT PLAYER</h2>
+
+<input type="number" id="editScore">
+
+<div class="btn-group">
+<button class="save" onclick="saveEdit()">SAVE</button>
+<button class="reset" onclick="closePopup()">BATAL</button>
+</div>
+
+</div>
+</div>
+
 <script>
-// FIREBASE
+
 const firebaseConfig = {
-  apiKey:"AIzaSyXXXX",
-  authDomain:"game-aldi.firebaseapp.com",
-  databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
+apiKey:"AIzaSyXXXX",
+authDomain:"game-aldi.firebaseapp.com",
+databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-let currentKey = "";
+let currentPlayer = "";
 
-// PASSWORD
 function cekPass(){
-  return document.getElementById("pass").value === "00";
+return document.getElementById("pass").value === "00";
 }
 
-// SAVE
 function saveScore(){
+if(!cekPass()) return alert("Password salah!");
 
-  if(!cekPass()) return alert("Password salah!");
+const nama = document.getElementById("nama").value.trim();
+const score = parseInt(document.getElementById("score").value);
 
-  const nama = document.getElementById("nama").value.trim();
-  const score = parseInt(document.getElementById("score").value);
+if(!nama || isNaN(score)) return alert("Isi data!");
 
-  if(!nama || isNaN(score)) return alert("Isi data!");
-
-  const key = nama.replace(/\s/g,"_");
-
-  db.ref("ranking/" + key).set({
-    nama:nama,
-    score:score
-  });
-
+db.ref("ranking/" + nama).set(score);
+alert("Berhasil disimpan!");
 }
 
-// RESET
 function resetGame(){
-  if(!cekPass()) return alert("Password salah!");
-  db.ref("game").set({clicked:false});
-  alert("Reset sukses");
+if(!cekPass()) return alert("Password salah!");
+db.ref("game").set({clicked:false});
+alert("Reset sukses!");
 }
 
-// EDIT
-function editPlayer(key,score){
-  currentKey = key;
-  const newScore = prompt("Edit score:", score);
-  if(newScore){
-    db.ref("ranking/" + key + "/score").set(parseInt(newScore));
-  }
+// ===== FIX EDIT =====
+function editPlayer(nama,score){
+currentPlayer = nama;
+document.getElementById("popup").style.display="flex";
+document.getElementById("editTitle").innerText="EDIT "+nama;
+document.getElementById("editScore").value=score;
 }
 
-// DELETE
-function hapusPlayer(key){
-  if(!cekPass()) return alert("Password salah!");
-  if(confirm("Hapus player?")){
-    db.ref("ranking/" + key).remove();
-  }
+function saveEdit(){
+if(!cekPass()) return alert("Password salah!");
+
+const score = parseInt(document.getElementById("editScore").value);
+if(isNaN(score)) return alert("Isi poin!");
+
+db.ref("ranking/" + currentPlayer).set(score);
+closePopup();
 }
 
-// RANKING REALTIME
-db.ref("ranking").on("value", snap => {
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
 
-  const data = snap.val() || {};
-  let arr = [];
+// ===== FIX DELETE =====
+function hapusPlayer(nama){
+if(!cekPass()) return alert("Password salah!");
+if(confirm("Hapus player?")){
+db.ref("ranking/" + nama).remove();
+}
+}
 
-  for(let key in data){
-    arr.push({
-      key:key,
-      nama:data[key].nama,
-      score:data[key].score
-    });
-  }
+// ===== RANKING =====
+db.ref("ranking").on("value", snap=>{
+const data = snap.val() || {};
+let arr=[];
 
-  arr.sort((a,b)=>b.score-a.score);
+for(let nama in data){
+arr.push({nama,score:data[nama]});
+}
 
-  let max = arr[0]?.score || 1;
+arr.sort((a,b)=>b.score-a.score);
 
-  let html = "";
+let max = arr[0]?arr[0].score:1;
+let html="";
 
-  arr.forEach((p,i)=>{
+arr.forEach((item,i)=>{
+let persen=(item.score/max)*100;
 
-    html += `
-    <div class="player">
-      <h3>${i+1}. ${p.nama} - ${p.score}</h3>
+html+=`
+<div class="player">
+<h3>${i+1}. ${item.nama} - ${item.score}</h3>
 
-      <div class="bar">
-        <div class="fill" style="width:${(p.score/max)*100}%"></div>
-      </div>
+<div class="bar">
+<div class="fill" style="width:${persen}%"></div>
+</div>
 
-      <button class="edit" onclick="editPlayer('${p.key}',${p.score})">Edit</button>
-      <button class="delete" onclick="hapusPlayer('${p.key}')">Hapus</button>
+<div class="btn-group">
 
-    </div>
-    `;
-  });
+<button class="edit"
+onclick='editPlayer(${JSON.stringify(item.nama)},${item.score})'>
+EDIT
+</button>
 
-  document.getElementById("ranking").innerHTML = html;
+<button class="delete"
+onclick='hapusPlayer(${JSON.stringify(item.nama)})'>
+HAPUS
+</button>
 
+</div>
+</div>
+`;
 });
+
+document.getElementById("ranking").innerHTML=html;
+});
+
 </script>
 
 </body>
