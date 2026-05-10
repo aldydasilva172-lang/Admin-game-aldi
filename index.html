@@ -2,11 +2,15 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>ADMIN PANEL PRO</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADMIN PANEL ALDI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,120 +21,494 @@
 }
 
 body{
-  background:#0f0f0f;
-  font-family:Arial;
+
+  font-family:'Poppins',sans-serif;
+
+  min-height:100vh;
+
   color:white;
-  text-align:center;
-  padding:15px;
+
+  overflow-x:hidden;
+
+  background:
+  linear-gradient(
+  rgba(5,10,25,0.72),
+  rgba(5,10,25,0.88)
+  ),
+
+  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+
 }
 
-h1{
-  margin:15px 0;
+/* ONE PIECE VIBES */
+
+body::before{
+
+  content:'';
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+
+  radial-gradient(
+  circle at top left,
+  rgba(0,255,255,0.12),
+  transparent 30%
+  ),
+
+  radial-gradient(
+  circle at bottom right,
+  rgba(255,170,0,0.14),
+  transparent 30%
+  );
+
+  pointer-events:none;
+
 }
+
+body::after{
+
+  content:'';
+
+  position:fixed;
+
+  width:450px;
+  height:450px;
+
+  background:
+  rgba(255,170,0,0.10);
+
+  border-radius:50%;
+
+  filter:blur(120px);
+
+  bottom:-120px;
+  right:-120px;
+
+}
+
+/* SHIP */
+
+.ship{
+
+  position:fixed;
+
+  bottom:25px;
+  left:25px;
+
+  font-size:45px;
+
+  opacity:0.7;
+
+  animation:
+  floatShip 4s ease-in-out infinite;
+
+}
+
+@keyframes floatShip{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+
+/* HEADER */
+
+.header{
+
+  width:100%;
+
+  padding:22px;
+
+  text-align:center;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:32px;
+  font-weight:900;
+
+  letter-spacing:3px;
+
+  background:
+  rgba(255,255,255,0.05);
+
+  backdrop-filter:blur(15px);
+
+  border-bottom:
+  1px solid rgba(255,255,255,0.08);
+
+  text-shadow:
+  0 0 20px cyan;
+
+  box-shadow:
+  0 0 25px rgba(0,255,255,0.15);
+
+}
+
+/* CONTAINER */
+
+.container{
+
+  width:100%;
+  max-width:700px;
+
+  margin:auto;
+
+  padding:20px;
+
+}
+
+/* CARD */
 
 .card{
-  background:#1a1a1a;
-  border-radius:25px;
-  padding:20px;
+
+  background:
+  rgba(15,15,35,0.68);
+
+  backdrop-filter:blur(18px);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:30px;
+
+  padding:25px;
+
   margin-top:20px;
+
+  box-shadow:
+  0 0 40px rgba(0,0,0,0.35);
+
 }
 
-input{
-  width:95%;
-  max-width:400px;
-  height:55px;
-  border:none;
-  border-radius:15px;
-  margin:8px;
+/* TITLE */
+
+.card h2{
+
+  margin-bottom:20px;
+
   text-align:center;
-  font-size:18px;
+
+  font-family:'Orbitron',sans-serif;
+
+  color:#00f0ff;
+
+  text-shadow:
+  0 0 12px cyan;
+
+}
+
+/* INPUT */
+
+input{
+
+  width:100%;
+
+  height:58px;
+
+  border:none;
+  outline:none;
+
+  border-radius:18px;
+
+  margin-top:12px;
+
+  padding:0 18px;
+
+  font-size:17px;
+
+  color:white;
+
+  background:
+  rgba(255,255,255,0.08);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  transition:0.3s;
+
+}
+
+input:focus{
+
+  border:
+  1px solid cyan;
+
+  box-shadow:
+  0 0 20px cyan;
+
+}
+
+input::placeholder{
+
+  color:#bbb;
+
+}
+
+/* BUTTON */
+
+.btn-group{
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  margin-top:18px;
+
 }
 
 button{
+
+  flex:1;
+
   border:none;
-  border-radius:15px;
-  padding:14px 25px;
-  margin:5px;
-  font-size:16px;
-  font-weight:bold;
+
+  border-radius:16px;
+
+  padding:15px;
+
   cursor:pointer;
+
+  color:white;
+
+  font-size:15px;
+  font-weight:700;
+
+  transition:0.2s;
+
+  font-family:'Orbitron',sans-serif;
+
+}
+
+button:hover{
+
+  transform:translateY(-2px);
+
 }
 
 .save{
-  background:limegreen;
-  color:white;
+
+  background:
+  linear-gradient(145deg,#00ff99,#00c3ff);
+
+  box-shadow:
+  0 0 20px rgba(0,255,180,0.4);
+
 }
 
 .reset{
-  background:red;
-  color:white;
+
+  background:
+  linear-gradient(145deg,#ff004c,#ff7a00);
+
+  box-shadow:
+  0 0 20px rgba(255,0,80,0.35);
+
 }
 
 .edit{
-  background:orange;
+
+  background:
+  linear-gradient(145deg,#ffb300,#ff6a00);
+
 }
 
 .delete{
-  background:#ff0044;
-  color:white;
+
+  background:
+  linear-gradient(145deg,#ff004c,#c400ff);
+
 }
 
-.player{
-  background:#222;
-  padding:15px;
-  border-radius:20px;
-  margin-top:15px;
-}
-
-.bar{
-  width:100%;
-  height:20px;
-  background:#333;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.fill{
-  height:100%;
-  background:limegreen;
-}
+/* FAST PLAYER */
 
 #fastBox{
-  margin-top:15px;
-  background:#222;
-  border-radius:25px;
+
+  text-align:center;
+
   padding:25px;
+
+  border-radius:25px;
+
+  background:
+  rgba(255,255,255,0.05);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
 }
 
 #fastName{
-  font-size:35px;
-  color:gold;
+
+  font-size:38px;
+
+  font-weight:900;
+
   margin-top:10px;
-  font-weight:bold;
+
+  color:gold;
+
+  text-shadow:
+  0 0 15px gold;
+
 }
 
 #fastTime{
+
   margin-top:10px;
-  color:#aaa;
-  font-size:20px;
+
+  color:#bbb;
+
+  font-size:18px;
+
 }
 
+/* PLAYER */
+
+.player{
+
+  background:
+  rgba(255,255,255,0.05);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:22px;
+
+  padding:18px;
+
+  margin-top:18px;
+
+}
+
+.player h3{
+
+  font-size:18px;
+
+  margin-bottom:12px;
+
+}
+
+/* BAR */
+
+.bar{
+
+  width:100%;
+
+  height:16px;
+
+  background:
+  rgba(255,255,255,0.08);
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+}
+
+.fill{
+
+  height:100%;
+
+  border-radius:30px;
+
+  background:
+  linear-gradient(
+  90deg,
+  #00f0ff,
+  #8a2eff,
+  #ff00d4);
+
+  box-shadow:
+  0 0 12px #00f0ff;
+
+}
+
+/* POPUP */
+
 #popup{
+
   display:none;
+
   position:fixed;
+
   inset:0;
-  background:rgba(0,0,0,0.8);
+
+  background:
+  rgba(0,0,0,0.75);
+
   justify-content:center;
+
   align-items:center;
+
+  z-index:9999;
+
 }
 
 .popup-content{
-  background:#1a1a1a;
+
   width:90%;
   max-width:350px;
+
+  background:
+  rgba(15,15,35,0.95);
+
+  border:
+  1px solid rgba(255,255,255,0.08);
+
+  border-radius:28px;
+
   padding:25px;
-  border-radius:25px;
+
+  backdrop-filter:blur(20px);
+
+}
+
+.popup-content h2{
+
+  text-align:center;
+
+  margin-bottom:15px;
+
+  color:#00f0ff;
+
+  font-family:'Orbitron',sans-serif;
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .header{
+    font-size:26px;
+  }
+
+  #fastName{
+    font-size:30px;
+  }
+
+  button{
+    font-size:13px;
+  }
+
 }
 
 </style>
@@ -138,42 +516,60 @@ button{
 
 <body>
 
-<h1>🎮 ADMIN PANEL</h1>
+<div class="ship">
+🏴‍☠️
+</div>
+
+<div class="header">
+🏴‍☠️ ADMIN PANEL GAME ALDI
+</div>
+
+<div class="container">
+
+<!-- CONTROL -->
 
 <div class="card">
+
+<h2>⚙️ CONTROL PANEL</h2>
 
 <input
 type="password"
 id="pass"
-placeholder="Password Admin">
-
-<br>
+placeholder="PASSWORD ADMIN">
 
 <input
 type="text"
 id="nama"
-placeholder="Nama Player">
+placeholder="NAMA PLAYER">
 
 <input
 type="number"
 id="score"
-placeholder="Poin">
+placeholder="POIN PLAYER">
 
-<br>
+<div class="btn-group">
 
 <button
 class="save"
 onclick="saveScore()">
+
 SIMPAN
+
 </button>
 
 <button
 class="reset"
 onclick="resetGame()">
-RESET RONDE
+
+RESET
+
 </button>
 
 </div>
+
+</div>
+
+<!-- FAST PLAYER -->
 
 <div class="card">
 
@@ -181,7 +577,7 @@ RESET RONDE
 
 <div id="fastBox">
 
-<div style="font-size:55px;">
+<div style="font-size:60px;">
 🥇
 </div>
 
@@ -197,15 +593,19 @@ Menunggu buzzer
 
 </div>
 
+<!-- RANKING -->
+
 <div class="card">
 
-<h2>🏆 KLASMEN</h2>
+<h2>🏆 RANKING PLAYER</h2>
 
 <div id="ranking"></div>
 
 </div>
 
-<!-- POPUP EDIT -->
+</div>
+
+<!-- POPUP -->
 
 <div id="popup">
 
@@ -218,21 +618,27 @@ EDIT PLAYER
 <input
 type="number"
 id="editScore"
-placeholder="Edit poin">
+placeholder="EDIT POIN">
 
-<br><br>
+<div class="btn-group">
 
 <button
 class="save"
 onclick="saveEdit()">
+
 SAVE
+
 </button>
 
 <button
 class="reset"
 onclick="closePopup()">
+
 BATAL
+
 </button>
+
+</div>
 
 </div>
 
@@ -315,18 +721,13 @@ function resetGame(){
 
   }
 
-  db.ref("game").remove()
-  .then(()=>{
+  db.ref("game").set({
 
-    db.ref("game").set({
-
-      clicked:false
-
-    });
-
-    alert("Ronde berhasil direset!");
+    clicked:false
 
   });
+
+  alert("Ronde berhasil direset!");
 
 }
 
@@ -392,7 +793,7 @@ function closePopup(){
 }
 
 
-// ================= DELETE
+// ================= DELETE PLAYER
 function hapusPlayer(nama){
 
   if(!cekPass()){
@@ -412,48 +813,41 @@ function hapusPlayer(nama){
 }
 
 
-// ================= PLAYER TERCEPAT
+// ================= FAST PLAYER
 db.ref("game").on("value", snap => {
 
   const data = snap.val() || {};
-
-  const nama =
-  data.player ||
-  data.winner ||
-  data.firstPlayer ||
-  "Belum ada";
-
-  const waktu =
-  data.time ||
-  data.waktu ||
-  "";
 
   if(data.clicked === true){
 
     document
     .getElementById("fastName")
-    .innerHTML = nama;
+    .innerHTML =
+    data.player || "Unknown";
 
     document
     .getElementById("fastTime")
-    .innerHTML = "⏰ " + waktu;
+    .innerHTML =
+    "⚡ PEMENANG RONDE";
 
   }else{
 
     document
     .getElementById("fastName")
-    .innerHTML = "Belum ada";
+    .innerHTML =
+    "Belum ada";
 
     document
     .getElementById("fastTime")
-    .innerHTML = "Menunggu buzzer";
+    .innerHTML =
+    "Menunggu buzzer";
 
   }
 
 });
 
 
-// ================= KLASMEN
+// ================= RANKING
 db.ref("ranking").on("value", snap => {
 
   const data = snap.val() || {};
@@ -503,28 +897,30 @@ db.ref("ranking").on("value", snap => {
 
       </div>
 
-      <br>
+      <div class="btn-group">
 
-      <button
-      class="edit"
-      onclick="editPlayer(
-      '${item.nama}',
-      '${item.score}'
-      )">
+        <button
+        class="edit"
+        onclick="editPlayer(
+        '${item.nama}',
+        '${item.score}'
+        )">
 
-      EDIT
+        EDIT
 
-      </button>
+        </button>
 
-      <button
-      class="delete"
-      onclick="hapusPlayer(
-      '${item.nama}'
-      )">
+        <button
+        class="delete"
+        onclick="hapusPlayer(
+        '${item.nama}'
+        )">
 
-      HAPUS
+        HAPUS
 
-      </button>
+        </button>
+
+      </div>
 
     </div>
 
