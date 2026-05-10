@@ -216,7 +216,7 @@ if(!cekPass()) return alert("Password salah!");
 const score = parseInt(document.getElementById("editScore").value);
 if(isNaN(score)) return alert("Isi poin!");
 
-db.ref("ranking/" + safeKey(currentPlayer)).update({
+db.ref("ranking/" + currentPlayer).update({
 score:score
 });
 
