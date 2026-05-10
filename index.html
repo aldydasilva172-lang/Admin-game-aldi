@@ -17,8 +17,8 @@
 }
 
 body{
-  font-family:Arial;
   background:#0f0f0f;
+  font-family:Arial;
   color:white;
   text-align:center;
   padding:15px;
@@ -26,7 +26,6 @@ body{
 
 h1{
   margin:15px 0;
-  font-size:32px;
 }
 
 .card{
@@ -34,7 +33,6 @@ h1{
   border-radius:25px;
   padding:20px;
   margin-top:20px;
-  box-shadow:0 0 15px rgba(0,0,0,0.5);
 }
 
 input{
@@ -44,9 +42,8 @@ input{
   border:none;
   border-radius:15px;
   margin:8px;
-  font-size:18px;
   text-align:center;
-  outline:none;
+  font-size:18px;
 }
 
 button{
@@ -71,7 +68,6 @@ button{
 
 .edit{
   background:orange;
-  color:black;
 }
 
 .delete{
@@ -79,37 +75,10 @@ button{
   color:white;
 }
 
-#fastestBox{
-  margin-top:20px;
-  background:linear-gradient(145deg,#222,#111);
-  border-radius:25px;
-  padding:30px 20px;
-}
-
-#fastName{
-  font-size:35px;
-  font-weight:bold;
-  color:gold;
-  margin-top:10px;
-}
-
-#fastTime{
-  margin-top:15px;
-  font-size:22px;
-  color:#aaa;
-}
-
-#statusJawab{
-  margin-top:18px;
-  font-size:20px;
-  color:lime;
-  font-weight:bold;
-}
-
 .player{
   background:#222;
-  border-radius:20px;
   padding:15px;
+  border-radius:20px;
   margin-top:15px;
 }
 
@@ -119,7 +88,7 @@ button{
   background:#333;
   border-radius:20px;
   overflow:hidden;
-  margin-top:12px;
+  margin-top:10px;
 }
 
 .fill{
@@ -127,32 +96,36 @@ button{
   background:limegreen;
 }
 
-.rank{
-  font-size:22px;
-  margin-bottom:10px;
+#fastBox{
+  margin-top:15px;
+  background:#222;
+  border-radius:25px;
+  padding:25px;
 }
 
-.kosong{
-  font-size:22px;
-  color:#888;
+#fastName{
+  font-size:35px;
+  color:gold;
+  margin-top:10px;
+  font-weight:bold;
 }
 
-/* ================= POPUP */
+#fastTime{
+  margin-top:10px;
+  color:#aaa;
+  font-size:20px;
+}
 
-#popupEdit{
+#popup{
   display:none;
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:rgba(0,0,0,0.8);
-  z-index:999;
   justify-content:center;
   align-items:center;
 }
 
-.popupBox{
+.popup-content{
   background:#1a1a1a;
   width:90%;
   max-width:350px;
@@ -160,16 +133,12 @@ button{
   border-radius:25px;
 }
 
-.popupBox h2{
-  margin-bottom:15px;
-}
-
 </style>
 </head>
 
 <body>
 
-<h1>🎮 ADMIN PANEL Y</h1>
+<h1>🎮 ADMIN PANEL</h1>
 
 <div class="card">
 
@@ -195,7 +164,7 @@ placeholder="Poin">
 <button
 class="save"
 onclick="saveScore()">
-SIMPAN PLAYER
+SIMPAN
 </button>
 
 <button
@@ -210,22 +179,18 @@ RESET RONDE
 
 <h2>⚡ PLAYER TERCEPAT</h2>
 
-<div id="fastestBox">
+<div id="fastBox">
 
 <div style="font-size:55px;">
 🥇
 </div>
 
 <div id="fastName">
-Belum Ada
+Belum ada
 </div>
 
 <div id="fastTime">
-Menunggu player pencet buzzer
-</div>
-
-<div id="statusJawab">
--
+Menunggu buzzer
 </div>
 
 </div>
@@ -240,40 +205,36 @@ Menunggu player pencet buzzer
 
 </div>
 
-<!-- ================= POPUP EDIT -->
+<!-- POPUP EDIT -->
 
-<div id="popupEdit">
+<div id="popup">
 
-  <div class="popupBox">
+<div class="popup-content">
 
-    <h2 id="editNama">
-    EDIT PLAYER
-    </h2>
+<h2 id="editTitle">
+EDIT PLAYER
+</h2>
 
-    <input
-    type="number"
-    id="editScore"
-    placeholder="Edit poin">
+<input
+type="number"
+id="editScore"
+placeholder="Edit poin">
 
-    <br><br>
+<br><br>
 
-    <button
-    class="save"
-    onclick="saveEdit()">
+<button
+class="save"
+onclick="saveEdit()">
+SAVE
+</button>
 
-    SAVE
+<button
+class="reset"
+onclick="closePopup()">
+BATAL
+</button>
 
-    </button>
-
-    <button
-    class="reset"
-    onclick="closePopup()">
-
-    BATAL
-
-    </button>
-
-  </div>
+</div>
 
 </div>
 
@@ -282,7 +243,7 @@ Menunggu player pencet buzzer
 // ================= FIREBASE
 const firebaseConfig = {
 
-  apiKey: "AIzaSyXXXX",
+  apiKey:"AIzaSyXXXX",
 
   authDomain:
   "game-aldi.firebaseapp.com",
@@ -296,6 +257,8 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
+let currentPlayer = "";
+
 
 // ================= PASSWORD
 function cekPass(){
@@ -307,7 +270,7 @@ function cekPass(){
 }
 
 
-// ================= SAVE SCORE
+// ================= SAVE PLAYER
 function saveScore(){
 
   if(!cekPass()){
@@ -337,12 +300,99 @@ function saveScore(){
   db.ref("ranking/" + nama)
   .set(score);
 
-  alert("Score berhasil disimpan!");
+  alert("Berhasil disimpan!");
 
 }
 
 
-// ================= DELETE PLAYER
+// ================= RESET
+function resetGame(){
+
+  if(!cekPass()){
+
+    alert("Password salah!");
+    return;
+
+  }
+
+  db.ref("game").remove()
+  .then(()=>{
+
+    db.ref("game").set({
+
+      clicked:false
+
+    });
+
+    alert("Ronde berhasil direset!");
+
+  });
+
+}
+
+
+// ================= EDIT PLAYER
+function editPlayer(nama,score){
+
+  currentPlayer = nama;
+
+  document
+  .getElementById("popup")
+  .style.display = "flex";
+
+  document
+  .getElementById("editTitle")
+  .innerHTML = "EDIT " + nama;
+
+  document
+  .getElementById("editScore")
+  .value = score;
+
+}
+
+
+// ================= SAVE EDIT
+function saveEdit(){
+
+  if(!cekPass()){
+
+    alert("Password salah!");
+    return;
+
+  }
+
+  const score =
+  parseInt(
+  document.getElementById("editScore")
+  .value
+  );
+
+  if(isNaN(score)){
+
+    alert("Isi poin!");
+    return;
+
+  }
+
+  db.ref("ranking/" + currentPlayer)
+  .set(score);
+
+  closePopup();
+
+}
+
+
+// ================= CLOSE POPUP
+function closePopup(){
+
+  document
+  .getElementById("popup")
+  .style.display = "none";
+
+}
+
+
+// ================= DELETE
 function hapusPlayer(nama){
 
   if(!cekPass()){
@@ -362,161 +412,48 @@ function hapusPlayer(nama){
 }
 
 
-// ================= POPUP EDIT
-
-let currentPlayer = "";
-
-function editPlayer(nama,score){
-
-  currentPlayer = nama;
-
-  document.getElementById("popupEdit")
-  .style.display = "flex";
-
-  document.getElementById("editNama")
-  .innerHTML =
-  "EDIT " + nama;
-
-  document.getElementById("editScore")
-  .value = score;
-
-}
-
-
-// ================= SAVE EDIT
-function saveEdit(){
-
-  if(!cekPass()){
-
-    alert("Password salah!");
-    return;
-
-  }
-
-  const newScore =
-  parseInt(
-  document.getElementById("editScore")
-  .value
-  );
-
-  if(isNaN(newScore)){
-
-    alert("Isi poin!");
-    return;
-
-  }
-
-  db.ref("ranking/" + currentPlayer)
-  .set(newScore);
-
-  closePopup();
-
-  alert("Poin berhasil diupdate!");
-
-}
-
-
-// ================= CLOSE POPUP
-function closePopup(){
-
-  document.getElementById("popupEdit")
-  .style.display = "none";
-
-}
-
-
-// ================= RESET GAME
-function resetGame(){
-
-  if(!cekPass()){
-
-    alert("Password salah!");
-    return;
-
-  }
-
-  db.ref("game").set({
-
-    clicked:false,
-
-    player:"",
-
-    firstPlayer:"",
-
-    time:"",
-
-    waktu:""
-
-  });
-
-  alert("Ronde berhasil direset!");
-
-}
-
-
 // ================= PLAYER TERCEPAT
 db.ref("game").on("value", snap => {
 
-  const data = snap.val();
+  const data = snap.val() || {};
 
-  if(!data){
-
-    document.getElementById("fastName")
-    .innerHTML = "Belum Ada";
-
-    document.getElementById("fastTime")
-    .innerHTML =
-    "Menunggu player pencet buzzer";
-
-    document.getElementById("statusJawab")
-    .innerHTML = "-";
-
-    return;
-
-  }
-
-  const namaPlayer =
+  const nama =
   data.player ||
+  data.winner ||
   data.firstPlayer ||
-  "Tidak diketahui";
+  "Belum ada";
 
-  const waktuPlayer =
+  const waktu =
   data.time ||
   data.waktu ||
-  "-";
+  "";
 
-  if(data.clicked){
+  if(data.clicked === true){
 
-    document.getElementById("fastName")
-    .innerHTML =
-    namaPlayer;
+    document
+    .getElementById("fastName")
+    .innerHTML = nama;
 
-    document.getElementById("fastTime")
-    .innerHTML =
-    "⏰ " + waktuPlayer;
-
-    document.getElementById("statusJawab")
-    .innerHTML =
-    "🎤 BOLEH MENJAWAB";
+    document
+    .getElementById("fastTime")
+    .innerHTML = "⏰ " + waktu;
 
   }else{
 
-    document.getElementById("fastName")
-    .innerHTML = "Belum Ada";
+    document
+    .getElementById("fastName")
+    .innerHTML = "Belum ada";
 
-    document.getElementById("fastTime")
-    .innerHTML =
-    "Menunggu player pencet buzzer";
-
-    document.getElementById("statusJawab")
-    .innerHTML = "-";
+    document
+    .getElementById("fastTime")
+    .innerHTML = "Menunggu buzzer";
 
   }
 
 });
 
 
-// ================= RANKING
+// ================= KLASMEN
 db.ref("ranking").on("value", snap => {
 
   const data = snap.val() || {};
@@ -541,16 +478,6 @@ db.ref("ranking").on("value", snap => {
 
   let html = "";
 
-  if(arr.length === 0){
-
-    html = `
-    <div class="kosong">
-    Belum ada player
-    </div>
-    `;
-
-  }
-
   arr.forEach((item,index)=>{
 
     let persen =
@@ -560,12 +487,12 @@ db.ref("ranking").on("value", snap => {
 
     <div class="player">
 
-      <div class="rank">
+      <h3>
 
       ${index+1}. ${item.nama}
-      — ${item.score} POINT
+      — ${item.score} POIN
 
-      </div>
+      </h3>
 
       <div class="bar">
 
@@ -605,7 +532,8 @@ db.ref("ranking").on("value", snap => {
 
   });
 
-  document.getElementById("ranking")
+  document
+  .getElementById("ranking")
   .innerHTML = html;
 
 });
