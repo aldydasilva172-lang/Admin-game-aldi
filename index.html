@@ -16,6 +16,11 @@ body{
   color:white;
   text-align:center;
   padding:20px;
+  margin:0;
+}
+
+h1{
+  margin-top:10px;
 }
 
 input{
@@ -27,6 +32,7 @@ input{
   text-align:center;
   font-size:18px;
   margin:10px;
+  outline:none;
 }
 
 button{
@@ -35,10 +41,13 @@ button{
   border-radius:10px;
   margin:5px;
   font-size:16px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .save{
   background:limegreen;
+  color:white;
 }
 
 .reset{
@@ -48,6 +57,7 @@ button{
 
 .edit{
   background:orange;
+  color:black;
 }
 
 .delete{
@@ -83,6 +93,22 @@ button{
   background:limegreen;
 }
 
+#firstPlayer{
+  background:#222;
+  padding:25px;
+  border-radius:15px;
+  margin-top:20px;
+  font-size:24px;
+  font-weight:bold;
+  line-height:1.7;
+}
+
+.status{
+  margin-top:10px;
+  font-size:14px;
+  color:#aaa;
+}
+
 </style>
 </head>
 
@@ -90,31 +116,50 @@ button{
 
 <h1>🔐 ADMIN PANEL</h1>
 
-<input type="password"
+<input
+type="password"
 id="pass"
-placeholder="Password">
+placeholder="Password Admin">
 
 <br>
 
-<input type="text"
+<input
+type="text"
 id="nama"
 placeholder="Nama Player">
 
-<input type="number"
+<input
+type="number"
 id="score"
 placeholder="Poin">
 
 <br>
 
-<button class="save"
+<button
+class="save"
 onclick="saveScore()">
 SIMPAN / EDIT
 </button>
 
-<button class="reset"
+<button
+class="reset"
 onclick="resetGame()">
 RESET RONDE
 </button>
+
+<div class="card">
+
+<h2>⚡ PLAYER TERCEPAT</h2>
+
+<div id="firstPlayer">
+Belum ada yang pencet
+</div>
+
+<div class="status">
+Player pertama otomatis boleh menjawab
+</div>
+
+</div>
 
 <div class="card">
 
@@ -126,39 +171,57 @@ RESET RONDE
 
 <script>
 
+// ================= FIREBASE CONFIG
 const firebaseConfig = {
+
   apiKey: "AIzaSyXXXX",
-  authDomain: "game-aldi.firebaseapp.com",
-  databaseURL: "https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
+
+  authDomain:
+  "game-aldi.firebaseapp.com",
+
+  databaseURL:
+  "https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
+
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
+
+// ================= PASSWORD ADMIN
 function cekPass(){
 
-  return document.getElementById("pass").value === "00";
+  return document
+  .getElementById("pass")
+  .value === "00";
 
 }
+
 
 // ================= SAVE SCORE
 function saveScore(){
 
   if(!cekPass()){
+
     alert("Password salah!");
     return;
+
   }
 
   const nama =
   document.getElementById("nama").value;
 
   const score =
-  parseInt(document.getElementById("score").value);
+  parseInt(
+  document.getElementById("score").value
+  );
 
   if(!nama || isNaN(score)){
+
     alert("Isi data!");
     return;
+
   }
 
   db.ref("ranking/" + nama).set(score);
@@ -167,12 +230,15 @@ function saveScore(){
 
 }
 
+
 // ================= DELETE PLAYER
 function hapusPlayer(nama){
 
   if(!cekPass()){
+
     alert("Password salah!");
     return;
+
   }
 
   if(confirm("Hapus player?")){
@@ -183,30 +249,86 @@ function hapusPlayer(nama){
 
 }
 
+
 // ================= EDIT PLAYER
 function editPlayer(nama,score){
 
-  document.getElementById("nama").value = nama;
+  document.getElementById("nama").value =
+  nama;
 
-  document.getElementById("score").value = score;
+  document.getElementById("score").value =
+  score;
 
 }
+
 
 // ================= RESET GAME
 function resetGame(){
 
   if(!cekPass()){
+
     alert("Password salah!");
     return;
+
   }
 
   db.ref("game").set({
-    clicked:false
+
+    clicked:false,
+
+    firstPlayer:"",
+
+    waktu:""
+
   });
 
-  alert("Ronde direset!");
+  alert("Ronde berhasil direset!");
 
 }
+
+
+// ================= PLAYER TERCEPAT
+db.ref("game").on("value", snap => {
+
+  const data = snap.val();
+
+  const box =
+  document.getElementById("firstPlayer");
+
+  if(!data){
+
+    box.innerHTML =
+    "Belum ada yang pencet";
+
+    return;
+
+  }
+
+  if(data.clicked){
+
+    box.innerHTML = `
+
+      🥇 ${data.firstPlayer}
+
+      <br><br>
+
+      ⏰ ${data.waktu}
+
+      <br><br>
+
+      🎤 BOLEH MENJAWAB
+
+    `;
+
+  }else{
+
+    box.innerHTML =
+    "Belum ada yang pencet";
+
+  }
+
+});
+
 
 // ================= RANKING
 db.ref("ranking").on("value", snap => {
@@ -218,8 +340,10 @@ db.ref("ranking").on("value", snap => {
   for(let nama in data){
 
     arr.push({
+
       nama:nama,
       score:data[nama]
+
     });
 
   }
@@ -241,30 +365,42 @@ db.ref("ranking").on("value", snap => {
     <div class="player">
 
       <h3>
+
       ${index+1}. ${item.nama}
       — ${item.score} POIN
+
       </h3>
 
       <div class="bar">
-        <div class="fill"
-        style="width:${persen}%"></div>
+
+        <div
+        class="fill"
+        style="width:${persen}%">
+        </div>
+
       </div>
 
       <br>
 
-      <button class="edit"
+      <button
+      class="edit"
       onclick="editPlayer(
       '${item.nama}',
       '${item.score}'
       )">
+
       EDIT
+
       </button>
 
-      <button class="delete"
+      <button
+      class="delete"
       onclick="hapusPlayer(
       '${item.nama}'
       )">
+
       HAPUS
+
       </button>
 
     </div>
@@ -273,7 +409,8 @@ db.ref("ranking").on("value", snap => {
 
   });
 
-  document.getElementById("ranking").innerHTML = html;
+  document.getElementById("ranking")
+  .innerHTML = html;
 
 });
 
