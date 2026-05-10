@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>ADMIN PANEL</title>
+<title>ADMIN PANEL PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -10,39 +10,53 @@
 
 <style>
 
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
   font-family:Arial;
-  background:#111;
+  background:#0f0f0f;
   color:white;
   text-align:center;
-  padding:20px;
-  margin:0;
+  padding:15px;
 }
 
 h1{
-  margin-top:10px;
+  margin:15px 0;
+  font-size:32px;
+}
+
+.card{
+  background:#1a1a1a;
+  border-radius:25px;
+  padding:20px;
+  margin-top:20px;
+  box-shadow:0 0 15px rgba(0,0,0,0.5);
 }
 
 input{
-  width:90%;
-  max-width:350px;
-  height:50px;
+  width:95%;
+  max-width:400px;
+  height:55px;
   border:none;
-  border-radius:12px;
-  text-align:center;
+  border-radius:15px;
+  margin:8px;
   font-size:18px;
-  margin:10px;
+  text-align:center;
   outline:none;
 }
 
 button{
-  padding:12px 25px;
   border:none;
-  border-radius:10px;
+  border-radius:15px;
+  padding:14px 25px;
   margin:5px;
   font-size:16px;
-  cursor:pointer;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .save{
@@ -61,22 +75,42 @@ button{
 }
 
 .delete{
-  background:#ff0033;
+  background:#ff0044;
   color:white;
 }
 
-.card{
-  background:#1a1a1a;
-  margin-top:25px;
-  padding:20px;
-  border-radius:20px;
+#fastestBox{
+  margin-top:20px;
+  background:linear-gradient(145deg,#222,#111);
+  border-radius:25px;
+  padding:30px 20px;
+}
+
+#fastName{
+  font-size:35px;
+  font-weight:bold;
+  color:gold;
+  margin-top:10px;
+}
+
+#fastTime{
+  margin-top:15px;
+  font-size:22px;
+  color:#aaa;
+}
+
+#statusJawab{
+  margin-top:18px;
+  font-size:20px;
+  color:lime;
+  font-weight:bold;
 }
 
 .player{
   background:#222;
+  border-radius:20px;
   padding:15px;
-  border-radius:15px;
-  margin:12px 0;
+  margin-top:15px;
 }
 
 .bar{
@@ -85,7 +119,7 @@ button{
   background:#333;
   border-radius:20px;
   overflow:hidden;
-  margin-top:10px;
+  margin-top:12px;
 }
 
 .fill{
@@ -93,20 +127,14 @@ button{
   background:limegreen;
 }
 
-#firstPlayer{
-  background:#222;
-  padding:25px;
-  border-radius:15px;
-  margin-top:20px;
-  font-size:24px;
-  font-weight:bold;
-  line-height:1.7;
+.rank{
+  font-size:22px;
+  margin-bottom:10px;
 }
 
-.status{
-  margin-top:10px;
-  font-size:14px;
-  color:#aaa;
+.kosong{
+  font-size:22px;
+  color:#888;
 }
 
 </style>
@@ -114,7 +142,9 @@ button{
 
 <body>
 
-<h1>🔐 ADMIN PANEL</h1>
+<h1>🎮 ADMIN PANEL</h1>
+
+<div class="card">
 
 <input
 type="password"
@@ -147,23 +177,37 @@ onclick="resetGame()">
 RESET RONDE
 </button>
 
+</div>
+
 <div class="card">
 
 <h2>⚡ PLAYER TERCEPAT</h2>
 
-<div id="firstPlayer">
-Belum ada yang pencet
+<div id="fastestBox">
+
+<div style="font-size:55px;">
+🥇
 </div>
 
-<div class="status">
-Player pertama otomatis boleh menjawab
+<div id="fastName">
+Belum Ada
+</div>
+
+<div id="fastTime">
+Menunggu player pencet buzzer
+</div>
+
+<div id="statusJawab">
+-
+</div>
+
 </div>
 
 </div>
 
 <div class="card">
 
-<h2>🏅 KLASMEN ADMIN</h2>
+<h2>🏆 KLASMEN</h2>
 
 <div id="ranking"></div>
 
@@ -171,7 +215,7 @@ Player pertama otomatis boleh menjawab
 
 <script>
 
-// ================= FIREBASE CONFIG
+// ================= FIREBASE
 const firebaseConfig = {
 
   apiKey: "AIzaSyXXXX",
@@ -189,7 +233,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 
-// ================= PASSWORD ADMIN
+// ================= PASSWORD
 function cekPass(){
 
   return document
@@ -210,7 +254,7 @@ function saveScore(){
   }
 
   const nama =
-  document.getElementById("nama").value;
+  document.getElementById("nama").value.trim();
 
   const score =
   parseInt(
@@ -226,12 +270,24 @@ function saveScore(){
 
   db.ref("ranking/" + nama).set(score);
 
-  alert("Data tersimpan!");
+  alert("Score berhasil disimpan!");
 
 }
 
 
-// ================= DELETE PLAYER
+// ================= EDIT
+function editPlayer(nama,score){
+
+  document.getElementById("nama").value =
+  nama;
+
+  document.getElementById("score").value =
+  score;
+
+}
+
+
+// ================= DELETE
 function hapusPlayer(nama){
 
   if(!cekPass()){
@@ -250,18 +306,6 @@ function hapusPlayer(nama){
 }
 
 
-// ================= EDIT PLAYER
-function editPlayer(nama,score){
-
-  document.getElementById("nama").value =
-  nama;
-
-  document.getElementById("score").value =
-  score;
-
-}
-
-
 // ================= RESET GAME
 function resetGame(){
 
@@ -275,10 +319,8 @@ function resetGame(){
   db.ref("game").set({
 
     clicked:false,
-
-    firstPlayer:"",
-
-    waktu:""
+    player:"",
+    time:""
 
   });
 
@@ -292,13 +334,17 @@ db.ref("game").on("value", snap => {
 
   const data = snap.val();
 
-  const box =
-  document.getElementById("firstPlayer");
-
   if(!data){
 
-    box.innerHTML =
-    "Belum ada yang pencet";
+    document.getElementById("fastName")
+    .innerHTML = "Belum Ada";
+
+    document.getElementById("fastTime")
+    .innerHTML =
+    "Menunggu player pencet buzzer";
+
+    document.getElementById("statusJawab")
+    .innerHTML = "-";
 
     return;
 
@@ -306,24 +352,29 @@ db.ref("game").on("value", snap => {
 
   if(data.clicked){
 
-    box.innerHTML = `
+    document.getElementById("fastName")
+    .innerHTML =
+    data.player || "Tidak diketahui";
 
-      🥇 ${data.firstPlayer}
+    document.getElementById("fastTime")
+    .innerHTML =
+    "⏰ " + (data.time || "-");
 
-      <br><br>
-
-      ⏰ ${data.waktu}
-
-      <br><br>
-
-      🎤 BOLEH MENJAWAB
-
-    `;
+    document.getElementById("statusJawab")
+    .innerHTML =
+    "🎤 BOLEH MENJAWAB";
 
   }else{
 
-    box.innerHTML =
-    "Belum ada yang pencet";
+    document.getElementById("fastName")
+    .innerHTML = "Belum Ada";
+
+    document.getElementById("fastTime")
+    .innerHTML =
+    "Menunggu player pencet buzzer";
+
+    document.getElementById("statusJawab")
+    .innerHTML = "-";
 
   }
 
@@ -355,6 +406,16 @@ db.ref("ranking").on("value", snap => {
 
   let html = "";
 
+  if(arr.length === 0){
+
+    html = `
+    <div class="kosong">
+    Belum ada player
+    </div>
+    `;
+
+  }
+
   arr.forEach((item,index)=>{
 
     let persen =
@@ -364,12 +425,12 @@ db.ref("ranking").on("value", snap => {
 
     <div class="player">
 
-      <h3>
+      <div class="rank">
 
       ${index+1}. ${item.nama}
-      — ${item.score} POIN
+      — ${item.score} POINT
 
-      </h3>
+      </div>
 
       <div class="bar">
 
