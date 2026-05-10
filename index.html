@@ -137,12 +137,39 @@ button{
   color:#888;
 }
 
+/* ================= POPUP */
+
+#popupEdit{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
+
+.popupBox{
+  background:#1a1a1a;
+  width:90%;
+  max-width:350px;
+  padding:25px;
+  border-radius:25px;
+}
+
+.popupBox h2{
+  margin-bottom:15px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>🎮 ADMIN PANEL</h1>
+<h1>🎮 ADMIN PANEL Y</h1>
 
 <div class="card">
 
@@ -168,7 +195,7 @@ placeholder="Poin">
 <button
 class="save"
 onclick="saveScore()">
-SIMPAN / EDIT
+SIMPAN PLAYER
 </button>
 
 <button
@@ -213,6 +240,43 @@ Menunggu player pencet buzzer
 
 </div>
 
+<!-- ================= POPUP EDIT -->
+
+<div id="popupEdit">
+
+  <div class="popupBox">
+
+    <h2 id="editNama">
+    EDIT PLAYER
+    </h2>
+
+    <input
+    type="number"
+    id="editScore"
+    placeholder="Edit poin">
+
+    <br><br>
+
+    <button
+    class="save"
+    onclick="saveEdit()">
+
+    SAVE
+
+    </button>
+
+    <button
+    class="reset"
+    onclick="closePopup()">
+
+    BATAL
+
+    </button>
+
+  </div>
+
+</div>
+
 <script>
 
 // ================= FIREBASE
@@ -254,11 +318,13 @@ function saveScore(){
   }
 
   const nama =
-  document.getElementById("nama").value.trim();
+  document.getElementById("nama")
+  .value.trim();
 
   const score =
   parseInt(
-  document.getElementById("score").value
+  document.getElementById("score")
+  .value
   );
 
   if(!nama || isNaN(score)){
@@ -268,21 +334,10 @@ function saveScore(){
 
   }
 
-  db.ref("ranking/" + nama).set(score);
+  db.ref("ranking/" + nama)
+  .set(score);
 
   alert("Score berhasil disimpan!");
-
-}
-
-
-// ================= EDIT PLAYER
-function editPlayer(nama,score){
-
-  document.getElementById("nama").value =
-  nama;
-
-  document.getElementById("score").value =
-  score;
 
 }
 
@@ -299,9 +354,73 @@ function hapusPlayer(nama){
 
   if(confirm("Hapus player?")){
 
-    db.ref("ranking/" + nama).remove();
+    db.ref("ranking/" + nama)
+    .remove();
 
   }
+
+}
+
+
+// ================= POPUP EDIT
+
+let currentPlayer = "";
+
+function editPlayer(nama,score){
+
+  currentPlayer = nama;
+
+  document.getElementById("popupEdit")
+  .style.display = "flex";
+
+  document.getElementById("editNama")
+  .innerHTML =
+  "EDIT " + nama;
+
+  document.getElementById("editScore")
+  .value = score;
+
+}
+
+
+// ================= SAVE EDIT
+function saveEdit(){
+
+  if(!cekPass()){
+
+    alert("Password salah!");
+    return;
+
+  }
+
+  const newScore =
+  parseInt(
+  document.getElementById("editScore")
+  .value
+  );
+
+  if(isNaN(newScore)){
+
+    alert("Isi poin!");
+    return;
+
+  }
+
+  db.ref("ranking/" + currentPlayer)
+  .set(newScore);
+
+  closePopup();
+
+  alert("Poin berhasil diupdate!");
+
+}
+
+
+// ================= CLOSE POPUP
+function closePopup(){
+
+  document.getElementById("popupEdit")
+  .style.display = "none";
 
 }
 
@@ -356,7 +475,6 @@ db.ref("game").on("value", snap => {
 
   }
 
-  // SUPPORT SCRIPT LAMA + BARU
   const namaPlayer =
   data.player ||
   data.firstPlayer ||
@@ -370,7 +488,8 @@ db.ref("game").on("value", snap => {
   if(data.clicked){
 
     document.getElementById("fastName")
-    .innerHTML = namaPlayer;
+    .innerHTML =
+    namaPlayer;
 
     document.getElementById("fastTime")
     .innerHTML =
