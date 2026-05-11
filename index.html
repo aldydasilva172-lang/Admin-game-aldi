@@ -234,7 +234,7 @@ margin-bottom:15px;
 
 <div class="ship">🏴‍☠️</div>
 
-<div class="header">🏴‍☠️ ADMIN PANEL GAME ALDI NEW</div>
+<div class="header">🏴‍☠️ ADMIN PANEL GAME ALDI </div>
 
 <div class="container">
 
@@ -303,16 +303,32 @@ let currentPlayer = "";
 
 // ===== PASSWORD =====
 function cekPass(){
-return document.getElementById("pass").value === "00";
+return document.getElementById("pass").value.trim() === "00";
 }
 
 // ===== SAFE KEY =====
 function safeKey(name){
-return name.replace(/[.#$[\]]/g,"_");
+return name
+.trim()
+.replace(/[.#$[\]/]/g,"_");
+}
+
+// ===== DISABLE BUTTON =====
+function setLoading(btn,status,text=""){
+if(status){
+btn.disabled = true;
+btn.style.opacity = "0.6";
+btn.innerText = text || "LOADING...";
+}else{
+btn.disabled = false;
+btn.style.opacity = "1";
+}
 }
 
 // ===== SAVE SCORE =====
-function saveScore(){
+async function saveScore(){
+
+const btn = event.target;
 
 if(!cekPass()) return alert("Password salah!");
 
@@ -323,23 +339,54 @@ if(!nama || isNaN(score)){
 return alert("Isi data!");
 }
 
-db.ref("ranking/" + safeKey(nama)).set({
+setLoading(btn,true,"MENYIMPAN");
+
+try{
+
+await db.ref("ranking/" + safeKey(nama)).set({
 name:nama,
 score:score
 });
 
 alert("Berhasil disimpan!");
 
+document.getElementById("nama").value = "";
+document.getElementById("score").value = "";
+
+}catch(err){
+
+alert("Gagal simpan: " + err.message);
+
+}
+
+setLoading(btn,false,"SIMPAN");
+
 }
 
 // ===== RESET GAME =====
-function resetGame(){
+async function resetGame(){
+
+const btn = event.target;
 
 if(!cekPass()) return alert("Password salah!");
 
-db.ref("game").remove();
+if(!confirm("Reset ronde?")) return;
+
+setLoading(btn,true,"RESET...");
+
+try{
+
+await db.ref("game").remove();
 
 alert("Ronde direset!");
+
+}catch(err){
+
+alert("Gagal reset: " + err.message);
+
+}
+
+setLoading(btn,false,"RESET");
 
 }
 
@@ -357,7 +404,9 @@ document.getElementById("editScore").value = score;
 }
 
 // ===== SAVE EDIT =====
-function saveEdit(){
+async function saveEdit(){
+
+const btn = event.target;
 
 if(!cekPass()) return alert("Password salah!");
 
@@ -367,11 +416,25 @@ if(isNaN(score)){
 return alert("Isi poin!");
 }
 
-db.ref("ranking/" + currentPlayer).update({
+setLoading(btn,true,"SAVE...");
+
+try{
+
+await db.ref("ranking/" + currentPlayer).update({
 score:score
 });
 
+alert("Poin diupdate!");
+
 closePopup();
+
+}catch(err){
+
+alert("Gagal update: " + err.message);
+
+}
+
+setLoading(btn,false,"SAVE");
 
 }
 
@@ -383,47 +446,53 @@ document.getElementById("popup").style.display = "none";
 }
 
 // ===== DELETE PLAYER =====
-function hapusPlayer(key){
+async function hapusPlayer(key){
 
 if(!cekPass()) return alert("Password salah!");
 
-if(confirm("Hapus player?")){
+if(!confirm("Hapus player ini?")) return;
 
-db.ref("ranking/" + key).remove()
-.then(()=>{
-alert("Player dihapus!");
-})
-.catch((err)=>{
+try{
+
+await db.ref("ranking/" + key).remove();
+
+alert("Player berhasil dihapus!");
+
+}catch(err){
+
 alert("Gagal hapus: " + err.message);
-});
 
 }
 
 }
 
 // ===== FAST PLAYER =====
-db.ref("game").on("value",snap=>{
+db.ref("game").on("value",(snap)=>{
 
 const data = snap.val() || {};
 
 if(data.clicked){
 
-document.getElementById("fastName").innerText = data.player || "Unknown";
+document.getElementById("fastName").innerText =
+data.player || "Unknown";
 
-document.getElementById("fastTime").innerText = "⚡ PEMENANG RONDE";
+document.getElementById("fastTime").innerText =
+"⚡ PEMENANG RONDE";
 
 }else{
 
-document.getElementById("fastName").innerText = "Belum ada";
+document.getElementById("fastName").innerText =
+"Belum ada";
 
-document.getElementById("fastTime").innerText = "Menunggu buzzer";
+document.getElementById("fastTime").innerText =
+"Menunggu buzzer";
 
 }
 
 });
 
 // ===== RANKING =====
-db.ref("ranking").on("value",snap=>{
+db.ref("ranking").on("value",(snap)=>{
 
 const data = snap.val() || {};
 
@@ -434,7 +503,7 @@ for(let key in data){
 arr.push({
 key:key,
 nama:data[key].name || key,
-score:data[key].score || 0
+score:Number(data[key].score) || 0
 });
 
 }
@@ -461,12 +530,12 @@ html += `
 <div class="btn-group">
 
 <button class="edit"
-onclick='editPlayer(${JSON.stringify(item.key)},${JSON.stringify(item.nama)},${item.score})'>
+onclick="editPlayer('${item.key}','${item.nama}',${item.score})">
 EDIT
 </button>
 
 <button class="delete"
-onclick='hapusPlayer(${JSON.stringify(item.key)})'>
+onclick="hapusPlayer('${item.key}')">
 HAPUS
 </button>
 
