@@ -229,13 +229,27 @@ document.getElementById("popup").style.display="none";
 }
 
 // ===== DELETE =====
-function hapusPlayer(key){
+function hapusPlayer(nama){
 
 if(!cekPass()) return alert("Password salah!");
 
 if(confirm("Hapus player?")){
 
+db.ref("ranking").once("value",snap=>{
+
+const data = snap.val() || {};
+
+for(let key in data){
+
+if((data[key].name || "") === nama){
+
 db.ref("ranking/" + key).remove();
+
+}
+
+}
+
+});
 
 }
 
@@ -289,7 +303,7 @@ html+=`
 <div class="btn-group">
 <button class="edit" onclick='editPlayer(${JSON.stringify(item.key)},${JSON.stringify(item.nama)},${item.score})'>EDIT</button>
 
-<button class="delete" onclick='hapusPlayer(${JSON.stringify(item.key)})'>HAPUS</button>
+<button class="delete" onclick='hapusPlayer(${JSON.stringify(item.nama)})'>HAPUS</button>
 </div>
 
 </div>
