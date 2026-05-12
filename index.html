@@ -13,37 +13,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
 font-family:'Poppins',sans-serif;
 min-height:100vh;
 color:white;
 overflow-x:hidden;
+
 background:
 linear-gradient(rgba(5,10,25,0.72),rgba(5,10,25,0.88)),
 url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
+
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
 }
+
 body::before{
 content:'';
 position:fixed;
 inset:0;
+
 background:
 radial-gradient(circle at top left,rgba(0,255,255,0.12),transparent 30%),
 radial-gradient(circle at bottom right,rgba(255,170,0,0.14),transparent 30%);
+
 pointer-events:none;
 }
+
 body::after{
 content:'';
 position:fixed;
-width:450px;height:450px;
+width:450px;
+height:450px;
 background:rgba(255,170,0,0.10);
 border-radius:50%;
 filter:blur(120px);
-bottom:-120px;right:-120px;
+bottom:-120px;
+right:-120px;
 }
+
 .ship{
 position:fixed;
 bottom:25px;
@@ -52,6 +67,7 @@ font-size:45px;
 opacity:0.7;
 animation:floatShip 4s ease-in-out infinite;
 }
+
 @keyframes floatShip{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
@@ -66,10 +82,14 @@ font-family:'Orbitron',sans-serif;
 font-size:32px;
 font-weight:900;
 letter-spacing:3px;
+
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(15px);
+
 border-bottom:1px solid rgba(255,255,255,0.08);
+
 text-shadow:0 0 20px cyan;
+
 box-shadow:0 0 25px rgba(0,255,255,0.15);
 }
 
@@ -82,10 +102,15 @@ padding:20px;
 
 .card{
 background:rgba(15,15,35,0.68);
+
 backdrop-filter:blur(18px);
+
 border:1px solid rgba(255,255,255,0.08);
+
 border-radius:30px;
+
 padding:25px;
+
 margin-top:20px;
 }
 
@@ -100,14 +125,22 @@ margin-bottom:20px;
 input{
 width:100%;
 height:58px;
+
 border:none;
 outline:none;
+
 border-radius:18px;
+
 margin-top:12px;
+
 padding:0 18px;
+
 font-size:17px;
+
 color:white;
+
 background:rgba(255,255,255,0.08);
+
 border:1px solid rgba(255,255,255,0.08);
 }
 
@@ -129,14 +162,40 @@ margin-top:18px;
 
 button{
 flex:1;
+
 border:none;
+
 border-radius:16px;
+
 padding:15px;
+
 cursor:pointer;
+
 color:white;
+
 font-size:15px;
+
 font-weight:700;
+
 font-family:'Orbitron',sans-serif;
+
+transition:0.2s;
+
+-webkit-tap-highlight-color:transparent;
+
+touch-action:manipulation;
+
+user-select:none;
+}
+
+button:active{
+transform:scale(0.96);
+}
+
+button:disabled{
+cursor:not-allowed;
+opacity:0.6;
+filter:brightness(0.7);
 }
 
 .save{
@@ -177,47 +236,71 @@ font-size:18px;
 
 .player{
 background:rgba(255,255,255,0.05);
+
 border:1px solid rgba(255,255,255,0.08);
+
 border-radius:22px;
+
 padding:18px;
+
 margin-top:18px;
 }
 
 .player h3{
 font-size:18px;
 margin-bottom:12px;
+word-break:break-word;
 }
 
 .bar{
 width:100%;
 height:16px;
+
 background:rgba(255,255,255,0.08);
+
 border-radius:30px;
+
 overflow:hidden;
 }
 
 .fill{
 height:100%;
+
 border-radius:30px;
+
 background:linear-gradient(90deg,#00f0ff,#8a2eff,#ff00d4);
+
+transition:0.4s;
 }
 
 #popup{
 display:none;
+
 position:fixed;
+
 inset:0;
+
 background:rgba(0,0,0,0.75);
+
 justify-content:center;
+
 align-items:center;
+
 z-index:9999;
+
+padding:20px;
 }
 
 .popup-content{
-width:90%;
+width:100%;
 max-width:350px;
+
 background:rgba(15,15,35,0.95);
+
 border:1px solid rgba(255,255,255,0.08);
+
 border-radius:28px;
+
 padding:25px;
 }
 
@@ -227,6 +310,13 @@ color:#00f0ff;
 font-family:'Orbitron',sans-serif;
 margin-bottom:15px;
 }
+
+.empty{
+text-align:center;
+padding:30px;
+color:#bbb;
+}
+
 </style>
 </head>
 
@@ -234,52 +324,90 @@ margin-bottom:15px;
 
 <div class="ship">🏴‍☠️</div>
 
-<div class="header">🏴‍☠️ ADMIN PANEL GAME ALDI </div>
+<div class="header">
+🏴‍☠️ ADMIN PANEL GAME ALDI NEW
+</div>
 
 <div class="container">
 
 <div class="card">
+
 <h2>⚙️ CONTROL PANEL</h2>
 
 <input type="password" id="pass" placeholder="PASSWORD ADMIN">
+
 <input type="text" id="nama" placeholder="NAMA PLAYER">
+
 <input type="number" id="score" placeholder="POIN PLAYER">
 
 <div class="btn-group">
-<button class="save" onclick="saveScore()">SIMPAN</button>
-<button class="reset" onclick="resetGame()">RESET</button>
+
+<button class="save" onclick="saveScore(event)">
+SIMPAN
+</button>
+
+<button class="reset" onclick="resetGame(event)">
+RESET
+</button>
+
 </div>
+
 </div>
 
 <div class="card">
+
 <h2>⚡ PLAYER TERCEPAT</h2>
 
 <div id="fastBox">
-<div style="font-size:60px;">🥇</div>
-<div id="fastName">Belum ada</div>
-<div id="fastTime">Menunggu buzzer</div>
+
+<div style="font-size:60px;">
+🥇
+</div>
+
+<div id="fastName">
+Belum ada
+</div>
+
+<div id="fastTime">
+Menunggu buzzer
+</div>
+
 </div>
 
 </div>
 
 <div class="card">
+
 <h2>🏆 RANKING PLAYER</h2>
+
 <div id="ranking"></div>
+
 </div>
 
 </div>
+
+<!-- POPUP -->
 
 <div id="popup">
 
 <div class="popup-content">
 
-<h2 id="editTitle">EDIT PLAYER</h2>
+<h2 id="editTitle">
+EDIT PLAYER
+</h2>
 
 <input type="number" id="editScore" placeholder="EDIT POIN">
 
 <div class="btn-group">
-<button class="save" onclick="saveEdit()">SAVE</button>
-<button class="reset" onclick="closePopup()">BATAL</button>
+
+<button class="save" onclick="saveEdit(event)">
+SAVE
+</button>
+
+<button class="reset" onclick="closePopup()">
+BATAL
+</button>
+
 </div>
 
 </div>
@@ -288,11 +416,16 @@ margin-bottom:15px;
 
 <script>
 
-// ===== FIREBASE =====
+// ================= FIREBASE =================
+
 const firebaseConfig = {
+
 apiKey:"AIzaSyXXXX",
+
 authDomain:"game-aldi.firebaseapp.com",
+
 databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
+
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -301,76 +434,126 @@ const db = firebase.database();
 
 let currentPlayer = "";
 
-// ===== PASSWORD =====
+// ================= PASSWORD =================
+
 function cekPass(){
+
 return document.getElementById("pass").value.trim() === "00";
+
 }
 
-// ===== SAFE KEY =====
+// ================= SAFE KEY =================
+
 function safeKey(name){
+
 return name
 .trim()
-.replace(/[.#$[\]/]/g,"_");
+.toLowerCase()
+.replace(/\s+/g,"_")
+.replace(/[.#$[\]/]/g,"_")
+.replace(/[^a-z0-9_]/g,"");
+
 }
 
-// ===== DISABLE BUTTON =====
+// ================= LOADING =================
+
 function setLoading(btn,status,text=""){
+
 if(status){
+
 btn.disabled = true;
-btn.style.opacity = "0.6";
+
+btn.dataset.oldtext = btn.innerText;
+
 btn.innerText = text || "LOADING...";
+
 }else{
+
 btn.disabled = false;
-btn.style.opacity = "1";
-}
+
+btn.innerText = btn.dataset.oldtext || "BUTTON";
+
 }
 
-// ===== SAVE SCORE =====
-async function saveScore(){
+}
+
+// ================= SAVE SCORE =================
+
+async function saveScore(event){
 
 const btn = event.target;
 
-if(!cekPass()) return alert("Password salah!");
+if(!cekPass()){
+
+alert("Password salah!");
+
+return;
+
+}
 
 const nama = document.getElementById("nama").value.trim();
+
 const score = parseInt(document.getElementById("score").value);
 
 if(!nama || isNaN(score)){
-return alert("Isi data!");
+
+alert("Isi data!");
+
+return;
+
 }
+
+const key = safeKey(nama);
 
 setLoading(btn,true,"MENYIMPAN");
 
 try{
 
-await db.ref("ranking/" + safeKey(nama)).set({
+await db.ref("ranking/" + key).set({
+
 name:nama,
+
 score:score
+
 });
 
 alert("Berhasil disimpan!");
 
 document.getElementById("nama").value = "";
+
 document.getElementById("score").value = "";
 
 }catch(err){
+
+console.error(err);
 
 alert("Gagal simpan: " + err.message);
 
 }
 
-setLoading(btn,false,"SIMPAN");
+setLoading(btn,false);
 
 }
 
-// ===== RESET GAME =====
-async function resetGame(){
+// ================= RESET GAME =================
+
+async function resetGame(event){
 
 const btn = event.target;
 
-if(!cekPass()) return alert("Password salah!");
+if(!cekPass()){
 
-if(!confirm("Reset ronde?")) return;
+alert("Password salah!");
+
+return;
+
+}
+
+if(!confirm("Reset ronde game?")){
+
+return;
+
+}
 
 setLoading(btn,true,"RESET...");
 
@@ -378,42 +561,59 @@ try{
 
 await db.ref("game").remove();
 
-alert("Ronde direset!");
+alert("Ronde berhasil direset!");
 
 }catch(err){
+
+console.error(err);
 
 alert("Gagal reset: " + err.message);
 
 }
 
-setLoading(btn,false,"RESET");
+setLoading(btn,false);
 
 }
 
-// ===== EDIT PLAYER =====
+// ================= EDIT PLAYER =================
+
 function editPlayer(key,nama,score){
 
 currentPlayer = key;
 
 document.getElementById("popup").style.display = "flex";
 
-document.getElementById("editTitle").innerText = "EDIT " + nama;
+document.getElementById("editTitle").innerText =
+"EDIT " + nama;
 
 document.getElementById("editScore").value = score;
 
 }
 
-// ===== SAVE EDIT =====
-async function saveEdit(){
+// ================= SAVE EDIT =================
+
+async function saveEdit(event){
 
 const btn = event.target;
 
-if(!cekPass()) return alert("Password salah!");
+if(!cekPass()){
 
-const score = parseInt(document.getElementById("editScore").value);
+alert("Password salah!");
+
+return;
+
+}
+
+const score = parseInt(
+document.getElementById("editScore").value
+);
 
 if(isNaN(score)){
-return alert("Isi poin!");
+
+alert("Isi poin!");
+
+return;
+
 }
 
 setLoading(btn,true,"SAVE...");
@@ -421,52 +621,89 @@ setLoading(btn,true,"SAVE...");
 try{
 
 await db.ref("ranking/" + currentPlayer).update({
+
 score:score
+
 });
 
-alert("Poin diupdate!");
+alert("Poin berhasil diupdate!");
 
 closePopup();
 
 }catch(err){
 
+console.error(err);
+
 alert("Gagal update: " + err.message);
 
 }
 
-setLoading(btn,false,"SAVE");
+setLoading(btn,false);
 
 }
 
-// ===== CLOSE POPUP =====
+// ================= CLOSE POPUP =================
+
 function closePopup(){
 
 document.getElementById("popup").style.display = "none";
 
 }
 
-// ===== DELETE PLAYER =====
+// ================= DELETE PLAYER =================
+
 async function hapusPlayer(key){
 
-if(!cekPass()) return alert("Password salah!");
+if(!cekPass()){
 
-if(!confirm("Hapus player ini?")) return;
+alert("Password salah!");
+
+return;
+
+}
+
+if(!confirm("Hapus player ini?")){
+
+return;
+
+}
 
 try{
 
-await db.ref("ranking/" + key).remove();
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(btn=>{
+
+btn.disabled = true;
+
+});
+
+await db.ref("ranking").child(key).remove();
 
 alert("Player berhasil dihapus!");
 
 }catch(err){
 
+console.error(err);
+
 alert("Gagal hapus: " + err.message);
 
-}
+}finally{
+
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(btn=>{
+
+btn.disabled = false;
+
+});
 
 }
 
-// ===== FAST PLAYER =====
+}
+
+// ================= FAST PLAYER =================
+
 db.ref("game").on("value",(snap)=>{
 
 const data = snap.val() || {};
@@ -491,8 +728,11 @@ document.getElementById("fastTime").innerText =
 
 });
 
-// ===== RANKING =====
-db.ref("ranking").on("value",(snap)=>{
+// ================= RANKING =================
+
+db.ref("ranking")
+.limitToLast(100)
+.on("value",(snap)=>{
 
 const data = snap.val() || {};
 
@@ -501,9 +741,13 @@ let arr = [];
 for(let key in data){
 
 arr.push({
+
 key:key,
+
 nama:data[key].name || key,
+
 score:Number(data[key].score) || 0
+
 });
 
 }
@@ -514,14 +758,27 @@ let max = arr[0]?.score || 1;
 
 let html = "";
 
+if(arr.length === 0){
+
+html = `
+<div class="empty">
+Belum ada player
+</div>
+`;
+
+}else{
+
 arr.forEach((item,i)=>{
 
 let persen = (item.score / max) * 100;
 
 html += `
+
 <div class="player">
 
-<h3>${i+1}. ${item.nama} — ${item.score} POIN</h3>
+<h3>
+${i+1}. ${item.nama} — ${item.score} POIN
+</h3>
 
 <div class="bar">
 <div class="fill" style="width:${persen}%"></div>
@@ -529,22 +786,31 @@ html += `
 
 <div class="btn-group">
 
-<button class="edit"
+<button
+class="edit"
 onclick="editPlayer('${item.key}','${item.nama}',${item.score})">
+
 EDIT
+
 </button>
 
-<button class="delete"
+<button
+class="delete"
 onclick="hapusPlayer('${item.key}')">
+
 HAPUS
+
 </button>
 
 </div>
 
 </div>
+
 `;
 
 });
+
+}
 
 document.getElementById("ranking").innerHTML = html;
 
