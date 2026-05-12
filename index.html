@@ -2,18 +2,13 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>ADMIN PANEL ALDI</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN PANEL ALDI</title>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -21,443 +16,172 @@ box-sizing:border-box;
 }
 
 body{
-font-family:'Poppins',sans-serif;
-min-height:100vh;
+font-family:Arial,sans-serif;
+background:#08111f;
 color:white;
-overflow-x:hidden;
-
-background:
-linear-gradient(rgba(5,10,25,0.72),rgba(5,10,25,0.88)),
-url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');
-
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-}
-
-body::before{
-content:'';
-position:fixed;
-inset:0;
-
-background:
-radial-gradient(circle at top left,rgba(0,255,255,0.12),transparent 30%),
-radial-gradient(circle at bottom right,rgba(255,170,0,0.14),transparent 30%);
-
-pointer-events:none;
-}
-
-body::after{
-content:'';
-position:fixed;
-width:450px;
-height:450px;
-background:rgba(255,170,0,0.10);
-border-radius:50%;
-filter:blur(120px);
-bottom:-120px;
-right:-120px;
-}
-
-.ship{
-position:fixed;
-bottom:25px;
-left:25px;
-font-size:45px;
-opacity:0.7;
-animation:floatShip 4s ease-in-out infinite;
-z-index:1;
-}
-
-@keyframes floatShip{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
+padding:15px;
 }
 
 .header{
-width:100%;
-padding:22px;
 text-align:center;
-font-family:'Orbitron',sans-serif;
-font-size:32px;
-font-weight:900;
-letter-spacing:3px;
-
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(15px);
-
-border-bottom:1px solid rgba(255,255,255,0.08);
-
-text-shadow:0 0 20px cyan;
-
-box-shadow:0 0 25px rgba(0,255,255,0.15);
-}
-
-.container{
-width:100%;
-max-width:700px;
-margin:auto;
-padding:20px;
+font-size:24px;
+font-weight:bold;
+margin-bottom:20px;
 }
 
 .card{
-background:rgba(15,15,35,0.68);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,0.08);
-
-border-radius:30px;
-
-padding:25px;
-
-margin-top:20px;
-
-box-shadow:0 0 20px rgba(0,0,0,0.3);
+background:#111827;
+padding:18px;
+border-radius:18px;
+margin-bottom:18px;
 }
 
-.card h2{
-text-align:center;
-color:#00f0ff;
-font-family:'Orbitron',sans-serif;
-text-shadow:0 0 12px cyan;
-margin-bottom:20px;
+h2{
+font-size:18px;
+margin-bottom:15px;
 }
 
 input{
 width:100%;
-height:58px;
-
+height:50px;
 border:none;
 outline:none;
-
-border-radius:18px;
-
-margin-top:12px;
-
-padding:0 18px;
-
-font-size:17px;
-
+border-radius:12px;
+padding:0 15px;
+margin-top:10px;
+background:#1f2937;
 color:white;
-
-background:rgba(255,255,255,0.08);
-
-border:1px solid rgba(255,255,255,0.08);
-
-transition:0.2s;
+font-size:16px;
 }
 
-input:focus{
-border:1px solid cyan;
-box-shadow:0 0 20px cyan;
-}
-
-input::placeholder{
-color:#bbb;
+button{
+flex:1;
+border:none;
+height:48px;
+border-radius:12px;
+font-weight:bold;
+color:white;
+cursor:pointer;
 }
 
 .btn-group{
 display:flex;
 gap:10px;
-flex-wrap:wrap;
-margin-top:18px;
+margin-top:15px;
 }
 
-button{
-flex:1;
-
-border:none;
-
-border-radius:16px;
-
-padding:15px;
-
-cursor:pointer;
-
-color:white;
-
-font-size:15px;
-
-font-weight:700;
-
-font-family:'Orbitron',sans-serif;
-
-transition:0.2s;
-
--webkit-tap-highlight-color:transparent;
-
-touch-action:manipulation;
-
-user-select:none;
-}
-
-button:hover{
-transform:translateY(-2px);
-}
-
-button:active{
-transform:scale(0.96);
-}
-
-button:disabled{
-cursor:not-allowed;
-opacity:0.6;
-filter:brightness(0.7);
-}
-
-.save{
-background:linear-gradient(145deg,#00ff99,#00c3ff);
-}
-
-.reset{
-background:linear-gradient(145deg,#ff004c,#ff7a00);
-}
-
-.edit{
-background:linear-gradient(145deg,#ffb300,#ff6a00);
-}
-
-.delete{
-background:linear-gradient(145deg,#ff004c,#c400ff);
-}
-
-#fastBox{
-text-align:center;
-padding:25px;
-border-radius:25px;
-background:rgba(255,255,255,0.05);
-}
-
-#fastName{
-font-size:38px;
-font-weight:900;
-color:gold;
-text-shadow:0 0 15px gold;
-word-break:break-word;
-}
-
-#fastTime{
-margin-top:10px;
-color:#bbb;
-font-size:18px;
-}
+.save{background:#00b894;}
+.reset{background:#d63031;}
+.edit{background:#fdcb6e;color:black;}
+.delete{background:#e84393;}
 
 .player{
-background:rgba(255,255,255,0.05);
-
-border:1px solid rgba(255,255,255,0.08);
-
-border-radius:22px;
-
-padding:18px;
-
-margin-top:18px;
-
-animation:fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.player h3{
-font-size:18px;
-margin-bottom:12px;
-word-break:break-word;
+background:#1f2937;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
 }
 
 .bar{
 width:100%;
-height:16px;
-
-background:rgba(255,255,255,0.08);
-
-border-radius:30px;
-
+height:12px;
+background:#2d3748;
+border-radius:20px;
 overflow:hidden;
+margin-top:10px;
 }
 
 .fill{
 height:100%;
-
-border-radius:30px;
-
-background:linear-gradient(90deg,#00f0ff,#8a2eff,#ff00d4);
-
-transition:0.4s;
+background:#00d2ff;
 }
 
-#popup{
-display:none;
+#fastBox{text-align:center;}
 
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,0.75);
-
-justify-content:center;
-
-align-items:center;
-
-z-index:9999;
-
-padding:20px;
+#fastName{
+font-size:30px;
+font-weight:bold;
+margin-top:10px;
+color:gold;
 }
 
-.popup-content{
-width:100%;
-max-width:350px;
-
-background:rgba(15,15,35,0.95);
-
-border:1px solid rgba(255,255,255,0.08);
-
-border-radius:28px;
-
-padding:25px;
-}
-
-.popup-content h2{
-text-align:center;
-color:#00f0ff;
-font-family:'Orbitron',sans-serif;
-margin-bottom:15px;
+#fastTime{
+margin-top:8px;
+color:#ccc;
 }
 
 .empty{
 text-align:center;
-padding:30px;
-color:#bbb;
+padding:20px;
+color:#aaa;
 }
 
-@media(max-width:600px){
-
-.header{
-font-size:22px;
-padding:18px;
+#popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+padding:20px;
 }
 
-.card{
-padding:18px;
-border-radius:22px;
+.popup-content{
+background:#111827;
+padding:20px;
+border-radius:20px;
+width:100%;
+max-width:320px;
 }
-
-#fastName{
-font-size:28px;
-}
-
-button{
-font-size:13px;
-padding:13px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="ship">🏴‍☠️</div>
-
-<div class="header">
-🏴‍☠️ ADMIN PANEL GAME ALDI NEW
-</div>
-
-<div class="container">
+<div class="header">🏴‍☠️ ADMIN PANEL GAME</div>
 
 <div class="card">
+<h2>CONTROL PANEL</h2>
 
-<h2>⚙️ CONTROL PANEL</h2>
-
-<input type="password" id="pass" placeholder="PASSWORD ADMIN">
-
+<input type="password" id="pass" placeholder="PASSWORD">
 <input type="text" id="nama" placeholder="NAMA PLAYER">
-
-<input type="number" id="score" placeholder="POIN PLAYER">
+<input type="number" id="score" placeholder="POIN">
 
 <div class="btn-group">
-
-<button class="save" onclick="saveScore(event)">
-SIMPAN
-</button>
-
-<button class="reset" onclick="resetGame(event)">
-RESET
-</button>
-
+<button class="save" onclick="saveScore()">SIMPAN</button>
+<button class="reset" onclick="resetGame()">RESET</button>
 </div>
-
 </div>
 
 <div class="card">
-
-<h2>⚡ PLAYER TERCEPAT</h2>
+<h2>PLAYER TERCEPAT</h2>
 
 <div id="fastBox">
-
-<div style="font-size:60px;">
-🥇
+<div style="font-size:50px;">🥇</div>
+<div id="fastName">Belum ada</div>
+<div id="fastTime">Menunggu buzzer</div>
 </div>
-
-<div id="fastName">
-Belum ada
-</div>
-
-<div id="fastTime">
-Menunggu buzzer
-</div>
-
-</div>
-
 </div>
 
 <div class="card">
-
-<h2>🏆 RANKING PLAYER</h2>
-
+<h2>RANKING PLAYER</h2>
 <div id="ranking"></div>
-
-</div>
-
 </div>
 
 <!-- POPUP -->
-
 <div id="popup">
-
 <div class="popup-content">
 
-<h2 id="editTitle">
-EDIT PLAYER
-</h2>
+<h2 id="editTitle">EDIT PLAYER</h2>
 
-<input type="number" id="editScore" placeholder="EDIT POIN">
+<input type="number" id="editScore" placeholder="POIN">
 
 <div class="btn-group">
-
-<button class="save" onclick="saveEdit(event)">
-SAVE
-</button>
-
-<button class="reset" onclick="closePopup()">
-BATAL
-</button>
-
+<button class="save" onclick="saveEdit()">SAVE</button>
+<button class="reset" onclick="closePopup()">BATAL</button>
 </div>
 
 </div>
-
 </div>
 
 <script>
@@ -465,313 +189,192 @@ BATAL
 // ================= FIREBASE =================
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
-
-authDomain: "game-aldi.firebaseapp.com",
-
-databaseURL: "https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-projectId: "game-aldi",
-
-storageBucket: "game-aldi.firebasestorage.app",
-
-messagingSenderId: "184345142676",
-
-appId: "1:184345142676:web:f19d19999c897d0ca95b81"
-
+apiKey:"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+authDomain:"game-aldi.firebaseapp.com",
+databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"game-aldi",
+storageBucket:"game-aldi.firebasestorage.app",
+messagingSenderId:"184345142676",
+appId:"1:184345142676:web:f19d19999c897d0ca95b81"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
-let currentPlayer = "";
+const rankingBox = document.getElementById("ranking");
+const popup = document.getElementById("popup");
+const editScore = document.getElementById("editScore");
+const editTitle = document.getElementById("editTitle");
+const fastName = document.getElementById("fastName");
+const fastTime = document.getElementById("fastTime");
+
+let currentKey = "";
+let loading = false;
 
 // ================= PASSWORD =================
 
 function cekPass(){
-
-return document.getElementById("pass").value.trim() === "00";
-
+return document.getElementById("pass").value==="00";
 }
 
 // ================= SAFE KEY =================
 
-function safeKey(name){
-
-return btoa(
-unescape(
-encodeURIComponent(name.trim())
-)
-)
-.replace(/=/g,"");
-
+function safeKey(text){
+return btoa(unescape(encodeURIComponent(text))).replace(/=/g,'');
 }
 
-// ================= LOADING =================
+// ================= SAVE =================
 
-function setLoading(btn,status,text=""){
+async function saveScore(){
 
-if(status){
+if(loading)return;
 
-btn.disabled = true;
+if(!cekPass()) return alert("Password salah");
 
-btn.dataset.oldtext = btn.innerText;
+const nama=document.getElementById("nama").value.trim();
+const score=Number(document.getElementById("score").value);
 
-btn.innerText = text || "LOADING...";
+if(!nama||isNaN(score)) return alert("Isi data");
 
-}else{
-
-btn.disabled = false;
-
-btn.innerText = btn.dataset.oldtext || "BUTTON";
-
-}
-
-}
-
-// ================= SAVE SCORE =================
-
-async function saveScore(event){
-
-const btn = event.target;
-
-if(!cekPass()){
-
-alert("Password salah!");
-
-return;
-
-}
-
-const nama = document.getElementById("nama").value.trim();
-
-const score = parseInt(document.getElementById("score").value);
-
-if(!nama || isNaN(score)){
-
-alert("Isi data!");
-
-return;
-
-}
-
-const key = safeKey(nama);
-
-setLoading(btn,true,"MENYIMPAN");
+loading=true;
 
 try{
 
-await db.ref("ranking/" + key).set({
-
+await db.ref("ranking/"+safeKey(nama)).set({
 name:nama,
-
 score:score
-
 });
 
-alert("Berhasil disimpan!");
+document.getElementById("nama").value="";
+document.getElementById("score").value="";
 
-document.getElementById("nama").value = "";
+}catch{
 
-document.getElementById("score").value = "";
-
-}catch(err){
-
-console.error(err);
-
-alert("Gagal simpan: " + err.message);
+alert("Gagal simpan");
 
 }
 
-setLoading(btn,false);
+loading=false;
 
 }
 
-// ================= RESET GAME =================
+// ================= RESET =================
 
-async function resetGame(event){
+async function resetGame(){
 
-const btn = event.target;
+if(loading)return;
 
-if(!cekPass()){
+if(!cekPass()) return alert("Password salah");
 
-alert("Password salah!");
+if(!confirm("Reset game?")) return;
 
-return;
-
-}
-
-if(!confirm("Reset ronde game?")){
-
-return;
-
-}
-
-setLoading(btn,true,"RESET...");
+loading=true;
 
 try{
 
 await db.ref("game").remove();
 
-alert("Ronde berhasil direset!");
+}catch{
 
-}catch(err){
-
-console.error(err);
-
-alert("Gagal reset: " + err.message);
+alert("Gagal reset");
 
 }
 
-setLoading(btn,false);
+loading=false;
 
 }
 
-// ================= EDIT PLAYER =================
+// ================= EDIT =================
 
-function editPlayer(key,nama,score){
+function editPlayer(key,name,score){
 
-currentPlayer = key;
-
-document.getElementById("popup").style.display = "flex";
-
-document.getElementById("editTitle").innerText =
-"EDIT " + nama;
-
-document.getElementById("editScore").value = score;
+currentKey=key;
+popup.style.display="flex";
+editTitle.innerText="EDIT "+name;
+editScore.value=score;
 
 }
 
 // ================= SAVE EDIT =================
 
-async function saveEdit(event){
+async function saveEdit(){
 
-const btn = event.target;
+if(loading)return;
 
-if(!cekPass()){
+if(!cekPass()) return alert("Password salah");
 
-alert("Password salah!");
+const score=Number(editScore.value);
 
-return;
+if(isNaN(score)) return alert("Isi poin");
 
-}
-
-const score = parseInt(
-document.getElementById("editScore").value
-);
-
-if(isNaN(score)){
-
-alert("Isi poin!");
-
-return;
-
-}
-
-setLoading(btn,true,"SAVE...");
+loading=true;
 
 try{
 
-await db.ref("ranking/" + currentPlayer).update({
-
+await db.ref("ranking/"+currentKey).update({
 score:score
-
 });
 
-alert("Poin berhasil diupdate!");
+popup.style.display="none";
 
-closePopup();
+}catch{
 
-}catch(err){
-
-console.error(err);
-
-alert("Gagal update: " + err.message);
+alert("Gagal edit");
 
 }
 
-setLoading(btn,false);
+loading=false;
+
+}
+
+// ================= DELETE =================
+
+async function hapusPlayer(key){
+
+if(loading)return;
+
+if(!cekPass()) return alert("Password salah");
+
+if(!confirm("Hapus player?")) return;
+
+loading=true;
+
+try{
+
+await db.ref("ranking/"+key).remove();
+
+}catch{
+
+alert("Gagal hapus");
+
+}
+
+loading=false;
 
 }
 
 // ================= CLOSE POPUP =================
 
 function closePopup(){
-
-document.getElementById("popup").style.display = "none";
-
-}
-
-// ================= DELETE PLAYER =================
-
-async function hapusPlayer(key){
-
-if(!cekPass()){
-
-alert("Password salah!");
-return;
-
-}
-
-if(!confirm("Hapus player ini?")) return;
-
-try{
-
-const allDeleteBtn = document.querySelectorAll(".delete");
-
-allDeleteBtn.forEach(btn=>{
-btn.disabled = true;
-});
-
-await db.ref("ranking/" + key).remove();
-
-alert("Player berhasil dihapus!");
-
-}catch(err){
-
-console.error(err);
-
-alert("Gagal hapus: " + err.message);
-
-}finally{
-
-setTimeout(()=>{
-
-document.querySelectorAll(".delete").forEach(btn=>{
-
-btn.disabled = false;
-
-});
-
-},300);
-
-}
-
+popup.style.display="none";
 }
 
 // ================= FAST PLAYER =================
 
-db.ref("game").on("value",(snap)=>{
+db.ref("game").on("value",snap=>{
 
-const data = snap.val() || {};
+const data=snap.val();
 
-if(data.clicked){
+if(data&&data.clicked){
 
-document.getElementById("fastName").innerText =
-data.player || "Unknown";
-
-document.getElementById("fastTime").innerText =
-"⚡ PEMENANG RONDE";
+fastName.innerText=data.player||"Unknown";
+fastTime.innerText="⚡ PEMENANG";
 
 }else{
 
-document.getElementById("fastName").innerText =
-"Belum ada";
-
-document.getElementById("fastTime").innerText =
-"Menunggu buzzer";
+fastName.innerText="Belum ada";
+fastTime.innerText="Menunggu buzzer";
 
 }
 
@@ -779,89 +382,68 @@ document.getElementById("fastTime").innerText =
 
 // ================= RANKING =================
 
-db.ref("ranking")
-.limitToLast(100)
-.on("value",(snap)=>{
+db.ref("ranking").on("value",snap=>{
 
-const data = snap.val() || {};
-
-let arr = [];
+const data=snap.val()||{};
+let arr=[];
 
 for(let key in data){
 
 arr.push({
-
 key:key,
-
-nama:data[key].name || key,
-
-score:Number(data[key].score) || 0
-
+name:data[key].name||"Unknown",
+score:data[key].score||0
 });
 
 }
 
 arr.sort((a,b)=>b.score-a.score);
 
-let max = arr[0]?.score || 1;
+rankingBox.innerHTML="";
 
-let html = "";
+if(!arr.length){
 
-if(arr.length === 0){
+rankingBox.innerHTML="<div class='empty'>Belum ada player</div>";
+return;
 
-html = `
-<div class="empty">
-Belum ada player
-</div>
-`;
+}
 
-}else{
+const max=arr[0].score||1;
 
-arr.forEach((item,i)=>{
+arr.forEach((item,index)=>{
 
-let persen = (item.score / max) * 100;
+const persen=(item.score/max)*100;
 
-html += `
+const div=document.createElement("div");
 
-<div class="player">
+div.className="player";
 
-<h3>
-${i+1}. ${item.nama} — ${item.score} POIN
-</h3>
+div.innerHTML=`
+
+<h3>${index+1}. ${item.name} — ${item.score} poin</h3>
 
 <div class="bar">
 <div class="fill" style="width:${persen}%"></div>
 </div>
 
 <div class="btn-group">
-
-<button
-class="edit"
-onclick="editPlayer('${item.key}','${item.nama}',${item.score})">
-
-EDIT
-
-</button>
-
-<button
-class="delete"
-onclick="hapusPlayer('${item.key}')">
-
-HAPUS
-
-</button>
-
-</div>
-
+<button class="edit">EDIT</button>
+<button class="delete">HAPUS</button>
 </div>
 
 `;
 
+div.querySelector(".edit").onclick=()=>{
+editPlayer(item.key,item.name,item.score);
+};
+
+div.querySelector(".delete").onclick=()=>{
+hapusPlayer(item.key);
+};
+
+rankingBox.appendChild(div);
+
 });
-
-}
-
-document.getElementById("ranking").innerHTML = html;
 
 });
 
