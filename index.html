@@ -66,6 +66,7 @@ left:25px;
 font-size:45px;
 opacity:0.7;
 animation:floatShip 4s ease-in-out infinite;
+z-index:1;
 }
 
 @keyframes floatShip{
@@ -112,6 +113,8 @@ border-radius:30px;
 padding:25px;
 
 margin-top:20px;
+
+box-shadow:0 0 20px rgba(0,0,0,0.3);
 }
 
 .card h2{
@@ -142,6 +145,8 @@ color:white;
 background:rgba(255,255,255,0.08);
 
 border:1px solid rgba(255,255,255,0.08);
+
+transition:0.2s;
 }
 
 input:focus{
@@ -188,6 +193,10 @@ touch-action:manipulation;
 user-select:none;
 }
 
+button:hover{
+transform:translateY(-2px);
+}
+
 button:active{
 transform:scale(0.96);
 }
@@ -226,6 +235,7 @@ font-size:38px;
 font-weight:900;
 color:gold;
 text-shadow:0 0 15px gold;
+word-break:break-word;
 }
 
 #fastTime{
@@ -244,6 +254,19 @@ border-radius:22px;
 padding:18px;
 
 margin-top:18px;
+
+animation:fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 .player h3{
@@ -315,6 +338,29 @@ margin-bottom:15px;
 text-align:center;
 padding:30px;
 color:#bbb;
+}
+
+@media(max-width:600px){
+
+.header{
+font-size:22px;
+padding:18px;
+}
+
+.card{
+padding:18px;
+border-radius:22px;
+}
+
+#fastName{
+font-size:28px;
+}
+
+button{
+font-size:13px;
+padding:13px;
+}
+
 }
 
 </style>
@@ -420,11 +466,19 @@ BATAL
 
 const firebaseConfig = {
 
-apiKey:"AIzaSyXXXX",
+apiKey: "AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
 
-authDomain:"game-aldi.firebaseapp.com",
+authDomain: "game-aldi.firebaseapp.com",
 
-databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app"
+databaseURL: "https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "game-aldi",
+
+storageBucket: "game-aldi.firebasestorage.app",
+
+messagingSenderId: "184345142676",
+
+appId: "1:184345142676:web:f19d19999c897d0ca95b81"
 
 };
 
@@ -446,12 +500,12 @@ return document.getElementById("pass").value.trim() === "00";
 
 function safeKey(name){
 
-return name
-.trim()
-.toLowerCase()
-.replace(/\s+/g,"_")
-.replace(/[.#$[\]/]/g,"_")
-.replace(/[^a-z0-9_]/g,"");
+return btoa(
+unescape(
+encodeURIComponent(name.trim())
+)
+)
+.replace(/=/g,"");
 
 }
 
@@ -652,7 +706,7 @@ document.getElementById("popup").style.display = "none";
 
 // ================= DELETE PLAYER =================
 
-async function hapusPlayer(key){
+async function hapusPlayer(key,event){
 
 if(!cekPass()){
 
@@ -668,17 +722,29 @@ return;
 
 }
 
+const btn = event.target;
+
 try{
-
-const buttons = document.querySelectorAll("button");
-
-buttons.forEach(btn=>{
 
 btn.disabled = true;
 
-});
+btn.innerText = "MENGHAPUS...";
 
-await db.ref("ranking").child(key).remove();
+const snap = await db.ref("ranking/" + key).once("value");
+
+if(!snap.exists()){
+
+alert("Player tidak ditemukan!");
+
+btn.disabled = false;
+
+btn.innerText = "HAPUS";
+
+return;
+
+}
+
+await db.ref("ranking/" + key).remove();
 
 alert("Player berhasil dihapus!");
 
@@ -690,13 +756,16 @@ alert("Gagal hapus: " + err.message);
 
 }finally{
 
-const buttons = document.querySelectorAll("button");
+setTimeout(()=>{
 
-buttons.forEach(btn=>{
+document.querySelectorAll(".delete").forEach(btn=>{
 
 btn.disabled = false;
+btn.innerText = "HAPUS";
 
 });
+
+},300);
 
 }
 
@@ -796,7 +865,7 @@ EDIT
 
 <button
 class="delete"
-onclick="hapusPlayer('${item.key}')">
+onclick="hapusPlayer('${item.key}', event)">
 
 HAPUS
 
