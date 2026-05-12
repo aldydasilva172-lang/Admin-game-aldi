@@ -706,43 +706,24 @@ document.getElementById("popup").style.display = "none";
 
 // ================= DELETE PLAYER =================
 
-async function hapusPlayer(key,event){
+async function hapusPlayer(key){
 
 if(!cekPass()){
 
 alert("Password salah!");
-
 return;
 
 }
 
-if(!confirm("Hapus player ini?")){
-
-return;
-
-}
-
-const btn = event.target;
+if(!confirm("Hapus player ini?")) return;
 
 try{
 
+const allDeleteBtn = document.querySelectorAll(".delete");
+
+allDeleteBtn.forEach(btn=>{
 btn.disabled = true;
-
-btn.innerText = "MENGHAPUS...";
-
-const snap = await db.ref("ranking/" + key).once("value");
-
-if(!snap.exists()){
-
-alert("Player tidak ditemukan!");
-
-btn.disabled = false;
-
-btn.innerText = "HAPUS";
-
-return;
-
-}
+});
 
 await db.ref("ranking/" + key).remove();
 
@@ -761,7 +742,6 @@ setTimeout(()=>{
 document.querySelectorAll(".delete").forEach(btn=>{
 
 btn.disabled = false;
-btn.innerText = "HAPUS";
 
 });
 
@@ -865,7 +845,7 @@ EDIT
 
 <button
 class="delete"
-onclick="hapusPlayer('${item.key}', event)">
+onclick="hapusPlayer('${item.key}')">
 
 HAPUS
 
