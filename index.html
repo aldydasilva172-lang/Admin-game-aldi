@@ -543,6 +543,8 @@ background:#d63031;
 }
 
 
+/* ================= SPAM ================= */
+
 .spam-player{
 
 background:#3a1720;
@@ -611,9 +613,8 @@ CONTROL GAME ALDI
 </div>
 
 
-
 <!-- ================================================= -->
-<!-- CONTROL PANEL LAMA -->
+<!-- CONTROL PANEL -->
 <!-- ================================================= -->
 
 <div class="card">
@@ -686,9 +687,8 @@ onclick="bukaResetPemain()"
 </div>
 
 
-
 <!-- ================================================= -->
-<!-- PEMAIN MENUNGGU APPROVAL -->
+<!-- PEMAIN MENUNGGU -->
 <!-- ================================================= -->
 
 <div class="card">
@@ -713,7 +713,6 @@ Belum ada pemain menunggu.
 </div>
 
 </div>
-
 
 
 <!-- ================================================= -->
@@ -744,7 +743,6 @@ Belum ada pemain aktif.
 </div>
 
 
-
 <!-- ================================================= -->
 <!-- PEMAIN SPAM -->
 <!-- ================================================= -->
@@ -771,7 +769,6 @@ Belum ada pemain terkena spam.
 </div>
 
 </div>
-
 
 
 <!-- ================================================= -->
@@ -817,7 +814,6 @@ Menunggu buzzer
 </div>
 
 
-
 <!-- ================================================= -->
 <!-- RANKING -->
 <!-- ================================================= -->
@@ -834,7 +830,6 @@ RANKING PLAYER
 <div id="ranking"></div>
 
 </div>
-
 
 
 <!-- ================================================= -->
@@ -889,7 +884,6 @@ BATAL
 </div>
 
 </div>
-
 
 
 <!-- ================================================= -->
@@ -960,7 +954,6 @@ BATAL
 </div>
 
 
-
 <script>
 
 
@@ -1003,10 +996,9 @@ const db =
 firebase.database();
 
 
-
-/* ================================================= */
-/* ELEMENT */
-/* ================================================= */
+// =================================================
+// ELEMENT
+// =================================================
 
 const rankingBox =
 document.getElementById(
@@ -1080,11 +1072,9 @@ document.getElementById(
 );
 
 
-
 let currentKey = "";
 
 let loading = false;
-
 
 
 // =================================================
@@ -1098,7 +1088,6 @@ return document
 .value === "00";
 
 }
-
 
 
 // =================================================
@@ -1115,7 +1104,6 @@ encodeURIComponent(text)
 .replace(/=/g,'');
 
 }
-
 
 
 // =================================================
@@ -1205,7 +1193,6 @@ loading = false;
 }
 
 
-
 // =================================================
 // RESET GAME
 // =================================================
@@ -1240,18 +1227,16 @@ loading = true;
 try{
 
 /*
-  Reset hasil buzzer.
+  RESET GAME:
+  1. Hapus hasil buzzer.
+  2. Buka semua pemain yang SPAM.
+  3. Pemain approved tetap approved.
 */
 
 await db
 .ref("game")
 .remove();
 
-
-/*
-  Buka kembali SEMUA pemain
-  yang terkena SPAM.
-*/
 
 const snap =
 await db
@@ -1311,7 +1296,6 @@ loading = false;
 }
 
 
-
 // =================================================
 // RESET PEMAIN POPUP
 // =================================================
@@ -1349,7 +1333,6 @@ resetPlayerPassword.focus();
 );
 
 }
-
 
 
 // =================================================
@@ -1392,19 +1375,10 @@ loading = true;
 
 try{
 
-/*
-  Hapus seluruh daftar pemain.
-*/
-
 await db
 .ref("players")
 .remove();
 
-
-/*
-  Hasil game juga dibersihkan
-  agar tidak menyisakan pemenang.
-*/
 
 await db
 .ref("game")
@@ -1430,9 +1404,8 @@ loading = false;
 }
 
 
-
 // =================================================
-// TUTUP RESET PEMAIN
+// TUTUP POPUP RESET PEMAIN
 // =================================================
 
 function tutupResetPemain(){
@@ -1444,7 +1417,6 @@ resetPlayerPassword.value =
 "";
 
 }
-
 
 
 // =================================================
@@ -1473,7 +1445,6 @@ editScore.value =
 score;
 
 }
-
 
 
 // =================================================
@@ -1543,7 +1514,6 @@ loading = false;
 }
 
 
-
 // =================================================
 // DELETE
 // =================================================
@@ -1599,7 +1569,6 @@ loading = false;
 }
 
 
-
 // =================================================
 // CLOSE POPUP
 // =================================================
@@ -1610,7 +1579,6 @@ popup.style.display =
 "none";
 
 }
-
 
 
 // =================================================
@@ -1699,7 +1667,7 @@ onclick="approvePlayer('${id}')"
 
 
 /* =============================================
-   APPROVED / ACTIVE
+   ACTIVE
 ============================================= */
 
 if(
@@ -1795,7 +1763,7 @@ Menunggu RESET GAME.
 
 
 /* =============================================
-   TAMPILKAN PENDING
+   PENDING
 ============================================= */
 
 if(
@@ -1820,7 +1788,7 @@ pendingHTML;
 
 
 /* =============================================
-   TAMPILKAN ACTIVE
+   ACTIVE
 ============================================= */
 
 if(
@@ -1845,7 +1813,7 @@ activeHTML;
 
 
 /* =============================================
-   TAMPILKAN SPAM
+   SPAM
 ============================================= */
 
 if(
@@ -1869,7 +1837,6 @@ spamList.innerHTML =
 spamHTML;
 
 });
-
 
 
 // =================================================
@@ -1902,7 +1869,6 @@ false
 });
 
 }
-
 
 
 // =================================================
@@ -1953,10 +1919,6 @@ loading = true;
 
 try{
 
-/*
-  Pemain kembali ke pending.
-*/
-
 await db
 .ref(
 "players/" +
@@ -1972,12 +1934,6 @@ false
 
 });
 
-
-/*
-  Jika pemain tersebut adalah
-  pemenang saat ini, game
-  juga dibersihkan.
-*/
 
 const gameSnap =
 await db
@@ -2015,7 +1971,6 @@ alert(
 loading = false;
 
 }
-
 
 
 // =================================================
@@ -2118,7 +2073,6 @@ winnerControl.innerHTML = `
 });
 
 
-
 // =================================================
 // LANJUT
 // =================================================
@@ -2140,7 +2094,7 @@ return;
 
 if(
 !confirm(
-"Lanjutkan game?\n\nHasil menang/kalah di HP pemain TETAP DITAMPILKAN."
+"Lanjutkan game?\n\nTampilan menang/kalah di HP pemain tetap ditampilkan."
 )
 ){
 
@@ -2152,19 +2106,15 @@ return;
 /*
   PENTING:
 
-  Tidak menghapus game.
+  LANJUT TIDAK MENGHAPUS game.
 
-  Jadi:
+  Jadi HP pemain tetap menampilkan:
 
-  PEMENANG tetap:
   KAMU BOLEH JAWAB!✅
 
-  PEMAIN LAIN tetap:
-  KAMU KALAH CEPAT DARI...
+  atau
 
-  RESET GAME digunakan jika
-  admin ingin membuka permainan
-  kembali.
+  KAMU KALAH CEPAT DARI ❌
 */
 
 alert(
@@ -2172,7 +2122,6 @@ alert(
 );
 
 }
-
 
 
 // =================================================
@@ -2223,11 +2172,6 @@ loading = true;
 
 try{
 
-/*
-  PEMAIN DIKEMBALIKAN
-  KE STATUS PENDING.
-*/
-
 await db
 .ref(
 "players/" +
@@ -2243,12 +2187,6 @@ false
 
 });
 
-
-/*
-  Hasil game dihapus supaya
-  pemain lain bisa melanjutkan
-  setelah kontrol admin.
-*/
 
 await db
 .ref("game")
@@ -2267,7 +2205,6 @@ alert(
 loading = false;
 
 }
-
 
 
 // =================================================
@@ -2431,7 +2368,6 @@ div
 });
 
 });
-
 
 
 // =================================================
