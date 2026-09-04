@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADMIN PANEL ALDI</title>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#08111f;
+color:white;
+padding:15px;
+}
+
+.header{
+text-align:center;
+font-size:24px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.card{
+background:#111827;
+padding:18px;
+border-radius:18px;
+margin-bottom:18px;
+}
+
+h2{
+font-size:18px;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+height:50px;
+border:none;
+outline:none;
+border-radius:12px;
+padding:0 15px;
+margin-top:10px;
+background:#1f2937;
+color:white;
+font-size:16px;
+}
+
+button{
+flex:1;
+border:none;
+height:48px;
+border-radius:12px;
+font-weight:bold;
+color:white;
+cursor:pointer;
+}
+
+.btn-group{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.save{background:#00b894;}
+.reset{background:#d63031;}
+.edit{background:#fdcb6e;color:black;}
+.delete{background:#e84393;}
+
+.player{
+background:#1f2937;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
+}
+
+.bar{
+width:100%;
+height:12px;
+background:#2d3748;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.fill{
+height:100%;
+background:#00d2ff;
+}
+
+#fastBox{text-align:center;}
+
+#fastName{
+font-size:30px;
+font-weight:bold;
+margin-top:10px;
+color:gold;
+}
+
+#fastTime{
+margin-top:8px;
+color:#ccc;
+}
+
+.empty{
+text-align:center;
+padding:20px;
+color:#aaa;
+}
+
+#popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.popup-content{
+background:#111827;
+padding:20px;
+border-radius:20px;
+width:100%;
+max-width:320px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">CONTROL GAME ALDI</div>
+
+<div class="card">
+<h2>CONTROL PANEL</h2>
+
+<input type="password" id="pass" placeholder="PASSWORD">
+<input type="text" id="nama" placeholder="NAMA PLAYER">
+<input type="number" id="score" placeholder="POIN">
+
+<div class="btn-group">
+<button class="save" onclick="saveScore()">SIMPAN</button>
+<button class="reset" onclick="resetGame()">RESET</button>
+</div>
+</div>
+
+<div class="card">
+<h2>PLAYER TERCEPAT</h2>
+
+<div id="fastBox">
+<div style="font-size:50px;">🥇</div>
+<div id="fastName">Belum ada</div>
+<div id="fastTime">Menunggu buzzer</div>
+</div>
+</div>
+
+<div class="card">
+<h2>RANKING PLAYER</h2>
+<div id="ranking"></div>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-content">
+
+<h2 id="editTitle">EDIT PLAYER</h2>
+
+<input type="number" id="editScore" placeholder="POIN">
+
+<div class="btn-group">
+<button class="save" onclick="saveEdit()">SAVE</button>
+<button class="reset" onclick="closePopup()">BATAL</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+// ================= FIREBASE =================
+
+const firebaseConfig = {
+apiKey:"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+authDomain:"game-aldi.firebaseapp.com",
+databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"game-aldi",
+storageBucket:"game-aldi.firebasestorage.app",
+messagingSenderId:"184345142676",
+appId:"1:184345142676:web:f19d19999c897d0ca95b81"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+const rankingBox = document.getElementById("ranking");
+const popup = document.getElementById("popup");
+const editScore = document.getElementById("editScore");
+const editTitle = document.getElementById("editTitle");
+const fastName = document.getElementById("fastName");
+const fastTime = document.getElementById("fastTime");
+
+let currentKey = "";
+let loading = false;
+
+// ================= PASSWORD =================
+
+function cekPass(){
+return document.getElementById("pass").value==="00";
+}
+
+// ================= SAFE KEY =================
+
+function safeKey(text){
+return btoa(unescape(encodeURIComponent(text))).replace(/=/g,'');
+}
+
+// ================= SAVE =================
+
+async function saveScore(){
+
+if(loading)return;
+
+if(!cekPass()) return alert("Password salah");
+
+const nama=document.getElementById("nama").value.trim();
+const score=Number(document.getElementById("score").value);
+
+if(!nama||isNaN(score)) return alert("Isi data");
+
+loading=true;
+
+try{
+
+await db.ref("ranking/"+safeKey(nama)).set({
+name:nama,
+score:score
+});
+
+document.getElementById("nama").value="";
+document.getElementById("score").value="";
+
+}catch{
+
+alert("Gagal simpan");
+
+}
+
+loading=false;
+
+}
+
+// ================= RESET =================
+
+async function resetGame(){
+
+if(loading)return;
+
+if(!cekPass()) return alert("Password salah");
+
+if(!confirm("Reset game?")) return;
+
+loading=true;
+
+try{
+
+await db.ref("game").remove();
+
+}catch{
+
+alert("Gagal reset");
+
+}
+
+loading=false;
+
+}
+
+// ================= EDIT =================
+
+function editPlayer(key,name,score){
+
+currentKey=key;
+popup.style.display="flex";
+editTitle.innerText="EDIT "+name;
+editScore.value=score;
+
+}
+
+// ================= SAVE EDIT =================
+
+async function saveEdit(){
+
+if(loading)return;
+
+if(!cekPass()) return alert("Password salah");
+
+const score=Number(editScore.value);
+
+if(isNaN(score)) return alert("Isi poin");
+
+loading=true;
+
+try{
+
+await db.ref("ranking/"+currentKey).update({
+score:score
+});
+
+popup.style.display="none";
+
+}catch{
+
+alert("Gagal edit");
+
+}
+
+loading=false;
+
+}
+
+// ================= DELETE =================
+
+async function hapusPlayer(key){
+
+if(loading)return;
+
+if(!cekPass()) return alert("Password salah");
+
+if(!confirm("Hapus player?")) return;
+
+loading=true;
+
+try{
+
+await db.ref("ranking/"+key).remove();
+
+}catch{
+
+alert("Gagal hapus");
+
+}
+
+loading=false;
+
+}
+
+// ================= CLOSE POPUP =================
+
+function closePopup(){
+popup.style.display="none";
+}
+
+// ================= FAST PLAYER =================
+
+db.ref("game").on("value",snap=>{
+
+const data=snap.val();
+
+if(data&&data.clicked){
+
+fastName.innerText=data.player||"Unknown";
+fastTime.innerText="BOLEH JAWAB";
+
+}else{
+
+fastName.innerText="Belum ada";
+fastTime.innerText="Menunggu player tercepat";
+
+}
+
+});
+
+// ================= RANKING =================
+
+db.ref("ranking").on("value",snap=>{
+
+const data=snap.val()||{};
+let arr=[];
+
+for(let key in data){
+
+arr.push({
+key:key,
+name:data[key].name||"Unknown",
+score:data[key].score||0
+});
+
+}
+
+arr.sort((a,b)=>b.score-a.score);
+
+rankingBox.innerHTML="";
+
+if(!arr.length){
+
+rankingBox.innerHTML="<div class='empty'>Belum ada player</div>";
+return;
+
+}
+
+const max=arr[0].score||1;
+
+arr.forEach((item,index)=>{
+
+const persen=(item.score/max)*100;
+
+const div=document.createElement("div");
+
+div.className="player";
+
+div.innerHTML=`
+
+<h3>${index+1}. ${item.name} — ${item.score} poin</h3>
+
+<div class="bar">
+<div class="fill" style="width:${persen}%"></div>
+</div>
+
+<div class="btn-group">
+<button class="edit">EDIT</button>
+<button class="delete">HAPUS</button>
+</div>
+
+`;
+
+div.querySelector(".edit").onclick=()=>{
+editPlayer(item.key,item.name,item.score);
+};
+
+div.querySelector(".delete").onclick=()=>{
+hapusPlayer(item.key);
+};
+
+rankingBox.appendChild(div);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
