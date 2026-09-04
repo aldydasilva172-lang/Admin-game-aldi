@@ -296,6 +296,61 @@ max-width:320px;
 }
 
 
+/* ================= RESET PEMAIN POPUP ================= */
+
+#resetPlayerPopup{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.78);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:100000;
+
+}
+
+
+.reset-player-content{
+
+background:#111827;
+
+padding:22px;
+
+border-radius:20px;
+
+width:100%;
+
+max-width:340px;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+.reset-warning{
+
+text-align:center;
+
+color:#ff7675;
+
+font-size:13px;
+
+line-height:1.6;
+
+margin-top:8px;
+
+}
+
+
 /* ================= NEW CONTROL ================= */
 
 .section-title{
@@ -431,6 +486,100 @@ margin-top:10px;
 }
 
 
+/* ================= ACTIVE PLAYER ================= */
+
+.active-player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.active-name{
+
+font-size:19px;
+
+font-weight:bold;
+
+margin-bottom:7px;
+
+word-break:break-word;
+
+}
+
+
+.active-info{
+
+font-size:12px;
+
+color:#aaa;
+
+margin-bottom:10px;
+
+}
+
+
+.active-buttons{
+
+display:flex;
+
+gap:8px;
+
+}
+
+
+.keluarkan-player{
+
+width:100%;
+
+background:#d63031;
+
+}
+
+
+.spam-player{
+
+background:#3a1720;
+
+border:1px solid rgba(255,0,0,.35);
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.spam-name{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#ff4d4d;
+
+}
+
+
+.spam-info{
+
+font-size:12px;
+
+color:#ffaaaa;
+
+margin-top:5px;
+
+}
+
+
 @media(max-width:500px){
 
 .btn-group{
@@ -514,7 +663,21 @@ class="reset"
 onclick="resetGame()"
 >
 
-RESET
+RESET GAME
+
+</button>
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="reset"
+onclick="bukaResetPemain()"
+>
+
+🗑️ RESET PEMAIN
 
 </button>
 
@@ -544,6 +707,64 @@ id="pendingList"
 <div class="empty">
 
 Belum ada pemain menunggu.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- PEMAIN AKTIF -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+🟢 PEMAIN AKTIF
+
+</h2>
+
+
+<div
+id="activeList"
+>
+
+<div class="empty">
+
+Belum ada pemain aktif.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- PEMAIN SPAM -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+🔴 PEMAIN SPAM
+
+</h2>
+
+
+<div
+id="spamList"
+>
+
+<div class="empty">
+
+Belum ada pemain terkena spam.
 
 </div>
 
@@ -671,6 +892,75 @@ BATAL
 
 
 
+<!-- ================================================= -->
+<!-- POPUP RESET PEMAIN -->
+<!-- ================================================= -->
+
+<div id="resetPlayerPopup">
+
+<div class="reset-player-content">
+
+<h2>
+
+🗑️ RESET PEMAIN
+
+</h2>
+
+
+<div class="reset-warning">
+
+Semua nama pemain yang sudah terdaftar akan dihapus.
+
+Semua HP pemain akan kembali ke tampilan
+
+<b>MASUKKAN NAMA</b>.
+
+<br><br>
+
+Password tetap menggunakan password admin.
+
+</div>
+
+
+<input
+type="password"
+id="resetPlayerPassword"
+placeholder="PASSWORD"
+autocomplete="off"
+>
+
+
+<div class="btn-group">
+
+
+<button
+class="save"
+onclick="prosesResetPemain()"
+>
+
+RESET
+
+</button>
+
+
+<button
+class="reset"
+onclick="tutupResetPemain()"
+>
+
+BATAL
+
+</button>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
 <script>
 
 
@@ -760,9 +1050,33 @@ document.getElementById(
 );
 
 
+const activeList =
+document.getElementById(
+"activeList"
+);
+
+
+const spamList =
+document.getElementById(
+"spamList"
+);
+
+
 const winnerControl =
 document.getElementById(
 "winnerControl"
+);
+
+
+const resetPlayerPopup =
+document.getElementById(
+"resetPlayerPopup"
+);
+
+
+const resetPlayerPassword =
+document.getElementById(
+"resetPlayerPassword"
 );
 
 
@@ -925,12 +1239,67 @@ loading = true;
 
 try{
 
+/*
+  Reset hasil buzzer.
+*/
+
 await db
 .ref("game")
 .remove();
 
 
+/*
+  Buka kembali SEMUA pemain
+  yang terkena SPAM.
+*/
+
+const snap =
+await db
+.ref("players")
+.once("value");
+
+
+const data =
+snap.val() || {};
+
+
+const updates = {};
+
+
+Object.keys(data)
+.forEach(
+id => {
+
+if(
+data[id] &&
+data[id].spam === true
+){
+
+updates[
+id + "/spam"
+] = false;
+
+}
+
+});
+
+
+if(
+Object.keys(updates).length
+){
+
+await db
+.ref("players")
+.update(
+updates
+);
+
+}
+
+
 }catch(error){
+
+console.log(error);
 
 alert("Gagal reset");
 
@@ -938,6 +1307,141 @@ alert("Gagal reset");
 
 
 loading = false;
+
+}
+
+
+
+// =================================================
+// RESET PEMAIN POPUP
+// =================================================
+
+function bukaResetPemain(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+resetPlayerPassword.value =
+"";
+
+
+resetPlayerPopup.style.display =
+"flex";
+
+
+setTimeout(
+() => {
+
+resetPlayerPassword.focus();
+
+},
+100
+);
+
+}
+
+
+
+// =================================================
+// PROSES RESET PEMAIN
+// =================================================
+
+async function prosesResetPemain(){
+
+if(loading)
+return;
+
+
+const password =
+resetPlayerPassword
+.value;
+
+
+if(password !== "00"){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm(
+"RESET SEMUA PEMAIN?\n\nSemua nama pemain akan dihapus dan semua HP kembali ke MASUKKAN NAMA."
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  Hapus seluruh daftar pemain.
+*/
+
+await db
+.ref("players")
+.remove();
+
+
+/*
+  Hasil game juga dibersihkan
+  agar tidak menyisakan pemenang.
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+tutupResetPemain();
+
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"Gagal reset pemain"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+
+// =================================================
+// TUTUP RESET PEMAIN
+// =================================================
+
+function tutupResetPemain(){
+
+resetPlayerPopup.style.display =
+"none";
+
+resetPlayerPassword.value =
+"";
 
 }
 
@@ -1110,7 +1614,7 @@ popup.style.display =
 
 
 // =================================================
-// PLAYER PENDING
+// PLAYERS REALTIME
 // =================================================
 
 db.ref("players")
@@ -1122,9 +1626,18 @@ const data =
 snap.val() || {};
 
 
-let html = "";
+let pendingHTML = "";
 
-let count = 0;
+let activeHTML = "";
+
+let spamHTML = "";
+
+
+let pendingCount = 0;
+
+let activeCount = 0;
+
+let spamCount = 0;
 
 
 Object.keys(data)
@@ -1132,27 +1645,32 @@ Object.keys(data)
 id => {
 
 const player =
-data[id];
+data[id] || {};
 
+
+const nama =
+player.name ||
+"Unknown";
+
+
+/* =============================================
+   PENDING
+============================================= */
 
 if(
-player.status ===
-"pending"
+player.status === "pending"
 ){
 
-count++;
+pendingCount++;
 
 
-html += `
+pendingHTML += `
 
 <div class="pending-player">
 
 <div class="pending-name">
 
-${escapeHTML(
-player.name ||
-"Unknown"
-)}
+${escapeHTML(nama)}
 
 </div>
 
@@ -1179,12 +1697,112 @@ onclick="approvePlayer('${id}')"
 
 }
 
+
+/* =============================================
+   APPROVED / ACTIVE
+============================================= */
+
+if(
+player.status === "approved"
+){
+
+activeCount++;
+
+
+activeHTML += `
+
+<div class="active-player">
+
+<div class="active-name">
+
+${escapeHTML(nama)}
+
+</div>
+
+
+<div class="active-info">
+
+🟢 Pemain sudah disetujui
+
+${
+player.spam === true
+? "<br>🔴 Status: SPAM"
+: ""
+}
+
+</div>
+
+
+<div class="active-buttons">
+
+<button
+class="keluarkan-player"
+onclick="keluarkanPlayer('${id}')"
+>
+
+❌ KELUARKAN
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =============================================
+   SPAM
+============================================= */
+
+if(
+player.spam === true
+){
+
+spamCount++;
+
+
+spamHTML += `
+
+<div class="spam-player">
+
+<div class="spam-name">
+
+⚠️ ${escapeHTML(nama)}
+
+</div>
+
+
+<div class="spam-info">
+
+Pemain terkena double tap / spam.
+
+<br>
+
+Menunggu RESET GAME.
+
+</div>
+
+</div>
+
+`;
+
+}
+
 });
 
 
-if(count === 0){
+/* =============================================
+   TAMPILKAN PENDING
+============================================= */
 
-html = `
+if(
+pendingCount === 0
+){
+
+pendingHTML = `
 
 <div class="empty">
 
@@ -1198,7 +1816,57 @@ Tidak ada pemain menunggu.
 
 
 pendingList.innerHTML =
-html;
+pendingHTML;
+
+
+/* =============================================
+   TAMPILKAN ACTIVE
+============================================= */
+
+if(
+activeCount === 0
+){
+
+activeHTML = `
+
+<div class="empty">
+
+Belum ada pemain aktif.
+
+</div>
+
+`;
+
+}
+
+
+activeList.innerHTML =
+activeHTML;
+
+
+/* =============================================
+   TAMPILKAN SPAM
+============================================= */
+
+if(
+spamCount === 0
+){
+
+spamHTML = `
+
+<div class="empty">
+
+Belum ada pemain terkena spam.
+
+</div>
+
+`;
+
+}
+
+
+spamList.innerHTML =
+spamHTML;
 
 });
 
@@ -1221,12 +1889,130 @@ return;
 
 db.ref(
 "players/" +
-id +
-"/status"
+id
 )
-.set(
-"approved"
+.update({
+
+status:
+"approved",
+
+spam:
+false
+
+});
+
+}
+
+
+
+// =================================================
+// KELUARKAN PLAYER KAPAN SAJA
+// =================================================
+
+async function keluarkanPlayer(
+playerID
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(!playerID){
+
+alert(
+"ID player tidak ditemukan"
 );
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Keluarkan pemain ini dari game?"
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  Pemain kembali ke pending.
+*/
+
+await db
+.ref(
+"players/" +
+playerID
+)
+.update({
+
+status:
+"pending",
+
+spam:
+false
+
+});
+
+
+/*
+  Jika pemain tersebut adalah
+  pemenang saat ini, game
+  juga dibersihkan.
+*/
+
+const gameSnap =
+await db
+.ref("game")
+.once("value");
+
+
+const gameData =
+gameSnap.val();
+
+
+if(
+gameData &&
+gameData.playerID === playerID
+){
+
+await db
+.ref("game")
+.remove();
+
+}
+
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"Gagal mengeluarkan pemain"
+);
+
+}
+
+
+loading = false;
 
 }
 
@@ -1354,7 +2140,7 @@ return;
 
 if(
 !confirm(
-"Lanjutkan game?"
+"Lanjutkan game?\n\nHasil menang/kalah di HP pemain TETAP DITAMPILKAN."
 )
 ){
 
@@ -1363,36 +2149,27 @@ return;
 }
 
 
-loading = true;
-
-
-try{
-
 /*
-  Hanya menghapus data game.
+  PENTING:
 
-  Player tetap:
-  status = approved
+  Tidak menghapus game.
 
-  Jadi player tersebut
-  tetap bisa bermain lagi.
+  Jadi:
+
+  PEMENANG tetap:
+  KAMU BOLEH JAWAB!✅
+
+  PEMAIN LAIN tetap:
+  KAMU KALAH CEPAT DARI...
+
+  RESET GAME digunakan jika
+  admin ingin membuka permainan
+  kembali.
 */
 
-await db
-.ref("game")
-.remove();
-
-
-}catch(error){
-
 alert(
-"Gagal melanjutkan game"
+"Game dilanjutkan.\n\nTampilan hasil pemain tetap."
 );
-
-}
-
-
-loading = false;
 
 }
 
@@ -1448,22 +2225,29 @@ try{
 
 /*
   PEMAIN DIKEMBALIKAN
-  KE STATUS PENDING
+  KE STATUS PENDING.
 */
 
 await db
 .ref(
 "players/" +
-playerID +
-"/status"
+playerID
 )
-.set(
-"pending"
-);
+.update({
+
+status:
+"pending",
+
+spam:
+false
+
+});
 
 
 /*
-  SETELAH ITU RONDE DIRESET
+  Hasil game dihapus supaya
+  pemain lain bisa melanjutkan
+  setelah kontrol admin.
 */
 
 await db
@@ -1657,9 +2441,7 @@ div
 function escapeHTML(text){
 
 const div =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 
 div.textContent =
