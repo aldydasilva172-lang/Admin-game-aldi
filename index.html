@@ -1,528 +1,600 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
 
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 >
 
-<title>RM KEMANG GAMES - Maintenance</title>
+<title>ADMIN PANEL ALDI</title>
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-  rel="stylesheet"
->
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
 
 <style>
 
-/* ================================================= */
-/* GLOBAL */
-/* ================================================= */
-
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
 }
 
-html,
-body{
-  width:100%;
-  height:100%;
-}
 
 body{
-  font-family:'Poppins',sans-serif;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(0,255,255,.14),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(0,120,255,.16),
-      transparent 40%
-    ),
-    linear-gradient(
-      135deg,
-      #020617,
-      #07111f,
-      #020617
-    );
 
-  color:white;
+font-family:Arial,sans-serif;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+background:#08111f;
 
-  overflow:hidden;
-}
+color:white;
 
-
-/* ================================================= */
-/* BACKGROUND */
-/* ================================================= */
-
-.background{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-
-.background::before{
-  content:"";
-  position:absolute;
-  width:320px;
-  height:320px;
-
-  top:-120px;
-  left:-100px;
-
-  border-radius:50%;
-
-  background:rgba(0,255,255,.10);
-
-  filter:blur(70px);
-
-  animation:float1 7s ease-in-out infinite;
-}
-
-.background::after{
-  content:"";
-  position:absolute;
-  width:350px;
-  height:350px;
-
-  right:-130px;
-  bottom:-140px;
-
-  border-radius:50%;
-
-  background:rgba(0,120,255,.12);
-
-  filter:blur(80px);
-
-  animation:float2 8s ease-in-out infinite;
-}
-
-@keyframes float1{
-  0%,100%{
-    transform:translate(0,0);
-  }
-
-  50%{
-    transform:translate(50px,40px);
-  }
-}
-
-@keyframes float2{
-  0%,100%{
-    transform:translate(0,0);
-  }
-
-  50%{
-    transform:translate(-40px,-50px);
-  }
-}
-
-
-/* ================================================= */
-/* CONTAINER */
-/* ================================================= */
-
-.container{
-  position:relative;
-
-  width:calc(100% - 32px);
-  max-width:520px;
-
-  padding:42px 28px 34px;
-
-  text-align:center;
-
-  border:1px solid rgba(255,255,255,.13);
-
-  border-radius:28px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.09),
-      rgba(255,255,255,.035)
-    );
-
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.10);
-
-  z-index:2;
-
-  animation:containerIn .8s ease;
-}
-
-@keyframes containerIn{
-
-  from{
-    opacity:0;
-    transform:translateY(25px) scale(.96);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
+padding:15px;
 
 }
 
 
-/* ================================================= */
-/* LOGO */
-/* ================================================= */
+.header{
 
-.logo{
-  width:88px;
-  height:88px;
+text-align:center;
 
-  margin:0 auto 20px;
+font-size:24px;
 
-  border-radius:50%;
+font-weight:bold;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:42px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,255,255,.18),
-      rgba(0,110,255,.15)
-    );
-
-  border:1px solid rgba(255,255,255,.18);
-
-  box-shadow:
-    0 0 35px rgba(0,220,255,.18),
-    inset 0 0 20px rgba(255,255,255,.04);
-
-  animation:pulse 2.5s ease-in-out infinite;
-}
-
-@keyframes pulse{
-
-  0%,100%{
-    transform:scale(1);
-    box-shadow:
-      0 0 30px rgba(0,220,255,.15),
-      inset 0 0 20px rgba(255,255,255,.04);
-  }
-
-  50%{
-    transform:scale(1.05);
-    box-shadow:
-      0 0 45px rgba(0,220,255,.30),
-      inset 0 0 25px rgba(255,255,255,.06);
-  }
+margin-bottom:20px;
 
 }
 
 
-/* ================================================= */
-/* TITLE */
-/* ================================================= */
+.card{
 
-.brand{
-  font-size:13px;
+background:#111827;
 
-  font-weight:600;
+padding:18px;
 
-  letter-spacing:4px;
+border-radius:18px;
 
-  color:rgba(255,255,255,.65);
-
-  margin-bottom:8px;
-}
-
-h1{
-  font-size:34px;
-
-  font-weight:800;
-
-  letter-spacing:1px;
-
-  line-height:1.2;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff,
-      #7eeeff,
-      #ffffff
-    );
-
-  -webkit-background-clip:text;
-  background-clip:text;
-
-  color:transparent;
-
-  margin-bottom:12px;
-}
-
-.subtitle{
-  font-size:14px;
-
-  line-height:1.7;
-
-  color:rgba(255,255,255,.68);
-
-  max-width:400px;
-
-  margin:auto;
-}
-
-
-/* ================================================= */
-/* MAINTENANCE BOX */
-/* ================================================= */
-
-.maintenance-box{
-  margin-top:28px;
-
-  padding:22px 18px;
-
-  border-radius:20px;
-
-  background:
-    rgba(0,0,0,.22);
-
-  border:1px solid rgba(255,255,255,.10);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05);
-}
-
-.status{
-  display:inline-flex;
-
-  align-items:center;
-  justify-content:center;
-
-  gap:9px;
-
-  padding:8px 15px;
-
-  border-radius:999px;
-
-  font-size:11px;
-
-  font-weight:700;
-
-  letter-spacing:1px;
-
-  color:#8ff7ff;
-
-  background:rgba(0,220,255,.08);
-
-  border:1px solid rgba(0,220,255,.20);
-}
-
-.status-dot{
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  background:#00eaff;
-
-  box-shadow:
-    0 0 12px #00eaff;
-
-  animation:blink 1.3s infinite;
-}
-
-@keyframes blink{
-
-  0%,100%{
-    opacity:1;
-  }
-
-  50%{
-    opacity:.25;
-  }
+margin-bottom:18px;
 
 }
 
-.message{
-  margin-top:18px;
 
-  font-size:15px;
+h2{
 
-  font-weight:500;
+font-size:18px;
 
-  color:white;
-
-  line-height:1.6;
-}
-
-.detail{
-  margin-top:8px;
-
-  font-size:12px;
-
-  line-height:1.7;
-
-  color:rgba(255,255,255,.52);
-}
-
-
-/* ================================================= */
-/* LOADING */
-/* ================================================= */
-
-.loading{
-  margin:25px auto 0;
-
-  width:170px;
-  height:4px;
-
-  overflow:hidden;
-
-  border-radius:10px;
-
-  background:rgba(255,255,255,.08);
-}
-
-.loading-bar{
-  width:55%;
-  height:100%;
-
-  border-radius:10px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #00eaff,
-      transparent
-    );
-
-  animation:loading 1.6s ease-in-out infinite;
-}
-
-@keyframes loading{
-
-  0%{
-    transform:translateX(-180%);
-  }
-
-  100%{
-    transform:translateX(320%);
-  }
+margin-bottom:15px;
 
 }
 
 
-/* ================================================= */
-/* FOOTER */
-/* ================================================= */
+input{
 
-.footer{
-  margin-top:28px;
+width:100%;
 
-  font-size:10px;
+height:50px;
 
-  color:rgba(255,255,255,.35);
+border:none;
 
-  letter-spacing:1px;
-}
+outline:none;
 
+border-radius:12px;
 
-/* ================================================= */
-/* MOBILE */
-/* ================================================= */
+padding:0 15px;
 
-@media(max-width:480px){
+margin-top:10px;
 
-  .container{
-    width:calc(100% - 24px);
+background:#1f2937;
 
-    padding:
-      34px 20px
-      28px;
-      
-    border-radius:24px;
-  }
+color:white;
 
-  .logo{
-    width:76px;
-    height:76px;
-
-    font-size:35px;
-
-    margin-bottom:17px;
-  }
-
-  .brand{
-    font-size:11px;
-    letter-spacing:3px;
-  }
-
-  h1{
-    font-size:28px;
-  }
-
-  .subtitle{
-    font-size:13px;
-  }
-
-  .maintenance-box{
-    margin-top:24px;
-    padding:19px 15px;
-  }
-
-  .message{
-    font-size:14px;
-  }
+font-size:16px;
 
 }
 
 
-/* ================================================= */
-/* VERY SMALL SCREEN */
-/* ================================================= */
+button{
 
-@media(max-height:650px){
+flex:1;
 
-  .container{
-    padding-top:25px;
-    padding-bottom:22px;
-  }
+border:none;
 
-  .logo{
-    width:65px;
-    height:65px;
+height:48px;
 
-    font-size:30px;
+border-radius:12px;
 
-    margin-bottom:12px;
-  }
+font-weight:bold;
 
-  .maintenance-box{
-    margin-top:18px;
-  }
+color:white;
 
-  .footer{
-    margin-top:18px;
-  }
+cursor:pointer;
+
+}
+
+
+button:disabled{
+
+opacity:.5;
+
+cursor:not-allowed;
+
+}
+
+
+.btn-group{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+
+.save{
+
+background:#00b894;
+
+}
+
+
+.reset{
+
+background:#d63031;
+
+}
+
+
+.edit{
+
+background:#fdcb6e;
+
+color:black;
+
+}
+
+
+.delete{
+
+background:#e84393;
+
+}
+
+
+/* ================= PLAYER ================= */
+
+.player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:15px;
+
+}
+
+
+.bar{
+
+width:100%;
+
+height:12px;
+
+background:#2d3748;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:10px;
+
+}
+
+
+.fill{
+
+height:100%;
+
+background:#00d2ff;
+
+}
+
+
+/* ================= FAST ================= */
+
+#fastBox{
+
+text-align:center;
+
+}
+
+
+#fastName{
+
+font-size:30px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+color:gold;
+
+}
+
+
+#fastTime{
+
+margin-top:8px;
+
+color:#ccc;
+
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+
+text-align:center;
+
+padding:20px;
+
+color:#aaa;
+
+}
+
+
+/* ================= POPUP ================= */
+
+#popup{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.7);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:99999;
+
+}
+
+
+.popup-content{
+
+background:#111827;
+
+padding:20px;
+
+border-radius:20px;
+
+width:100%;
+
+max-width:320px;
+
+}
+
+
+/* ================= RESET PEMAIN POPUP ================= */
+
+#resetPlayerPopup{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.78);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:100000;
+
+}
+
+
+.reset-player-content{
+
+background:#111827;
+
+padding:22px;
+
+border-radius:20px;
+
+width:100%;
+
+max-width:340px;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+.reset-warning{
+
+text-align:center;
+
+color:#ff7675;
+
+font-size:13px;
+
+line-height:1.6;
+
+margin-top:8px;
+
+}
+
+
+/* ================= NEW CONTROL ================= */
+
+.section-title{
+
+font-size:14px;
+
+font-weight:bold;
+
+color:#00d2ff;
+
+margin-bottom:10px;
+
+}
+
+
+.pending-player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.pending-name{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:5px;
+
+}
+
+
+.pending-info{
+
+font-size:12px;
+
+color:#aaa;
+
+margin-bottom:12px;
+
+}
+
+
+.approve{
+
+width:100%;
+
+background:#00b894;
+
+}
+
+
+.fast-card{
+
+background:#172033;
+
+padding:18px;
+
+border-radius:15px;
+
+margin-top:10px;
+
+border:1px solid rgba(0,210,255,.25);
+
+}
+
+
+.fast-player-name{
+
+font-size:30px;
+
+font-weight:bold;
+
+color:gold;
+
+text-align:center;
+
+margin:10px 0;
+
+word-break:break-word;
+
+}
+
+
+.fast-player-info{
+
+text-align:center;
+
+font-size:13px;
+
+color:#aaa;
+
+}
+
+
+.continue{
+
+background:#00b894;
+
+}
+
+
+.remove{
+
+background:#d63031;
+
+}
+
+
+.notice{
+
+text-align:center;
+
+padding:12px;
+
+border-radius:12px;
+
+background:#172033;
+
+color:#aaa;
+
+font-size:13px;
+
+margin-top:10px;
+
+}
+
+
+/* ================= ACTIVE PLAYER ================= */
+
+.active-player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.active-name{
+
+font-size:19px;
+
+font-weight:bold;
+
+margin-bottom:7px;
+
+word-break:break-word;
+
+}
+
+
+.active-info{
+
+font-size:12px;
+
+color:#aaa;
+
+margin-bottom:10px;
+
+}
+
+
+.active-buttons{
+
+display:flex;
+
+gap:8px;
+
+}
+
+
+.keluarkan-player{
+
+width:100%;
+
+background:#d63031;
+
+}
+
+
+/* ================= SPAM ================= */
+
+.spam-player{
+
+background:#3a1720;
+
+border:1px solid rgba(255,0,0,.35);
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.spam-name{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#ff4d4d;
+
+}
+
+
+.spam-info{
+
+font-size:12px;
+
+color:#ffaaaa;
+
+margin-top:5px;
+
+}
+
+
+@media(max-width:500px){
+
+.btn-group{
+
+gap:7px;
+
+}
+
+button{
+
+font-size:12px;
+
+}
 
 }
 
@@ -533,73 +605,1791 @@ h1{
 
 <body>
 
-<div class="background"></div>
 
+<div class="header">
 
-<div class="container">
-
-  <div class="logo">
-    🎮
-  </div>
-
-  <div class="brand">
-    RM KEMANG
-  </div>
-
-  <h1>
-    GAMES
-  </h1>
-
-  <div class="subtitle">
-    Halaman permainan sedang dalam proses
-    pemeliharaan sementara.
-  </div>
-
-
-  <div class="maintenance-box">
-
-    <div class="status">
-
-      <span class="status-dot"></span>
-
-      MAINTENANCE
-
-    </div>
-
-
-    <div class="message">
-
-      🔧 SISTEM SEDANG DIPERBAIKI
-
-    </div>
-
-
-    <div class="detail">
-
-      Mohon tunggu beberapa saat.<br>
-      Silakan kembali lagi setelah sistem
-      kembali normal.
-
-    </div>
-
-
-    <div class="loading">
-
-      <div class="loading-bar"></div>
-
-    </div>
-
-  </div>
-
-
-  <div class="footer">
-
-    RM KEMANG GAMES • SYSTEM MAINTENANCE
-
-  </div>
+CONTROL GAME ALDI
 
 </div>
 
 
+<!-- ================================================= -->
+<!-- CONTROL PANEL -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+CONTROL PANEL
+
+</h2>
+
+
+<input
+type="password"
+id="pass"
+placeholder="PASSWORD"
+>
+
+
+<input
+type="text"
+id="nama"
+placeholder="NAMA PLAYER"
+>
+
+
+<input
+type="number"
+id="score"
+placeholder="POIN"
+>
+
+
+<div class="btn-group">
+
+<button
+class="save"
+onclick="saveScore()"
+>
+
+SIMPAN
+
+</button>
+
+
+<button
+class="reset"
+onclick="resetGame()"
+>
+
+RESET GAME
+
+</button>
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="reset"
+onclick="bukaResetPemain()"
+>
+
+🗑️ RESET PEMAIN
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- PEMAIN MENUNGGU -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+⏳ PEMAIN MENUNGGU
+
+</h2>
+
+
+<div
+id="pendingList"
+>
+
+<div class="empty">
+
+Belum ada pemain menunggu.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- PEMAIN AKTIF -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+🟢 PEMAIN AKTIF
+
+</h2>
+
+
+<div
+id="activeList"
+>
+
+<div class="empty">
+
+Belum ada pemain aktif.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- PEMAIN SPAM -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+🔴 PEMAIN SPAM
+
+</h2>
+
+
+<div
+id="spamList"
+>
+
+<div class="empty">
+
+Belum ada pemain terkena spam.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- PLAYER TERCEPAT -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+PLAYER TERCEPAT
+
+</h2>
+
+
+<div id="fastBox">
+
+<div style="font-size:50px;">
+
+🥇
+
+</div>
+
+
+<div id="fastName">
+
+Belum ada
+
+</div>
+
+
+<div id="fastTime">
+
+Menunggu buzzer
+
+</div>
+
+</div>
+
+
+<div id="winnerControl"></div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- RANKING -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+RANKING PLAYER
+
+</h2>
+
+
+<div id="ranking"></div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- POPUP EDIT -->
+<!-- ================================================= -->
+
+<div id="popup">
+
+<div class="popup-content">
+
+
+<h2 id="editTitle">
+
+EDIT PLAYER
+
+</h2>
+
+
+<input
+type="number"
+id="editScore"
+placeholder="POIN"
+>
+
+
+<div class="btn-group">
+
+
+<button
+class="save"
+onclick="saveEdit()"
+>
+
+SAVE
+
+</button>
+
+
+<button
+class="reset"
+onclick="closePopup()"
+>
+
+BATAL
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- POPUP RESET PEMAIN -->
+<!-- ================================================= -->
+
+<div id="resetPlayerPopup">
+
+<div class="reset-player-content">
+
+<h2>
+
+🗑️ RESET PEMAIN
+
+</h2>
+
+
+<div class="reset-warning">
+
+Semua nama pemain yang sudah terdaftar akan dihapus.
+
+Semua HP pemain akan kembali ke tampilan
+
+<b>MASUKKAN NAMA</b>.
+
+<br><br>
+
+Password tetap menggunakan password admin.
+
+</div>
+
+
+<input
+type="password"
+id="resetPlayerPassword"
+placeholder="PASSWORD"
+autocomplete="off"
+>
+
+
+<div class="btn-group">
+
+
+<button
+class="save"
+onclick="prosesResetPemain()"
+>
+
+RESET
+
+</button>
+
+
+<button
+class="reset"
+onclick="tutupResetPemain()"
+>
+
+BATAL
+
+</button>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+// =================================================
+// FIREBASE
+// =================================================
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+
+authDomain:
+"game-aldi.firebaseapp.com",
+
+databaseURL:
+"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:
+"game-aldi",
+
+storageBucket:
+"game-aldi.firebasestorage.app",
+
+messagingSenderId:
+"184345142676",
+
+appId:
+"1:184345142676:web:f19d19999c897d0ca95b81"
+
+};
+
+
+firebase.initializeApp(
+firebaseConfig
+);
+
+
+const db =
+firebase.database();
+
+
+// =================================================
+// ELEMENT
+// =================================================
+
+const rankingBox =
+document.getElementById(
+"ranking"
+);
+
+
+const popup =
+document.getElementById(
+"popup"
+);
+
+
+const editScore =
+document.getElementById(
+"editScore"
+);
+
+
+const editTitle =
+document.getElementById(
+"editTitle"
+);
+
+
+const fastName =
+document.getElementById(
+"fastName"
+);
+
+
+const fastTime =
+document.getElementById(
+"fastTime"
+);
+
+
+const pendingList =
+document.getElementById(
+"pendingList"
+);
+
+
+const activeList =
+document.getElementById(
+"activeList"
+);
+
+
+const spamList =
+document.getElementById(
+"spamList"
+);
+
+
+const winnerControl =
+document.getElementById(
+"winnerControl"
+);
+
+
+const resetPlayerPopup =
+document.getElementById(
+"resetPlayerPopup"
+);
+
+
+const resetPlayerPassword =
+document.getElementById(
+"resetPlayerPassword"
+);
+
+
+let currentKey = "";
+
+let loading = false;
+
+
+// =================================================
+// PASSWORD
+// =================================================
+
+function cekPass(){
+
+return document
+.getElementById("pass")
+.value === "00";
+
+}
+
+
+// =================================================
+// SAFE KEY
+// =================================================
+
+function safeKey(text){
+
+return btoa(
+unescape(
+encodeURIComponent(text)
+)
+)
+.replace(/=/g,'');
+
+}
+
+
+// =================================================
+// SAVE SCORE
+// =================================================
+
+async function saveScore(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+const nama =
+document
+.getElementById("nama")
+.value
+.trim();
+
+
+const score =
+Number(
+document
+.getElementById("score")
+.value
+);
+
+
+if(
+!nama ||
+isNaN(score)
+){
+
+alert("Isi data");
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref(
+"ranking/" +
+safeKey(nama)
+)
+.set({
+
+name:nama,
+
+score:score
+
+});
+
+
+document
+.getElementById("nama")
+.value="";
+
+
+document
+.getElementById("score")
+.value="";
+
+
+}catch(error){
+
+alert("Gagal simpan");
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// RESET GAME
+// =================================================
+
+async function resetGame(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm("Reset game?")
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  RESET GAME:
+  1. Hapus hasil buzzer.
+  2. Buka semua pemain yang SPAM.
+  3. Pemain approved tetap approved.
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+const snap =
+await db
+.ref("players")
+.once("value");
+
+
+const data =
+snap.val() || {};
+
+
+const updates = {};
+
+
+Object.keys(data)
+.forEach(
+id => {
+
+if(
+data[id] &&
+data[id].spam === true
+){
+
+updates[
+id + "/spam"
+] = false;
+
+}
+
+});
+
+
+if(
+Object.keys(updates).length
+){
+
+await db
+.ref("players")
+.update(
+updates
+);
+
+}
+
+
+}catch(error){
+
+console.log(error);
+
+alert("Gagal reset");
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// RESET PEMAIN POPUP
+// =================================================
+
+function bukaResetPemain(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+resetPlayerPassword.value =
+"";
+
+
+resetPlayerPopup.style.display =
+"flex";
+
+
+setTimeout(
+() => {
+
+resetPlayerPassword.focus();
+
+},
+100
+);
+
+}
+
+
+// =================================================
+// PROSES RESET PEMAIN
+// =================================================
+
+async function prosesResetPemain(){
+
+if(loading)
+return;
+
+
+const password =
+resetPlayerPassword
+.value;
+
+
+if(password !== "00"){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm(
+"RESET SEMUA PEMAIN?\n\nSemua nama pemain akan dihapus dan semua HP kembali ke MASUKKAN NAMA."
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref("players")
+.remove();
+
+
+await db
+.ref("game")
+.remove();
+
+
+tutupResetPemain();
+
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"Gagal reset pemain"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// TUTUP POPUP RESET PEMAIN
+// =================================================
+
+function tutupResetPemain(){
+
+resetPlayerPopup.style.display =
+"none";
+
+resetPlayerPassword.value =
+"";
+
+}
+
+
+// =================================================
+// EDIT
+// =================================================
+
+function editPlayer(
+key,
+name,
+score
+){
+
+currentKey =
+key;
+
+
+popup.style.display =
+"flex";
+
+
+editTitle.innerText =
+"EDIT " + name;
+
+
+editScore.value =
+score;
+
+}
+
+
+// =================================================
+// SAVE EDIT
+// =================================================
+
+async function saveEdit(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+const score =
+Number(
+editScore.value
+);
+
+
+if(isNaN(score)){
+
+alert("Isi poin");
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref(
+"ranking/" +
+currentKey
+)
+.update({
+
+score:score
+
+});
+
+
+popup.style.display =
+"none";
+
+
+}catch(error){
+
+alert("Gagal edit");
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// DELETE
+// =================================================
+
+async function hapusPlayer(
+key
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm("Hapus player?")
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref(
+"ranking/" +
+key
+)
+.remove();
+
+
+}catch(error){
+
+alert("Gagal hapus");
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// CLOSE POPUP
+// =================================================
+
+function closePopup(){
+
+popup.style.display =
+"none";
+
+}
+
+
+// =================================================
+// PLAYERS REALTIME
+// =================================================
+
+db.ref("players")
+.on(
+"value",
+snap => {
+
+const data =
+snap.val() || {};
+
+
+let pendingHTML = "";
+
+let activeHTML = "";
+
+let spamHTML = "";
+
+
+let pendingCount = 0;
+
+let activeCount = 0;
+
+let spamCount = 0;
+
+
+Object.keys(data)
+.forEach(
+id => {
+
+const player =
+data[id] || {};
+
+
+const nama =
+player.name ||
+"Unknown";
+
+
+/* =============================================
+   PENDING
+============================================= */
+
+if(
+player.status === "pending"
+){
+
+pendingCount++;
+
+
+pendingHTML += `
+
+<div class="pending-player">
+
+<div class="pending-name">
+
+${escapeHTML(nama)}
+
+</div>
+
+
+<div class="pending-info">
+
+⏳ Meminta izin bermain
+
+</div>
+
+
+<button
+class="approve"
+onclick="approvePlayer('${id}')"
+>
+
+✅ SETUJUI
+
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* =============================================
+   ACTIVE
+============================================= */
+
+if(
+player.status === "approved"
+){
+
+activeCount++;
+
+
+activeHTML += `
+
+<div class="active-player">
+
+<div class="active-name">
+
+${escapeHTML(nama)}
+
+</div>
+
+
+<div class="active-info">
+
+🟢 Pemain sudah disetujui
+
+${
+player.spam === true
+? "<br>🔴 Status: SPAM"
+: ""
+}
+
+</div>
+
+
+<div class="active-buttons">
+
+<button
+class="keluarkan-player"
+onclick="keluarkanPlayer('${id}')"
+>
+
+❌ KELUARKAN
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =============================================
+   SPAM
+============================================= */
+
+if(
+player.spam === true
+){
+
+spamCount++;
+
+
+spamHTML += `
+
+<div class="spam-player">
+
+<div class="spam-name">
+
+⚠️ ${escapeHTML(nama)}
+
+</div>
+
+
+<div class="spam-info">
+
+Pemain terkena double tap / spam.
+
+<br>
+
+Menunggu RESET GAME.
+
+</div>
+
+</div>
+
+`;
+
+}
+
+});
+
+
+/* =============================================
+   PENDING
+============================================= */
+
+if(
+pendingCount === 0
+){
+
+pendingHTML = `
+
+<div class="empty">
+
+Tidak ada pemain menunggu.
+
+</div>
+
+`;
+
+}
+
+
+pendingList.innerHTML =
+pendingHTML;
+
+
+/* =============================================
+   ACTIVE
+============================================= */
+
+if(
+activeCount === 0
+){
+
+activeHTML = `
+
+<div class="empty">
+
+Belum ada pemain aktif.
+
+</div>
+
+`;
+
+}
+
+
+activeList.innerHTML =
+activeHTML;
+
+
+/* =============================================
+   SPAM
+============================================= */
+
+if(
+spamCount === 0
+){
+
+spamHTML = `
+
+<div class="empty">
+
+Belum ada pemain terkena spam.
+
+</div>
+
+`;
+
+}
+
+
+spamList.innerHTML =
+spamHTML;
+
+});
+
+
+// =================================================
+// APPROVE PLAYER
+// =================================================
+
+function approvePlayer(id){
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+db.ref(
+"players/" +
+id
+)
+.update({
+
+status:
+"approved",
+
+spam:
+false
+
+});
+
+}
+
+
+// =================================================
+// KELUARKAN PLAYER KAPAN SAJA
+// =================================================
+
+async function keluarkanPlayer(
+playerID
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(!playerID){
+
+alert(
+"ID player tidak ditemukan"
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Keluarkan pemain ini dari game?"
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref(
+"players/" +
+playerID
+)
+.update({
+
+status:
+"pending",
+
+spam:
+false
+
+});
+
+
+const gameSnap =
+await db
+.ref("game")
+.once("value");
+
+
+const gameData =
+gameSnap.val();
+
+
+if(
+gameData &&
+gameData.playerID === playerID
+){
+
+await db
+.ref("game")
+.remove();
+
+}
+
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"Gagal mengeluarkan pemain"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// GAME / PLAYER TERCEPAT
+// =================================================
+
+db.ref("game")
+.on(
+"value",
+snap => {
+
+const data =
+snap.val();
+
+
+if(
+data &&
+data.clicked === true
+){
+
+fastName.innerText =
+data.player ||
+"Unknown";
+
+
+fastTime.innerText =
+"BOLEH JAWAB";
+
+
+winnerControl.innerHTML = `
+
+<div class="fast-card">
+
+<div class="fast-player-name">
+
+${escapeHTML(
+data.player ||
+"Unknown"
+)}
+
+</div>
+
+
+<div class="fast-player-info">
+
+🔔 PEMAIN BERHAK MENJAWAB
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="continue"
+onclick="continueGame()"
+>
+
+▶ LANJUT
+
+</button>
+
+
+<button
+class="remove"
+onclick="removeWinner('${data.playerID}')"
+>
+
+❌ KELUARKAN
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}else{
+
+fastName.innerText =
+"Belum ada";
+
+
+fastTime.innerText =
+"Menunggu player tercepat";
+
+
+winnerControl.innerHTML = `
+
+<div class="notice">
+
+🔥 Menunggu pemain menekan buzzer
+
+</div>
+
+`;
+
+}
+
+});
+
+
+// =================================================
+// LANJUT
+// =================================================
+
+async function continueGame(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Lanjutkan game?\n\nTampilan menang/kalah di HP pemain tetap ditampilkan."
+)
+){
+
+return;
+
+}
+
+
+/*
+  PENTING:
+
+  LANJUT TIDAK MENGHAPUS game.
+
+  Jadi HP pemain tetap menampilkan:
+
+  KAMU BOLEH JAWAB!✅
+
+  atau
+
+  KAMU KALAH CEPAT DARI ❌
+*/
+
+alert(
+"Game dilanjutkan.\n\nTampilan hasil pemain tetap."
+);
+
+}
+
+
+// =================================================
+// KELUARKAN PEMENANG
+// =================================================
+
+async function removeWinner(
+playerID
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(!playerID){
+
+alert(
+"ID player tidak ditemukan"
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Keluarkan pemain ini dari game?"
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+await db
+.ref(
+"players/" +
+playerID
+)
+.update({
+
+status:
+"pending",
+
+spam:
+false
+
+});
+
+
+await db
+.ref("game")
+.remove();
+
+
+}catch(error){
+
+alert(
+"Gagal mengeluarkan pemain"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
+// RANKING
+// =================================================
+
+db.ref("ranking")
+.on(
+"value",
+snap => {
+
+const data =
+snap.val() || {};
+
+
+let arr = [];
+
+
+for(
+let key in data
+){
+
+arr.push({
+
+key:key,
+
+name:
+data[key].name ||
+"Unknown",
+
+score:
+data[key].score ||
+0
+
+});
+
+}
+
+
+arr.sort(
+(a,b) =>
+b.score - a.score
+);
+
+
+rankingBox.innerHTML =
+"";
+
+
+if(!arr.length){
+
+rankingBox.innerHTML =
+
+"<div class='empty'>" +
+"Belum ada player" +
+"</div>";
+
+return;
+
+}
+
+
+const max =
+arr[0].score || 1;
+
+
+arr.forEach(
+(item,index) => {
+
+const persen =
+(item.score / max) *
+100;
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"player";
+
+
+div.innerHTML = `
+
+<h3>
+
+${index+1}.
+${escapeHTML(item.name)}
+—
+${item.score} poin
+
+</h3>
+
+
+<div class="bar">
+
+<div
+class="fill"
+style="width:${persen}%"
+></div>
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="edit"
+>
+
+EDIT
+
+</button>
+
+
+<button
+class="delete"
+>
+
+HAPUS
+
+</button>
+
+</div>
+
+`;
+
+
+div.querySelector(
+".edit"
+)
+.onclick = () => {
+
+editPlayer(
+item.key,
+item.name,
+item.score
+);
+
+};
+
+
+div.querySelector(
+".delete"
+)
+.onclick = () => {
+
+hapusPlayer(
+item.key
+);
+
+};
+
+
+rankingBox.appendChild(
+div
+);
+
+});
+
+});
+
+
+// =================================================
+// ESCAPE HTML
+// =================================================
+
+function escapeHTML(text){
+
+const div =
+document.createElement("div");
+
+
+div.textContent =
+text || "";
+
+
+return div.innerHTML;
+
+}
+
+</script>
+
 </body>
+
 </html>
