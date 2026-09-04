@@ -1,453 +1,1677 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
 <title>ADMIN PANEL ALDI</title>
 
+
+<!-- FIREBASE -->
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
+
 <style>
+
 *{
+
 margin:0;
 padding:0;
 box-sizing:border-box;
+
 }
+
 
 body{
+
 font-family:Arial,sans-serif;
+
 background:#08111f;
+
 color:white;
+
 padding:15px;
+
 }
+
 
 .header{
+
 text-align:center;
+
 font-size:24px;
+
 font-weight:bold;
+
 margin-bottom:20px;
+
 }
+
 
 .card{
+
 background:#111827;
+
 padding:18px;
+
 border-radius:18px;
+
 margin-bottom:18px;
+
 }
+
 
 h2{
+
 font-size:18px;
+
 margin-bottom:15px;
+
 }
 
+
 input{
+
 width:100%;
+
 height:50px;
+
 border:none;
+
 outline:none;
+
 border-radius:12px;
+
 padding:0 15px;
+
 margin-top:10px;
+
 background:#1f2937;
+
 color:white;
+
 font-size:16px;
+
+}
+
+
+button{
+
+flex:1;
+
+border:none;
+
+height:48px;
+
+border-radius:12px;
+
+font-weight:bold;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+button:disabled{
+
+opacity:.5;
+
+cursor:not-allowed;
+
+}
+
+
+.btn-group{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+
+.save{
+
+background:#00b894;
+
+}
+
+
+.reset{
+
+background:#d63031;
+
+}
+
+
+.edit{
+
+background:#fdcb6e;
+
+color:black;
+
+}
+
+
+.delete{
+
+background:#e84393;
+
+}
+
+
+/* ================= PLAYER ================= */
+
+.player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:15px;
+
+}
+
+
+.bar{
+
+width:100%;
+
+height:12px;
+
+background:#2d3748;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-top:10px;
+
+}
+
+
+.fill{
+
+height:100%;
+
+background:#00d2ff;
+
+}
+
+
+/* ================= FAST ================= */
+
+#fastBox{
+
+text-align:center;
+
+}
+
+
+#fastName{
+
+font-size:30px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+color:gold;
+
+}
+
+
+#fastTime{
+
+margin-top:8px;
+
+color:#ccc;
+
+}
+
+
+/* ================= EMPTY ================= */
+
+.empty{
+
+text-align:center;
+
+padding:20px;
+
+color:#aaa;
+
+}
+
+
+/* ================= POPUP ================= */
+
+#popup{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,0.7);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:99999;
+
+}
+
+
+.popup-content{
+
+background:#111827;
+
+padding:20px;
+
+border-radius:20px;
+
+width:100%;
+
+max-width:320px;
+
+}
+
+
+/* ================= NEW CONTROL ================= */
+
+.section-title{
+
+font-size:14px;
+
+font-weight:bold;
+
+color:#00d2ff;
+
+margin-bottom:10px;
+
+}
+
+
+.pending-player{
+
+background:#1f2937;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:12px;
+
+}
+
+
+.pending-name{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:5px;
+
+}
+
+
+.pending-info{
+
+font-size:12px;
+
+color:#aaa;
+
+margin-bottom:12px;
+
+}
+
+
+.approve{
+
+width:100%;
+
+background:#00b894;
+
+}
+
+
+.fast-card{
+
+background:#172033;
+
+padding:18px;
+
+border-radius:15px;
+
+margin-top:10px;
+
+border:1px solid rgba(0,210,255,.25);
+
+}
+
+
+.fast-player-name{
+
+font-size:30px;
+
+font-weight:bold;
+
+color:gold;
+
+text-align:center;
+
+margin:10px 0;
+
+word-break:break-word;
+
+}
+
+
+.fast-player-info{
+
+text-align:center;
+
+font-size:13px;
+
+color:#aaa;
+
+}
+
+
+.continue{
+
+background:#00b894;
+
+}
+
+
+.remove{
+
+background:#d63031;
+
+}
+
+
+.notice{
+
+text-align:center;
+
+padding:12px;
+
+border-radius:12px;
+
+background:#172033;
+
+color:#aaa;
+
+font-size:13px;
+
+margin-top:10px;
+
+}
+
+
+@media(max-width:500px){
+
+.btn-group{
+
+gap:7px;
+
 }
 
 button{
-flex:1;
-border:none;
-height:48px;
-border-radius:12px;
-font-weight:bold;
-color:white;
-cursor:pointer;
+
+font-size:12px;
+
 }
 
-.btn-group{
-display:flex;
-gap:10px;
-margin-top:15px;
 }
 
-.save{background:#00b894;}
-.reset{background:#d63031;}
-.edit{background:#fdcb6e;color:black;}
-.delete{background:#e84393;}
-
-.player{
-background:#1f2937;
-padding:15px;
-border-radius:15px;
-margin-top:15px;
-}
-
-.bar{
-width:100%;
-height:12px;
-background:#2d3748;
-border-radius:20px;
-overflow:hidden;
-margin-top:10px;
-}
-
-.fill{
-height:100%;
-background:#00d2ff;
-}
-
-#fastBox{text-align:center;}
-
-#fastName{
-font-size:30px;
-font-weight:bold;
-margin-top:10px;
-color:gold;
-}
-
-#fastTime{
-margin-top:8px;
-color:#ccc;
-}
-
-.empty{
-text-align:center;
-padding:20px;
-color:#aaa;
-}
-
-#popup{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.7);
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-.popup-content{
-background:#111827;
-padding:20px;
-border-radius:20px;
-width:100%;
-max-width:320px;
-}
 </style>
+
 </head>
+
 
 <body>
 
-<div class="header">CONTROL GAME ALDI</div>
+
+<div class="header">
+
+CONTROL GAME ALDI
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- CONTROL PANEL LAMA -->
+<!-- ================================================= -->
 
 <div class="card">
-<h2>CONTROL PANEL</h2>
 
-<input type="password" id="pass" placeholder="PASSWORD">
-<input type="text" id="nama" placeholder="NAMA PLAYER">
-<input type="number" id="score" placeholder="POIN">
+<h2>
+
+CONTROL PANEL
+
+</h2>
+
+
+<input
+type="password"
+id="pass"
+placeholder="PASSWORD"
+>
+
+
+<input
+type="text"
+id="nama"
+placeholder="NAMA PLAYER"
+>
+
+
+<input
+type="number"
+id="score"
+placeholder="POIN"
+>
+
 
 <div class="btn-group">
-<button class="save" onclick="saveScore()">SIMPAN</button>
-<button class="reset" onclick="resetGame()">RESET</button>
-</div>
+
+<button
+class="save"
+onclick="saveScore()"
+>
+
+SIMPAN
+
+</button>
+
+
+<button
+class="reset"
+onclick="resetGame()"
+>
+
+RESET
+
+</button>
+
 </div>
 
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- PEMAIN MENUNGGU APPROVAL -->
+<!-- ================================================= -->
+
 <div class="card">
-<h2>PLAYER TERCEPAT</h2>
+
+<h2>
+
+⏳ PEMAIN MENUNGGU
+
+</h2>
+
+
+<div
+id="pendingList"
+>
+
+<div class="empty">
+
+Belum ada pemain menunggu.
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- PLAYER TERCEPAT -->
+<!-- ================================================= -->
+
+<div class="card">
+
+<h2>
+
+PLAYER TERCEPAT
+
+</h2>
+
 
 <div id="fastBox">
-<div style="font-size:50px;">🥇</div>
-<div id="fastName">Belum ada</div>
-<div id="fastTime">Menunggu buzzer</div>
+
+<div style="font-size:50px;">
+
+🥇
+
 </div>
+
+
+<div id="fastName">
+
+Belum ada
+
 </div>
+
+
+<div id="fastTime">
+
+Menunggu buzzer
+
+</div>
+
+</div>
+
+
+<div id="winnerControl"></div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- RANKING -->
+<!-- ================================================= -->
 
 <div class="card">
-<h2>RANKING PLAYER</h2>
+
+<h2>
+
+RANKING PLAYER
+
+</h2>
+
+
 <div id="ranking"></div>
+
 </div>
 
-<!-- POPUP -->
+
+
+<!-- ================================================= -->
+<!-- POPUP EDIT -->
+<!-- ================================================= -->
+
 <div id="popup">
+
 <div class="popup-content">
 
-<h2 id="editTitle">EDIT PLAYER</h2>
 
-<input type="number" id="editScore" placeholder="POIN">
+<h2 id="editTitle">
+
+EDIT PLAYER
+
+</h2>
+
+
+<input
+type="number"
+id="editScore"
+placeholder="POIN"
+>
+
 
 <div class="btn-group">
-<button class="save" onclick="saveEdit()">SAVE</button>
-<button class="reset" onclick="closePopup()">BATAL</button>
+
+
+<button
+class="save"
+onclick="saveEdit()"
+>
+
+SAVE
+
+</button>
+
+
+<button
+class="reset"
+onclick="closePopup()"
+>
+
+BATAL
+
+</button>
+
+
+</div>
+
+
 </div>
 
 </div>
-</div>
+
+
 
 <script>
 
-// ================= FIREBASE =================
+
+// =================================================
+// FIREBASE
+// =================================================
 
 const firebaseConfig = {
-apiKey:"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
-authDomain:"game-aldi.firebaseapp.com",
-databaseURL:"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId:"game-aldi",
-storageBucket:"game-aldi.firebasestorage.app",
-messagingSenderId:"184345142676",
-appId:"1:184345142676:web:f19d19999c897d0ca95b81"
+
+apiKey:
+"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+
+authDomain:
+"game-aldi.firebaseapp.com",
+
+databaseURL:
+"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:
+"game-aldi",
+
+storageBucket:
+"game-aldi.firebasestorage.app",
+
+messagingSenderId:
+"184345142676",
+
+appId:
+"1:184345142676:web:f19d19999c897d0ca95b81"
+
 };
 
-firebase.initializeApp(firebaseConfig);
 
-const db = firebase.database();
+firebase.initializeApp(
+firebaseConfig
+);
 
-const rankingBox = document.getElementById("ranking");
-const popup = document.getElementById("popup");
-const editScore = document.getElementById("editScore");
-const editTitle = document.getElementById("editTitle");
-const fastName = document.getElementById("fastName");
-const fastTime = document.getElementById("fastTime");
+
+const db =
+firebase.database();
+
+
+
+/* ================================================= */
+/* ELEMENT */
+/* ================================================= */
+
+const rankingBox =
+document.getElementById(
+"ranking"
+);
+
+
+const popup =
+document.getElementById(
+"popup"
+);
+
+
+const editScore =
+document.getElementById(
+"editScore"
+);
+
+
+const editTitle =
+document.getElementById(
+"editTitle"
+);
+
+
+const fastName =
+document.getElementById(
+"fastName"
+);
+
+
+const fastTime =
+document.getElementById(
+"fastTime"
+);
+
+
+const pendingList =
+document.getElementById(
+"pendingList"
+);
+
+
+const winnerControl =
+document.getElementById(
+"winnerControl"
+);
+
+
 
 let currentKey = "";
+
 let loading = false;
 
-// ================= PASSWORD =================
+
+
+// =================================================
+// PASSWORD
+// =================================================
 
 function cekPass(){
-return document.getElementById("pass").value==="00";
+
+return document
+.getElementById("pass")
+.value === "00";
+
 }
 
-// ================= SAFE KEY =================
+
+
+// =================================================
+// SAFE KEY
+// =================================================
 
 function safeKey(text){
-return btoa(unescape(encodeURIComponent(text))).replace(/=/g,'');
+
+return btoa(
+unescape(
+encodeURIComponent(text)
+)
+)
+.replace(/=/g,'');
+
 }
 
-// ================= SAVE =================
+
+
+// =================================================
+// SAVE SCORE
+// =================================================
 
 async function saveScore(){
 
-if(loading)return;
+if(loading)
+return;
 
-if(!cekPass()) return alert("Password salah");
 
-const nama=document.getElementById("nama").value.trim();
-const score=Number(document.getElementById("score").value);
+if(!cekPass()){
 
-if(!nama||isNaN(score)) return alert("Isi data");
+alert("Password salah");
 
-loading=true;
+return;
+
+}
+
+
+const nama =
+document
+.getElementById("nama")
+.value
+.trim();
+
+
+const score =
+Number(
+document
+.getElementById("score")
+.value
+);
+
+
+if(
+!nama ||
+isNaN(score)
+){
+
+alert("Isi data");
+
+return;
+
+}
+
+
+loading = true;
+
 
 try{
 
-await db.ref("ranking/"+safeKey(nama)).set({
+await db
+.ref(
+"ranking/" +
+safeKey(nama)
+)
+.set({
+
 name:nama,
+
 score:score
+
 });
 
-document.getElementById("nama").value="";
-document.getElementById("score").value="";
 
-}catch{
+document
+.getElementById("nama")
+.value="";
+
+
+document
+.getElementById("score")
+.value="";
+
+
+}catch(error){
 
 alert("Gagal simpan");
 
 }
 
-loading=false;
+
+loading = false;
 
 }
 
-// ================= RESET =================
+
+
+// =================================================
+// RESET GAME
+// =================================================
 
 async function resetGame(){
 
-if(loading)return;
+if(loading)
+return;
 
-if(!cekPass()) return alert("Password salah");
 
-if(!confirm("Reset game?")) return;
+if(!cekPass()){
 
-loading=true;
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm("Reset game?")
+){
+
+return;
+
+}
+
+
+loading = true;
+
 
 try{
 
-await db.ref("game").remove();
+await db
+.ref("game")
+.remove();
 
-}catch{
+
+}catch(error){
 
 alert("Gagal reset");
 
 }
 
-loading=false;
+
+loading = false;
 
 }
 
-// ================= EDIT =================
 
-function editPlayer(key,name,score){
 
-currentKey=key;
-popup.style.display="flex";
-editTitle.innerText="EDIT "+name;
-editScore.value=score;
+// =================================================
+// EDIT
+// =================================================
+
+function editPlayer(
+key,
+name,
+score
+){
+
+currentKey =
+key;
+
+
+popup.style.display =
+"flex";
+
+
+editTitle.innerText =
+"EDIT " + name;
+
+
+editScore.value =
+score;
 
 }
 
-// ================= SAVE EDIT =================
+
+
+// =================================================
+// SAVE EDIT
+// =================================================
 
 async function saveEdit(){
 
-if(loading)return;
+if(loading)
+return;
 
-if(!cekPass()) return alert("Password salah");
 
-const score=Number(editScore.value);
+if(!cekPass()){
 
-if(isNaN(score)) return alert("Isi poin");
+alert("Password salah");
 
-loading=true;
+return;
+
+}
+
+
+const score =
+Number(
+editScore.value
+);
+
+
+if(isNaN(score)){
+
+alert("Isi poin");
+
+return;
+
+}
+
+
+loading = true;
+
 
 try{
 
-await db.ref("ranking/"+currentKey).update({
+await db
+.ref(
+"ranking/" +
+currentKey
+)
+.update({
+
 score:score
+
 });
 
-popup.style.display="none";
 
-}catch{
+popup.style.display =
+"none";
+
+
+}catch(error){
 
 alert("Gagal edit");
 
 }
 
-loading=false;
+
+loading = false;
 
 }
 
-// ================= DELETE =================
 
-async function hapusPlayer(key){
 
-if(loading)return;
+// =================================================
+// DELETE
+// =================================================
 
-if(!cekPass()) return alert("Password salah");
+async function hapusPlayer(
+key
+){
 
-if(!confirm("Hapus player?")) return;
+if(loading)
+return;
 
-loading=true;
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm("Hapus player?")
+){
+
+return;
+
+}
+
+
+loading = true;
+
 
 try{
 
-await db.ref("ranking/"+key).remove();
+await db
+.ref(
+"ranking/" +
+key
+)
+.remove();
 
-}catch{
+
+}catch(error){
 
 alert("Gagal hapus");
 
 }
 
-loading=false;
+
+loading = false;
 
 }
 
-// ================= CLOSE POPUP =================
+
+
+// =================================================
+// CLOSE POPUP
+// =================================================
 
 function closePopup(){
-popup.style.display="none";
-}
 
-// ================= FAST PLAYER =================
-
-db.ref("game").on("value",snap=>{
-
-const data=snap.val();
-
-if(data&&data.clicked){
-
-fastName.innerText=data.player||"Unknown";
-fastTime.innerText="BOLEH JAWAB";
-
-}else{
-
-fastName.innerText="Belum ada";
-fastTime.innerText="Menunggu player tercepat";
+popup.style.display =
+"none";
 
 }
 
-});
 
-// ================= RANKING =================
 
-db.ref("ranking").on("value",snap=>{
+// =================================================
+// PLAYER PENDING
+// =================================================
 
-const data=snap.val()||{};
-let arr=[];
+db.ref("players")
+.on(
+"value",
+snap => {
 
-for(let key in data){
+const data =
+snap.val() || {};
 
-arr.push({
-key:key,
-name:data[key].name||"Unknown",
-score:data[key].score||0
-});
 
-}
+let html = "";
 
-arr.sort((a,b)=>b.score-a.score);
+let count = 0;
 
-rankingBox.innerHTML="";
 
-if(!arr.length){
+Object.keys(data)
+.forEach(
+id => {
 
-rankingBox.innerHTML="<div class='empty'>Belum ada player</div>";
-return;
+const player =
+data[id];
 
-}
 
-const max=arr[0].score||1;
+if(
+player.status ===
+"pending"
+){
 
-arr.forEach((item,index)=>{
+count++;
 
-const persen=(item.score/max)*100;
 
-const div=document.createElement("div");
+html += `
 
-div.className="player";
+<div class="pending-player">
 
-div.innerHTML=`
+<div class="pending-name">
 
-<h3>${index+1}. ${item.name} — ${item.score} poin</h3>
+${escapeHTML(
+player.name ||
+"Unknown"
+)}
 
-<div class="bar">
-<div class="fill" style="width:${persen}%"></div>
 </div>
 
-<div class="btn-group">
-<button class="edit">EDIT</button>
-<button class="delete">HAPUS</button>
+
+<div class="pending-info">
+
+⏳ Meminta izin bermain
+
+</div>
+
+
+<button
+class="approve"
+onclick="approvePlayer('${id}')"
+>
+
+✅ SETUJUI
+
+</button>
+
 </div>
 
 `;
 
-div.querySelector(".edit").onclick=()=>{
-editPlayer(item.key,item.name,item.score);
+}
+
+});
+
+
+if(count === 0){
+
+html = `
+
+<div class="empty">
+
+Tidak ada pemain menunggu.
+
+</div>
+
+`;
+
+}
+
+
+pendingList.innerHTML =
+html;
+
+});
+
+
+
+// =================================================
+// APPROVE PLAYER
+// =================================================
+
+function approvePlayer(id){
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+db.ref(
+"players/" +
+id +
+"/status"
+)
+.set(
+"approved"
+);
+
+}
+
+
+
+// =================================================
+// GAME / PLAYER TERCEPAT
+// =================================================
+
+db.ref("game")
+.on(
+"value",
+snap => {
+
+const data =
+snap.val();
+
+
+if(
+data &&
+data.clicked === true
+){
+
+fastName.innerText =
+data.player ||
+"Unknown";
+
+
+fastTime.innerText =
+"BOLEH JAWAB";
+
+
+winnerControl.innerHTML = `
+
+<div class="fast-card">
+
+<div class="fast-player-name">
+
+${escapeHTML(
+data.player ||
+"Unknown"
+)}
+
+</div>
+
+
+<div class="fast-player-info">
+
+🔔 PEMAIN BERHAK MENJAWAB
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="continue"
+onclick="continueGame()"
+>
+
+▶ LANJUT
+
+</button>
+
+
+<button
+class="remove"
+onclick="removeWinner('${data.playerID}')"
+>
+
+❌ KELUARKAN
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}else{
+
+fastName.innerText =
+"Belum ada";
+
+
+fastTime.innerText =
+"Menunggu player tercepat";
+
+
+winnerControl.innerHTML = `
+
+<div class="notice">
+
+🔥 Menunggu pemain menekan buzzer
+
+</div>
+
+`;
+
+}
+
+});
+
+
+
+// =================================================
+// LANJUT
+// =================================================
+
+async function continueGame(){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Lanjutkan game?"
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  Hanya menghapus data game.
+
+  Player tetap:
+  status = approved
+
+  Jadi player tersebut
+  tetap bisa bermain lagi.
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+}catch(error){
+
+alert(
+"Gagal melanjutkan game"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+
+// =================================================
+// KELUARKAN PEMENANG
+// =================================================
+
+async function removeWinner(
+playerID
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(!playerID){
+
+alert(
+"ID player tidak ditemukan"
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Keluarkan pemain ini dari game?"
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  PEMAIN DIKEMBALIKAN
+  KE STATUS PENDING
+*/
+
+await db
+.ref(
+"players/" +
+playerID +
+"/status"
+)
+.set(
+"pending"
+);
+
+
+/*
+  SETELAH ITU RONDE DIRESET
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+}catch(error){
+
+alert(
+"Gagal mengeluarkan pemain"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+
+// =================================================
+// RANKING
+// =================================================
+
+db.ref("ranking")
+.on(
+"value",
+snap => {
+
+const data =
+snap.val() || {};
+
+
+let arr = [];
+
+
+for(
+let key in data
+){
+
+arr.push({
+
+key:key,
+
+name:
+data[key].name ||
+"Unknown",
+
+score:
+data[key].score ||
+0
+
+});
+
+}
+
+
+arr.sort(
+(a,b) =>
+b.score - a.score
+);
+
+
+rankingBox.innerHTML =
+"";
+
+
+if(!arr.length){
+
+rankingBox.innerHTML =
+
+"<div class='empty'>" +
+"Belum ada player" +
+"</div>";
+
+return;
+
+}
+
+
+const max =
+arr[0].score || 1;
+
+
+arr.forEach(
+(item,index) => {
+
+const persen =
+(item.score / max) *
+100;
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.className =
+"player";
+
+
+div.innerHTML = `
+
+<h3>
+
+${index+1}.
+${escapeHTML(item.name)}
+—
+${item.score} poin
+
+</h3>
+
+
+<div class="bar">
+
+<div
+class="fill"
+style="width:${persen}%"
+></div>
+
+</div>
+
+
+<div class="btn-group">
+
+<button
+class="edit"
+>
+
+EDIT
+
+</button>
+
+
+<button
+class="delete"
+>
+
+HAPUS
+
+</button>
+
+</div>
+
+`;
+
+
+div.querySelector(
+".edit"
+)
+.onclick = () => {
+
+editPlayer(
+item.key,
+item.name,
+item.score
+);
+
 };
 
-div.querySelector(".delete").onclick=()=>{
-hapusPlayer(item.key);
+
+div.querySelector(
+".delete"
+)
+.onclick = () => {
+
+hapusPlayer(
+item.key
+);
+
 };
 
-rankingBox.appendChild(div);
+
+rankingBox.appendChild(
+div
+);
 
 });
 
 });
+
+
+
+// =================================================
+// ESCAPE HTML
+// =================================================
+
+function escapeHTML(text){
+
+const div =
+document.createElement(
+"div"
+);
+
+
+div.textContent =
+text || "";
+
+
+return div.innerHTML;
+
+}
 
 </script>
 
 </body>
+
 </html>
