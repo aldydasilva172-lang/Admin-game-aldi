@@ -5,10 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CONTROL GAME ALDI</title>
 
@@ -22,10 +19,6 @@ rel="stylesheet"
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
 <style>
-
-/* ================================================= */
-/* GLOBAL */
-/* ================================================= */
 
 *{
 margin:0;
@@ -54,9 +47,7 @@ cursor:pointer;
 display:none !important;
 }
 
-/* ================================================= */
 /* LOGIN */
-/* ================================================= */
 
 #authPage{
 min-height:100vh;
@@ -71,15 +62,11 @@ width:100%;
 max-width:430px;
 padding:32px 24px;
 border-radius:28px;
-
 background:rgba(20,24,55,.55);
-
 border:1px solid rgba(255,255,255,.12);
-
 box-shadow:
 0 25px 70px rgba(0,0,0,.5),
 inset 0 1px rgba(255,255,255,.08);
-
 backdrop-filter:blur(22px);
 -webkit-backdrop-filter:blur(22px);
 }
@@ -188,9 +175,7 @@ text-align:center;
 display:none;
 }
 
-/* ================================================= */
 /* HEADER */
-/* ================================================= */
 
 #panelPage{
 display:none;
@@ -200,11 +185,9 @@ display:none;
 position:sticky;
 top:0;
 z-index:100;
-
 background:rgba(5,7,17,.75);
 backdrop-filter:blur(18px);
 -webkit-backdrop-filter:blur(18px);
-
 border-bottom:1px solid rgba(255,255,255,.08);
 }
 
@@ -212,7 +195,6 @@ border-bottom:1px solid rgba(255,255,255,.08);
 max-width:1100px;
 margin:auto;
 padding:15px 16px;
-
 display:flex;
 align-items:center;
 justify-content:space-between;
@@ -251,9 +233,7 @@ color:#fff;
 font-size:11px;
 }
 
-/* ================================================= */
 /* CONTAINER */
-/* ================================================= */
 
 .container{
 max-width:1100px;
@@ -261,23 +241,18 @@ margin:auto;
 padding:18px 14px 50px;
 }
 
-/* ================================================= */
-/* DASHBOARD STATUS */
-/* ================================================= */
+/* GAME */
 
 .game-card{
 padding:20px;
 border-radius:22px;
-
 background:
 linear-gradient(
 145deg,
 rgba(0,100,255,.18),
 rgba(0,255,255,.05)
 );
-
 border:1px solid rgba(0,210,255,.18);
-
 box-shadow:0 18px 50px rgba(0,0,0,.3);
 }
 
@@ -303,22 +278,16 @@ color:#00eaff;
 width:100%;
 margin-top:17px;
 padding:15px;
-
 border:0;
 border-radius:14px;
-
 background:linear-gradient(135deg,#ff1744,#ff6d00);
 color:#fff;
-
 font-weight:800;
 font-size:14px;
-
 box-shadow:0 10px 25px rgba(255,23,68,.2);
 }
 
-/* ================================================= */
 /* STATS */
-/* ================================================= */
 
 .stats{
 display:grid;
@@ -347,16 +316,13 @@ opacity:.55;
 margin-top:4px;
 }
 
-/* ================================================= */
-/* NAV TABS */
-/* ================================================= */
+/* TABS */
 
 .tabs{
 display:flex;
 gap:7px;
 overflow-x:auto;
 padding:3px 1px 10px;
-
 scrollbar-width:none;
 }
 
@@ -366,17 +332,11 @@ display:none;
 
 .tab{
 flex:0 0 auto;
-
 padding:10px 14px;
-
 border-radius:12px;
-
 border:1px solid rgba(255,255,255,.08);
-
 background:rgba(255,255,255,.045);
-
 color:#aaa;
-
 font-size:11px;
 font-weight:600;
 }
@@ -387,9 +347,7 @@ color:#fff;
 border-color:transparent;
 }
 
-/* ================================================= */
 /* SECTION */
-/* ================================================= */
 
 .section{
 display:none;
@@ -405,9 +363,7 @@ font-size:15px;
 margin:12px 0;
 }
 
-/* ================================================= */
 /* LIST */
-/* ================================================= */
 
 .list{
 display:flex;
@@ -417,11 +373,8 @@ gap:10px;
 
 .item{
 padding:15px;
-
 border-radius:17px;
-
 background:rgba(255,255,255,.045);
-
 border:1px solid rgba(255,255,255,.07);
 }
 
@@ -493,9 +446,7 @@ opacity:.45;
 font-size:12px;
 }
 
-/* ================================================= */
 /* POINTS */
-/* ================================================= */
 
 .points-box{
 padding:18px;
@@ -550,9 +501,7 @@ font-family:Orbitron,sans-serif;
 color:#00d9ff;
 }
 
-/* ================================================= */
 /* SETTINGS */
-/* ================================================= */
 
 .setting-card{
 padding:17px;
@@ -592,21 +541,16 @@ background:#d71945;
 background:#006cff;
 }
 
-/* ================================================= */
 /* MODAL */
-/* ================================================= */
 
 .modal{
 position:fixed;
 inset:0;
 z-index:500;
-
 display:none;
 align-items:center;
 justify-content:center;
-
 padding:20px;
-
 background:rgba(0,0,0,.65);
 }
 
@@ -617,15 +561,10 @@ display:flex;
 .modal-box{
 width:100%;
 max-width:420px;
-
 padding:22px;
-
 border-radius:22px;
-
 background:#101328;
-
 border:1px solid rgba(255,255,255,.1);
-
 box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
 
@@ -660,9 +599,7 @@ background:rgba(255,255,255,.08);
 background:#e91e43;
 }
 
-/* ================================================= */
 /* MOBILE */
-/* ================================================= */
 
 @media(max-width:600px){
 
@@ -707,10 +644,7 @@ padding-right:10px;
 
 <body>
 
-
-<!-- ================================================= -->
 <!-- AUTH PAGE -->
-<!-- ================================================= -->
 
 <div id="authPage">
 
@@ -723,7 +657,6 @@ RM KEMANG
 <div class="auth-subtitle">
 GAME CONTROL PANEL
 </div>
-
 
 <div class="auth-tabs">
 
@@ -744,9 +677,6 @@ SIGN UP
 
 </div>
 
-
-<!-- LOGIN -->
-
 <div id="loginForm">
 
 <div class="field">
@@ -762,7 +692,6 @@ autocomplete="username"
 
 </div>
 
-
 <div class="field">
 
 <label>PASSWORD</label>
@@ -776,14 +705,12 @@ autocomplete="current-password"
 
 </div>
 
-
 <button
 class="main-btn"
 onclick="loginUser()"
 >
 LOGIN
 </button>
-
 
 <div
 class="forgot"
@@ -793,9 +720,6 @@ Lupa Password?
 </div>
 
 </div>
-
-
-<!-- SIGN UP -->
 
 <div
 id="signupForm"
@@ -815,7 +739,6 @@ autocomplete="username"
 
 </div>
 
-
 <div class="field">
 
 <label>EMAIL</label>
@@ -828,7 +751,6 @@ autocomplete="email"
 >
 
 </div>
-
 
 <div class="field">
 
@@ -843,7 +765,6 @@ autocomplete="new-password"
 
 </div>
 
-
 <div class="field">
 
 <label>KONFIRMASI PASSWORD</label>
@@ -857,7 +778,6 @@ autocomplete="new-password"
 
 </div>
 
-
 <button
 class="main-btn"
 onclick="signupUser()"
@@ -866,7 +786,6 @@ SIGN UP
 </button>
 
 </div>
-
 
 <div
 id="authMessage"
@@ -877,14 +796,9 @@ class="auth-message"
 
 </div>
 
-
-
-<!-- ================================================= -->
 <!-- PANEL -->
-<!-- ================================================= -->
 
 <div id="panelPage">
-
 
 <header class="header">
 
@@ -914,12 +828,7 @@ Logout
 
 </header>
 
-
-
 <div class="container">
-
-
-<!-- GAME STATUS -->
 
 <div class="game-card">
 
@@ -950,10 +859,6 @@ onclick="confirmResetGame()"
 
 </div>
 
-
-
-<!-- STATS -->
-
 <div class="stats">
 
 <div class="stat">
@@ -971,7 +876,6 @@ MENUNGGU
 
 </div>
 
-
 <div class="stat">
 
 <div
@@ -986,7 +890,6 @@ AKTIF
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -1004,10 +907,6 @@ SPAM
 </div>
 
 </div>
-
-
-
-<!-- TABS -->
 
 <div class="tabs">
 
@@ -1056,12 +955,6 @@ PENGATURAN
 
 </div>
 
-
-
-<!-- ================================================= -->
-<!-- PENDING -->
-<!-- ================================================= -->
-
 <section
 id="section-pending"
 class="section active"
@@ -1077,12 +970,6 @@ class="list"
 ></div>
 
 </section>
-
-
-
-<!-- ================================================= -->
-<!-- ACTIVE -->
-<!-- ================================================= -->
 
 <section
 id="section-active"
@@ -1100,12 +987,6 @@ class="list"
 
 </section>
 
-
-
-<!-- ================================================= -->
-<!-- SPAM -->
-<!-- ================================================= -->
-
 <section
 id="section-spam"
 class="section"
@@ -1122,12 +1003,6 @@ class="list"
 
 </section>
 
-
-
-<!-- ================================================= -->
-<!-- POINTS -->
-<!-- ================================================= -->
-
 <section
 id="section-points"
 class="section"
@@ -1136,7 +1011,6 @@ class="section"
 <div class="section-title">
 🏆 POIN & RANKING
 </div>
-
 
 <div class="points-box">
 
@@ -1164,10 +1038,7 @@ onclick="saveScore()"
 
 </div>
 
-
-<div
-style="margin-top:18px"
->
+<div style="margin-top:18px">
 
 <div class="section-title">
 🏆 RANKING
@@ -1180,12 +1051,6 @@ id="rankingList"
 </div>
 
 </section>
-
-
-
-<!-- ================================================= -->
-<!-- OPERATORS -->
-<!-- ================================================= -->
 
 <section
 id="section-operators"
@@ -1203,12 +1068,6 @@ class="list"
 
 </section>
 
-
-
-<!-- ================================================= -->
-<!-- SETTINGS -->
-<!-- ================================================= -->
-
 <section
 id="section-settings"
 class="section"
@@ -1217,7 +1076,6 @@ class="section"
 <div class="section-title">
 ⚙️ PENGATURAN
 </div>
-
 
 <div
 id="operatorManagement"
@@ -1245,7 +1103,6 @@ KELOLA OPERATOR
 
 </div>
 
-
 <div class="setting-card">
 
 <div class="setting-title">
@@ -1265,7 +1122,6 @@ RESET SEMUA PEMAIN
 
 </div>
 
-
 <div class="setting-card">
 
 <div class="setting-title">
@@ -1284,7 +1140,6 @@ GANTI PASSWORD
 </button>
 
 </div>
-
 
 <div class="setting-card">
 
@@ -1307,16 +1162,11 @@ LOGOUT
 
 </section>
 
-
 </div>
 
 </div>
 
-
-
-<!-- ================================================= -->
 <!-- MODAL -->
-<!-- ================================================= -->
 
 <div
 id="modal"
@@ -1358,8 +1208,6 @@ YA
 
 </div>
 
-
-
 <script>
 
 /* ================================================= */
@@ -1390,7 +1238,6 @@ appId:
 "1:184345142676:web:f19d19999c897d0ca95b81"
 
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
@@ -1604,6 +1451,7 @@ document
 document
 .getElementById("signupConfirm")
 .value="";
+
 
 }catch(error){
 
@@ -2316,7 +2164,6 @@ PENDING
 
 </div>
 
-
 <div class="actions">
 
 <button
@@ -2366,7 +2213,6 @@ SPAM
 
 </div>
 
-
 <div class="actions">
 
 <button
@@ -2413,7 +2259,6 @@ AKTIF
 </span>
 
 </div>
-
 
 <div class="actions">
 
@@ -2972,7 +2817,6 @@ MENUNGGU
 
 </div>
 
-
 <div class="actions">
 
 <button
@@ -3016,9 +2860,15 @@ emptyHTML(
 
 async function approveOperator(username){
 
-console.log(
-"TERIMA OPERATOR:",
-username
+/* CEK AKUN FIREBASE AKTIF */
+
+alert(
+auth.currentUser
+? "AKUN FIREBASE AKTIF\n\nEmail:\n" +
+  auth.currentUser.email +
+  "\n\nUID:\n" +
+  auth.currentUser.uid
+: "❌ TIDAK ADA USER FIREBASE AKTIF"
 );
 
 
