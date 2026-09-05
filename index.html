@@ -46,7 +46,10 @@ cursor:pointer;
 display:none !important;
 }
 
+
+/* ================================================= */
 /* LOGIN */
+/* ================================================= */
 
 #authPage{
 min-height:100vh;
@@ -162,9 +165,13 @@ background:rgba(255,255,255,.06);
 font-size:12px;
 text-align:center;
 display:none;
+white-space:pre-line;
 }
 
+
+/* ================================================= */
 /* HEADER */
+/* ================================================= */
 
 #panelPage{
 display:none;
@@ -222,7 +229,10 @@ color:#fff;
 font-size:11px;
 }
 
+
+/* ================================================= */
 /* CONTAINER */
+/* ================================================= */
 
 .container{
 max-width:1100px;
@@ -230,7 +240,10 @@ margin:auto;
 padding:18px 14px 50px;
 }
 
+
+/* ================================================= */
 /* GAME */
+/* ================================================= */
 
 .game-card{
 padding:20px;
@@ -275,7 +288,10 @@ font-weight:800;
 font-size:14px;
 }
 
+
+/* ================================================= */
 /* STATS */
+/* ================================================= */
 
 .stats{
 display:grid;
@@ -304,7 +320,10 @@ opacity:.55;
 margin-top:4px;
 }
 
+
+/* ================================================= */
 /* TABS */
+/* ================================================= */
 
 .tabs{
 display:flex;
@@ -335,7 +354,10 @@ color:#fff;
 border-color:transparent;
 }
 
+
+/* ================================================= */
 /* SECTION */
+/* ================================================= */
 
 .section{
 display:none;
@@ -351,7 +373,10 @@ font-size:15px;
 margin:12px 0;
 }
 
+
+/* ================================================= */
 /* LIST */
+/* ================================================= */
 
 .list{
 display:flex;
@@ -434,7 +459,10 @@ opacity:.45;
 font-size:12px;
 }
 
+
+/* ================================================= */
 /* POINTS */
+/* ================================================= */
 
 .points-box{
 padding:18px;
@@ -489,7 +517,10 @@ font-family:Orbitron,sans-serif;
 color:#00d9ff;
 }
 
+
+/* ================================================= */
 /* SETTINGS */
+/* ================================================= */
 
 .setting-card{
 padding:17px;
@@ -529,7 +560,10 @@ background:#d71945;
 background:#006cff;
 }
 
+
+/* ================================================= */
 /* MODAL */
+/* ================================================= */
 
 .modal{
 position:fixed;
@@ -587,6 +621,11 @@ background:rgba(255,255,255,.08);
 background:#e91e43;
 }
 
+
+/* ================================================= */
+/* MOBILE */
+/* ================================================= */
+
 @media(max-width:600px){
 
 .header-inner{
@@ -630,6 +669,7 @@ padding-right:10px;
 
 <body>
 
+
 <!-- ================================================= -->
 <!-- AUTH PAGE -->
 <!-- ================================================= -->
@@ -645,6 +685,7 @@ RM KEMANG
 <div class="auth-subtitle">
 GAME CONTROL PANEL
 </div>
+
 
 <div class="auth-tabs">
 
@@ -665,6 +706,9 @@ SIGN UP
 
 </div>
 
+
+<!-- LOGIN -->
+
 <div id="loginForm">
 
 <div class="field">
@@ -680,6 +724,7 @@ autocomplete="username"
 
 </div>
 
+
 <div class="field">
 
 <label>PASSWORD</label>
@@ -693,12 +738,14 @@ autocomplete="current-password"
 
 </div>
 
+
 <button
 class="main-btn"
 onclick="loginUser()"
 >
 LOGIN
 </button>
+
 
 <div
 class="forgot"
@@ -707,7 +754,18 @@ onclick="showForgot()"
 Lupa Password?
 </div>
 
+
+<div
+class="forgot"
+onclick="resendVerification()"
+>
+📧 KIRIM ULANG EMAIL VERIFIKASI
 </div>
+
+</div>
+
+
+<!-- SIGN UP -->
 
 <div
 id="signupForm"
@@ -727,6 +785,7 @@ autocomplete="username"
 
 </div>
 
+
 <div class="field">
 
 <label>EMAIL</label>
@@ -739,6 +798,7 @@ autocomplete="email"
 >
 
 </div>
+
 
 <div class="field">
 
@@ -753,6 +813,7 @@ autocomplete="new-password"
 
 </div>
 
+
 <div class="field">
 
 <label>KONFIRMASI PASSWORD</label>
@@ -766,6 +827,7 @@ autocomplete="new-password"
 
 </div>
 
+
 <button
 class="main-btn"
 onclick="signupUser()"
@@ -774,6 +836,7 @@ SIGN UP
 </button>
 
 </div>
+
 
 <div
 id="authMessage"
@@ -798,6 +861,7 @@ class="auth-message"
 <div class="logo">
 RM <span>KEMANG</span> GAMES
 </div>
+
 
 <div>
 
@@ -874,6 +938,7 @@ MENUNGGU
 
 </div>
 
+
 <div class="stat">
 
 <div
@@ -888,6 +953,7 @@ AKTIF
 </div>
 
 </div>
+
 
 <div class="stat">
 
@@ -1025,6 +1091,7 @@ class="section"
 🏆 POIN & RANKING
 </div>
 
+
 <div class="points-box">
 
 <label>NAMA PEMAIN</label>
@@ -1034,6 +1101,7 @@ id="scoreName"
 placeholder="Nama pemenang"
 >
 
+
 <label>JUMLAH POIN</label>
 
 <input
@@ -1041,6 +1109,7 @@ id="scoreValue"
 type="number"
 placeholder="Contoh: 10"
 >
+
 
 <button
 class="main-btn"
@@ -1050,6 +1119,7 @@ onclick="saveScore()"
 </button>
 
 </div>
+
 
 <div style="margin-top:18px">
 
@@ -1093,6 +1163,7 @@ class="section"
 <div class="section-title">
 ⚙️ PENGATURAN
 </div>
+
 
 <div
 id="operatorManagement"
@@ -1187,7 +1258,9 @@ LOGOUT
 </div>
 
 
+<!-- ================================================= -->
 <!-- MODAL -->
+<!-- ================================================= -->
 
 <div
 id="modal"
@@ -1458,8 +1531,12 @@ const user =
 result.user;
 
 
+/* KIRIM EMAIL VERIFIKASI */
+
 await user.sendEmailVerification();
 
+
+/* SIMPAN DATA OPERATOR */
 
 await db
 .ref("admins/" + username)
@@ -1479,7 +1556,9 @@ await auth.signOut();
 
 
 showMessage(
-"✅ Pendaftaran berhasil. Silakan cek email untuk verifikasi. Setelah email diverifikasi, tunggu persetujuan Super Admin."
+"✅ Pendaftaran berhasil.\n\n📧 Email verifikasi sudah dikirim ke:\n"+
+email+
+"\n\nSilakan cek Inbox / SPAM.\n\nSetelah email diverifikasi, tunggu persetujuan Super Admin."
 );
 
 
@@ -1577,7 +1656,7 @@ if(!user.emailVerified){
 await auth.signOut();
 
 showMessage(
-"📧 Email belum diverifikasi."
+"📧 Email belum diverifikasi.\n\nGunakan tombol KIRIM ULANG EMAIL VERIFIKASI di bawah."
 );
 
 return;
@@ -1632,15 +1711,165 @@ getFirebaseError(error)
 
 
 /* ================================================= */
+/* RESEND EMAIL VERIFICATION */
+/* ================================================= */
+
+async function resendVerification(){
+
+const username =
+document
+.getElementById("loginUsername")
+.value
+.trim()
+.toLowerCase();
+
+const password =
+document
+.getElementById("loginPassword")
+.value;
+
+
+if(!username){
+
+showMessage(
+"Masukkan username terlebih dahulu."
+);
+
+return;
+
+}
+
+if(!password){
+
+showMessage(
+"Masukkan password terlebih dahulu."
+);
+
+return;
+
+}
+
+
+try{
+
+/* Cari data akun */
+
+const snap =
+await db
+.ref("admins/"+username)
+.once("value");
+
+
+if(!snap.exists()){
+
+showMessage(
+"Username tidak ditemukan."
+);
+
+return;
+
+}
+
+
+const account =
+snap.val();
+
+
+if(!account.email){
+
+showMessage(
+"Email akun tidak ditemukan."
+);
+
+return;
+
+}
+
+
+/* Login sementara ke Firebase */
+
+const result =
+await auth
+.signInWithEmailAndPassword(
+account.email,
+password
+);
+
+const user =
+result.user;
+
+
+/* Jika sudah diverifikasi */
+
+if(user.emailVerified){
+
+await auth.signOut();
+
+showMessage(
+"✅ Email akun ini sudah terverifikasi.\n\nSilakan LOGIN."
+);
+
+return;
+
+}
+
+
+/* Bahasa email */
+
+auth.languageCode = "id";
+
+
+/* Kirim ulang email */
+
+await user.sendEmailVerification();
+
+
+/* Logout */
+
+await auth.signOut();
+
+
+showMessage(
+"📧 Email verifikasi berhasil dikirim ulang.\n\n"+
+account.email+
+"\n\nSilakan cek Inbox dan folder SPAM."
+);
+
+
+}catch(error){
+
+console.error(
+"RESEND VERIFICATION ERROR:",
+error
+);
+
+
+try{
+
+await auth.signOut();
+
+}catch(e){
+
+console.error(e);
+
+}
+
+
+showMessage(
+getFirebaseError(error)
+);
+
+}
+
+}
+
+
+/* ================================================= */
 /* AUTH STATE */
 /* ================================================= */
 
 auth.onAuthStateChanged(
 async function(user){
-
-/*
-TIDAK ADA USER
-*/
 
 if(!user){
 
@@ -1661,16 +1890,8 @@ return;
 }
 
 
-/*
-USER ADA
-*/
-
 currentUser=user;
 
-
-/*
-Cari akun berdasarkan email
-*/
 
 try{
 
@@ -1683,6 +1904,7 @@ const data =
 snap.val() || {};
 
 let account=null;
+
 
 Object
 .keys(data)
@@ -1705,10 +1927,6 @@ account=item;
 });
 
 
-/*
-Akun tidak ditemukan
-*/
-
 if(!account){
 
 console.error(
@@ -1721,9 +1939,18 @@ return;
 }
 
 
-/*
-Cek akses operator
-*/
+/* Jika email belum diverifikasi */
+
+if(!user.emailVerified){
+
+await auth.signOut();
+
+return;
+
+}
+
+
+/* Cek akses */
 
 if(
 account.role !== "superadmin" &&
@@ -1737,26 +1964,13 @@ return;
 }
 
 
-/*
-Simpan session
-*/
-
 currentAccount=account;
 currentRole=account.role;
 
 
-/*
-Tampilkan panel
-*/
-
 showPanel();
 
 }catch(error){
-
-/*
-JANGAN logout otomatis jika
-database gagal dibaca sementara.
-*/
 
 console.error(
 "AUTH STATE DATABASE ERROR:",
@@ -1812,10 +2026,6 @@ currentRole === "superadmin"
 }
 
 
-/*
-SUPER ADMIN
-*/
-
 if(currentRole === "superadmin"){
 
 document
@@ -1839,13 +2049,10 @@ document
 }
 
 
-/*
-Listener
-*/
-
 listenPlayers();
 listenGame();
 listenRanking();
+
 
 if(currentRole==="superadmin"){
 
@@ -3210,7 +3417,13 @@ const errors={
 "Koneksi internet bermasalah.",
 
 "auth/requires-recent-login":
-"Silakan login kembali lalu coba lagi."
+"Silakan login kembali lalu coba lagi.",
+
+"auth/user-disabled":
+"Akun ini dinonaktifkan.",
+
+"auth/operation-not-allowed":
+"Login Email/Password belum diaktifkan."
 
 };
 
