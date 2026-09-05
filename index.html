@@ -3055,6 +3055,12 @@ emptyHTML(
 /* ================================================= */
 
 async function approveOperator(username){
+  alert(
+  "AUTH UID:\n" +
+  auth.currentUser.uid +
+  "\n\nEMAIL:\n" +
+  auth.currentUser.email
+);
 
 if(currentRole !== "superadmin"){
 
