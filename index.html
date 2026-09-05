@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
 
 <title>CONTROL GAME ALDI</title>
 
@@ -18,7 +21,12 @@ rel="stylesheet"
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
+
 <style>
+
+/* ================================================= */
+/* GLOBAL */
+/* ================================================= */
 
 *{
 margin:0;
@@ -26,20 +34,41 @@ padding:0;
 box-sizing:border-box;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
 font-family:Poppins,sans-serif;
 background:
-radial-gradient(circle at top,#151b3d,#05060c 65%);
+radial-gradient(
+circle at 20% 0%,
+rgba(0,110,255,.20),
+transparent 30%
+),
+radial-gradient(
+circle at 90% 20%,
+rgba(0,220,255,.10),
+transparent 28%
+),
+linear-gradient(
+180deg,
+#080b18 0%,
+#05060c 55%,
+#03040a 100%
+);
 color:#fff;
 min-height:100vh;
 }
 
-button,input{
+button,
+input{
 font-family:Poppins,sans-serif;
 }
 
 button{
 cursor:pointer;
+-webkit-tap-highlight-color:transparent;
 }
 
 .hidden{
@@ -47,7 +76,9 @@ display:none !important;
 }
 
 
+/* ================================================= */
 /* LOGIN */
+/* ================================================= */
 
 #authPage{
 min-height:100vh;
@@ -60,15 +91,24 @@ padding:20px;
 .auth-card{
 width:100%;
 max-width:430px;
-padding:32px 24px;
-border-radius:28px;
-background:rgba(20,24,55,.55);
-border:1px solid rgba(255,255,255,.12);
+padding:34px 25px;
+border-radius:30px;
+
+background:
+linear-gradient(
+145deg,
+rgba(24,31,68,.70),
+rgba(8,11,27,.62)
+);
+
+border:1px solid rgba(255,255,255,.10);
+
 box-shadow:
-0 25px 70px rgba(0,0,0,.5),
+0 30px 90px rgba(0,0,0,.60),
 inset 0 1px rgba(255,255,255,.08);
-backdrop-filter:blur(22px);
--webkit-backdrop-filter:blur(22px);
+
+backdrop-filter:blur(24px);
+-webkit-backdrop-filter:blur(24px);
 }
 
 .auth-logo{
@@ -82,30 +122,44 @@ margin-bottom:7px;
 
 .auth-subtitle{
 text-align:center;
-font-size:12px;
-opacity:.6;
+font-size:11px;
+opacity:.55;
+letter-spacing:1px;
 margin-bottom:28px;
 }
 
 .auth-tabs{
 display:flex;
-gap:8px;
+gap:7px;
+padding:4px;
 margin-bottom:22px;
+
+background:rgba(0,0,0,.20);
+border:1px solid rgba(255,255,255,.06);
+border-radius:15px;
 }
 
 .auth-tabs button{
 flex:1;
 padding:11px;
 border:0;
-border-radius:12px;
-background:rgba(255,255,255,.06);
-color:#aaa;
+border-radius:11px;
+background:transparent;
+color:#888;
+transition:.25s;
 }
 
 .auth-tabs button.active{
-background:linear-gradient(135deg,#006cff,#00d9ff);
+background:
+linear-gradient(
+135deg,
+#006cff,
+#00d9ff
+);
 color:#fff;
 font-weight:600;
+box-shadow:
+0 7px 20px rgba(0,160,255,.22);
 }
 
 .field{
@@ -114,24 +168,28 @@ margin-bottom:14px;
 
 .field label{
 display:block;
-font-size:11px;
-opacity:.7;
+font-size:10px;
+opacity:.65;
 margin-bottom:6px;
+letter-spacing:.5px;
 }
 
 .field input{
 width:100%;
 padding:13px 14px;
 border-radius:13px;
-border:1px solid rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.10);
 background:rgba(0,0,0,.25);
 color:#fff;
 outline:none;
+transition:.25s;
 }
 
 .field input:focus{
 border-color:#00cfff;
-box-shadow:0 0 0 2px rgba(0,207,255,.1);
+box-shadow:
+0 0 0 2px rgba(0,207,255,.08),
+0 0 20px rgba(0,207,255,.08);
 }
 
 .main-btn{
@@ -139,18 +197,30 @@ width:100%;
 padding:14px;
 border:0;
 border-radius:14px;
-background:linear-gradient(135deg,#006cff,#00d9ff);
+background:
+linear-gradient(
+135deg,
+#006cff,
+#00d9ff
+);
 color:#fff;
 font-weight:700;
-font-size:14px;
+font-size:13px;
 margin-top:5px;
+box-shadow:
+0 10px 25px rgba(0,120,255,.18);
+transition:.2s;
+}
+
+.main-btn:active{
+transform:scale(.98);
 }
 
 .forgot{
 display:block;
 text-align:center;
 margin-top:14px;
-font-size:12px;
+font-size:11px;
 color:#00d9ff;
 cursor:pointer;
 }
@@ -159,34 +229,50 @@ cursor:pointer;
 margin-top:15px;
 padding:11px;
 border-radius:12px;
-background:rgba(255,255,255,.06);
-font-size:12px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.05);
+font-size:11px;
 text-align:center;
 display:none;
 white-space:pre-line;
 }
 
 
-/* HEADER */
+/* ================================================= */
+/* PANEL */
+/* ================================================= */
 
 #panelPage{
 display:none;
 }
 
+
+/* ================================================= */
+/* HEADER */
+/* ================================================= */
+
 .header{
 position:sticky;
 top:0;
 z-index:100;
-background:rgba(5,7,17,.75);
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
-border-bottom:1px solid rgba(255,255,255,.08);
+
+background:
+rgba(4,6,15,.78);
+
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
+
+border-bottom:1px solid rgba(255,255,255,.07);
+
+box-shadow:
+0 10px 35px rgba(0,0,0,.20);
 }
 
 .header-inner{
 max-width:1100px;
 margin:auto;
-padding:15px 16px;
+padding:14px 16px;
+
 display:flex;
 align-items:center;
 justify-content:space-between;
@@ -195,7 +281,7 @@ gap:12px;
 
 .logo{
 font-family:Orbitron,sans-serif;
-font-size:17px;
+font-size:16px;
 font-weight:800;
 letter-spacing:1px;
 }
@@ -206,8 +292,9 @@ color:#00d9ff;
 
 .user-info{
 text-align:right;
-font-size:10px;
+font-size:9px;
 opacity:.75;
+line-height:1.5;
 }
 
 .user-role{
@@ -218,106 +305,251 @@ font-weight:600;
 .logout-btn{
 margin-left:8px;
 padding:8px 11px;
+
 border-radius:10px;
-border:1px solid rgba(255,255,255,.1);
-background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.09);
+
+background:rgba(255,255,255,.045);
 color:#fff;
-font-size:11px;
+font-size:10px;
+
+transition:.2s;
+}
+
+.logout-btn:active{
+transform:scale(.95);
 }
 
 
+/* ================================================= */
 /* CONTAINER */
+/* ================================================= */
 
 .container{
 max-width:1100px;
 margin:auto;
-padding:18px 14px 50px;
+padding:18px 14px 55px;
 }
 
 
-/* GAME */
+/* ================================================= */
+/* GAME CARD */
+/* ================================================= */
 
 .game-card{
+position:relative;
+overflow:hidden;
+
 padding:20px;
-border-radius:22px;
+border-radius:23px;
+
 background:
 linear-gradient(
 145deg,
-rgba(0,100,255,.18),
-rgba(0,255,255,.05)
+rgba(0,105,255,.20),
+rgba(0,220,255,.045)
 );
-border:1px solid rgba(0,210,255,.18);
-box-shadow:0 18px 50px rgba(0,0,0,.3);
+
+border:1px solid rgba(0,210,255,.16);
+
+box-shadow:
+0 20px 55px rgba(0,0,0,.30),
+inset 0 1px rgba(255,255,255,.05);
+}
+
+.game-card::before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+right:-90px;
+top:-90px;
+
+background:
+radial-gradient(
+circle,
+rgba(0,217,255,.16),
+transparent 70%
+);
+
+pointer-events:none;
 }
 
 .game-title{
 font-family:Orbitron,sans-serif;
-font-size:13px;
-opacity:.7;
+font-size:10px;
+opacity:.55;
+letter-spacing:1px;
 margin-bottom:8px;
 }
 
 .game-status{
-font-size:22px;
+font-size:21px;
 font-weight:700;
 }
 
 .game-winner{
 margin-top:7px;
-font-size:13px;
+font-size:12px;
 color:#00eaff;
 }
 
 .reset-game-btn{
 width:100%;
 margin-top:17px;
-padding:15px;
+padding:14px;
+
 border:0;
 border-radius:14px;
-background:linear-gradient(135deg,#ff1744,#ff6d00);
+
+background:
+linear-gradient(
+135deg,
+#ff1744,
+#ff6d00
+);
+
 color:#fff;
 font-weight:800;
-font-size:14px;
+font-size:13px;
+
+box-shadow:
+0 9px 25px rgba(255,70,0,.14);
 }
 
 
-/* STATS */
+/* ================================================= */
+/* STATUS BAR */
+/* ================================================= */
 
-.stats{
+.status-bar{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin:14px 0;
+gap:9px;
+margin:14px 0 15px;
 }
 
-.stat{
-padding:15px;
+.status-card{
+position:relative;
+overflow:hidden;
+
+padding:14px 8px;
+
 border-radius:17px;
-background:rgba(255,255,255,.045);
-border:1px solid rgba(255,255,255,.07);
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.065),
+rgba(255,255,255,.025)
+);
+
+border:1px solid rgba(255,255,255,.075);
+
 text-align:center;
+
+transition:
+transform .18s,
+border-color .18s,
+background .18s;
+
+cursor:pointer;
 }
 
-.stat-number{
+.status-card::after{
+content:"";
+position:absolute;
+left:15%;
+right:15%;
+bottom:-18px;
+height:35px;
+
+background:
+radial-gradient(
+ellipse,
+rgba(0,217,255,.18),
+transparent 70%
+);
+
+pointer-events:none;
+}
+
+.status-card:active{
+transform:scale(.96);
+}
+
+.status-card.active-status{
+border-color:rgba(0,210,255,.38);
+
+background:
+linear-gradient(
+145deg,
+rgba(0,120,255,.16),
+rgba(0,210,255,.055)
+);
+
+box-shadow:
+0 8px 25px rgba(0,120,255,.08);
+}
+
+.status-icon{
+font-size:15px;
+margin-bottom:4px;
+}
+
+.status-number{
 font-family:Orbitron,sans-serif;
-font-size:22px;
+font-size:21px;
 font-weight:700;
+line-height:1.2;
 }
 
-.stat-label{
-font-size:10px;
+.status-label{
+font-size:8px;
 opacity:.55;
 margin-top:4px;
+letter-spacing:.6px;
+}
+
+.status-arrow{
+position:absolute;
+top:7px;
+right:8px;
+font-size:8px;
+opacity:.25;
 }
 
 
-/* TABS */
+/* ================================================= */
+/* NAVIGATION TABS */
+/* ================================================= */
+
+.tabs-wrap{
+position:sticky;
+top:58px;
+z-index:80;
+
+padding:7px 0 9px;
+
+background:
+linear-gradient(
+180deg,
+rgba(5,7,17,.95),
+rgba(5,7,17,.78),
+transparent
+);
+
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+}
 
 .tabs{
 display:flex;
 gap:7px;
 overflow-x:auto;
-padding:3px 1px 10px;
+
+padding:3px 1px 5px;
+
 scrollbar-width:none;
 }
 
@@ -326,53 +558,132 @@ display:none;
 }
 
 .tab{
+position:relative;
+
 flex:0 0 auto;
+
 padding:10px 14px;
+
 border-radius:12px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.045);
-color:#aaa;
-font-size:11px;
+
+border:1px solid rgba(255,255,255,.07);
+
+background:
+rgba(255,255,255,.035);
+
+color:#888;
+
+font-size:10px;
 font-weight:600;
+
+transition:.22s;
+}
+
+.tab::after{
+content:"";
+position:absolute;
+
+left:50%;
+bottom:-4px;
+
+width:0;
+height:2px;
+
+border-radius:5px;
+
+background:#00d9ff;
+
+transform:translateX(-50%);
+
+transition:.22s;
 }
 
 .tab.active{
-background:linear-gradient(135deg,#006cff,#00cfff);
 color:#fff;
+
+background:
+linear-gradient(
+135deg,
+rgba(0,108,255,.88),
+rgba(0,207,255,.80)
+);
+
 border-color:transparent;
+
+box-shadow:
+0 7px 22px rgba(0,130,255,.16);
+}
+
+.tab.active::after{
+width:18px;
 }
 
 
-/* SECTION */
+/* ================================================= */
+/* SECTIONS */
+/* ================================================= */
 
 .section{
 display:none;
+
+animation:
+sectionIn .25s ease;
 }
 
 .section.active{
 display:block;
 }
 
+@keyframes sectionIn{
+
+from{
+opacity:0;
+transform:translateY(5px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 .section-title{
 font-family:Orbitron,sans-serif;
-font-size:15px;
-margin:12px 0;
+font-size:13px;
+letter-spacing:.4px;
+margin:10px 0 12px;
 }
 
 
+/* ================================================= */
 /* LIST */
+/* ================================================= */
 
 .list{
 display:flex;
 flex-direction:column;
-gap:10px;
+gap:9px;
 }
 
 .item{
 padding:15px;
+
 border-radius:17px;
-background:rgba(255,255,255,.045);
-border:1px solid rgba(255,255,255,.07);
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.055),
+rgba(255,255,255,.025)
+);
+
+border:1px solid rgba(255,255,255,.065);
+
+box-shadow:
+0 7px 25px rgba(0,0,0,.12);
+
+transition:.2s;
 }
 
 .item-main{
@@ -384,23 +695,29 @@ align-items:center;
 
 .item-name{
 font-weight:600;
-font-size:14px;
+font-size:13px;
 }
 
 .item-email{
-font-size:10px;
-opacity:.55;
+font-size:9px;
+opacity:.45;
 margin-top:3px;
 word-break:break-all;
 }
 
 .badge{
 display:inline-block;
-margin-top:7px;
+
 padding:4px 8px;
+
 border-radius:8px;
-font-size:9px;
-background:rgba(255,255,255,.08);
+
+font-size:8px;
+
+background:
+rgba(255,255,255,.07);
+
+border:1px solid rgba(255,255,255,.04);
 }
 
 .actions{
@@ -413,11 +730,21 @@ margin-top:12px;
 .action{
 border:0;
 border-radius:10px;
+
 padding:9px 11px;
-font-size:10px;
+
+font-size:9px;
 font-weight:600;
 color:#fff;
-background:rgba(255,255,255,.09);
+
+background:
+rgba(255,255,255,.08);
+
+transition:.18s;
+}
+
+.action:active{
+transform:scale(.95);
 }
 
 .action.blue{
@@ -437,47 +764,87 @@ background:#f57c00;
 }
 
 .empty{
-padding:30px 15px;
+padding:32px 15px;
+
 text-align:center;
-opacity:.45;
-font-size:12px;
+
+opacity:.4;
+
+font-size:11px;
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,.025);
+
+border:1px solid rgba(255,255,255,.04);
 }
 
 
+/* ================================================= */
 /* POINTS */
+/* ================================================= */
 
 .points-box{
 padding:18px;
-border-radius:18px;
-background:rgba(255,255,255,.045);
+
+border-radius:19px;
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.055),
+rgba(255,255,255,.025)
+);
+
 border:1px solid rgba(255,255,255,.07);
 }
 
 .points-box label{
 display:block;
-font-size:11px;
-opacity:.6;
+
+font-size:10px;
+opacity:.55;
+
 margin-bottom:6px;
 }
 
 .points-box input{
 width:100%;
+
 padding:12px;
+
 border-radius:12px;
-border:1px solid rgba(255,255,255,.1);
+
+border:1px solid rgba(255,255,255,.09);
+
 background:rgba(0,0,0,.25);
+
 color:#fff;
+
 outline:none;
+
 margin-bottom:10px;
+}
+
+.points-box input:focus{
+border-color:#00d9ff;
 }
 
 .ranking-item{
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 padding:13px;
-border-radius:13px;
-background:rgba(255,255,255,.04);
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.05);
+
 margin-bottom:7px;
 }
 
@@ -489,65 +856,73 @@ align-items:center;
 
 .rank-number{
 font-family:Orbitron,sans-serif;
-font-size:12px;
-opacity:.6;
+font-size:11px;
+opacity:.55;
 width:25px;
 }
 
 .rank-score{
 font-family:Orbitron,sans-serif;
 color:#00d9ff;
-}
-
-
-/* SETTINGS */
-
-.setting-card{
-padding:17px;
-border-radius:17px;
-background:rgba(255,255,255,.045);
-border:1px solid rgba(255,255,255,.07);
-margin-bottom:10px;
-}
-
-.setting-title{
-font-weight:600;
 font-size:13px;
 }
 
-.setting-desc{
-font-size:10px;
-opacity:.5;
-margin-top:4px;
-line-height:1.5;
+
+/* ================================================= */
+/* OPERATOR */
+/* ================================================= */
+
+.operator-summary{
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:15px;
+
+margin-bottom:12px;
+
+border-radius:17px;
+
+background:
+linear-gradient(
+145deg,
+rgba(0,110,255,.11),
+rgba(0,210,255,.035)
+);
+
+border:1px solid rgba(0,210,255,.10);
 }
 
-.setting-btn{
-width:100%;
-margin-top:12px;
-padding:12px;
-border-radius:12px;
-border:0;
-color:#fff;
-background:rgba(255,255,255,.08);
+.operator-summary-title{
+font-weight:600;
+font-size:12px;
 }
 
-.setting-btn.red{
-background:#d71945;
+.operator-summary-desc{
+font-size:9px;
+opacity:.45;
+margin-top:3px;
 }
 
-.setting-btn.blue{
-background:#006cff;
+.operator-summary-icon{
+font-size:22px;
 }
 
 
+/* ================================================= */
 /* HISTORY */
+/* ================================================= */
 
 .history-item{
 padding:15px;
+
 border-radius:17px;
-background:rgba(255,255,255,.045);
-border:1px solid rgba(255,255,255,.07);
+
+background:
+rgba(255,255,255,.045);
+
+border:1px solid rgba(255,255,255,.06);
+
 margin-bottom:9px;
 }
 
@@ -560,56 +935,238 @@ gap:10px;
 
 .history-user{
 font-weight:600;
-font-size:13px;
+font-size:12px;
 }
 
 .history-time{
-font-size:9px;
-opacity:.45;
+font-size:8px;
+opacity:.4;
 text-align:right;
 }
 
 .history-action{
-font-size:11px;
+font-size:10px;
 margin-top:6px;
 line-height:1.5;
-opacity:.8;
+opacity:.75;
 }
 
 .history-role{
 display:inline-block;
+
 margin-top:7px;
+
 padding:4px 8px;
+
 border-radius:8px;
-font-size:8px;
-background:rgba(0,217,255,.1);
+
+font-size:7px;
+
+background:
+rgba(0,217,255,.09);
+
 color:#00d9ff;
 }
 
 .history-clear{
 width:100%;
+
 margin-bottom:12px;
+
 padding:12px;
+
 border:0;
 border-radius:12px;
+
 background:#d71945;
+
 color:#fff;
+
 font-weight:700;
-font-size:11px;
+font-size:10px;
 }
 
 
+/* ================================================= */
+/* SETTINGS COMPACT */
+/* ================================================= */
+
+.settings-intro{
+padding:16px;
+
+border-radius:18px;
+
+background:
+linear-gradient(
+145deg,
+rgba(0,110,255,.12),
+rgba(0,210,255,.035)
+);
+
+border:1px solid rgba(0,210,255,.09);
+
+margin-bottom:11px;
+}
+
+.settings-intro-title{
+font-family:Orbitron,sans-serif;
+font-size:12px;
+}
+
+.settings-intro-desc{
+font-size:9px;
+opacity:.45;
+margin-top:4px;
+}
+
+.setting-card{
+position:relative;
+
+padding:15px;
+
+border-radius:16px;
+
+background:
+rgba(255,255,255,.038);
+
+border:1px solid rgba(255,255,255,.06);
+
+margin-bottom:8px;
+
+transition:.2s;
+}
+
+.setting-card.open{
+background:
+rgba(255,255,255,.055);
+
+border-color:
+rgba(0,210,255,.18);
+}
+
+.setting-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+
+cursor:pointer;
+}
+
+.setting-left{
+display:flex;
+align-items:center;
+gap:11px;
+}
+
+.setting-icon{
+width:35px;
+height:35px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:11px;
+
+background:
+rgba(255,255,255,.06);
+
+font-size:15px;
+}
+
+.setting-title{
+font-weight:600;
+font-size:11px;
+}
+
+.setting-desc{
+font-size:8px;
+opacity:.42;
+margin-top:3px;
+line-height:1.45;
+}
+
+.setting-arrow{
+font-size:10px;
+opacity:.4;
+
+transition:.2s;
+}
+
+.setting-card.open .setting-arrow{
+transform:rotate(180deg);
+}
+
+.setting-content{
+display:none;
+
+padding-top:12px;
+margin-top:12px;
+
+border-top:
+1px solid rgba(255,255,255,.06);
+}
+
+.setting-card.open .setting-content{
+display:block;
+}
+
+.setting-btn{
+width:100%;
+
+padding:11px;
+
+border-radius:11px;
+
+border:0;
+
+color:#fff;
+
+background:
+rgba(255,255,255,.08);
+
+font-size:10px;
+font-weight:600;
+}
+
+.setting-btn.red{
+background:#d71945;
+}
+
+.setting-btn.blue{
+background:#006cff;
+}
+
+.setting-small-note{
+font-size:8px;
+opacity:.4;
+line-height:1.5;
+margin-bottom:9px;
+}
+
+
+/* ================================================= */
 /* MODAL */
+/* ================================================= */
 
 .modal{
 position:fixed;
 inset:0;
 z-index:500;
+
 display:none;
+
 align-items:center;
 justify-content:center;
+
 padding:20px;
-background:rgba(0,0,0,.65);
+
+background:
+rgba(0,0,0,.68);
+
+backdrop-filter:blur(5px);
+-webkit-backdrop-filter:blur(5px);
 }
 
 .modal.show{
@@ -619,23 +1176,34 @@ display:flex;
 .modal-box{
 width:100%;
 max-width:420px;
+
 padding:22px;
+
 border-radius:22px;
-background:#101328;
-border:1px solid rgba(255,255,255,.1);
-box-shadow:0 30px 80px rgba(0,0,0,.6);
+
+background:
+linear-gradient(
+145deg,
+#151a35,
+#0c0f21
+);
+
+border:1px solid rgba(255,255,255,.10);
+
+box-shadow:
+0 30px 80px rgba(0,0,0,.65);
 }
 
 .modal-title{
 font-family:Orbitron,sans-serif;
-font-size:15px;
+font-size:14px;
 margin-bottom:15px;
 }
 
 .modal-text{
-font-size:12px;
+font-size:11px;
 line-height:1.6;
-opacity:.7;
+opacity:.65;
 margin-bottom:15px;
 }
 
@@ -646,11 +1214,17 @@ gap:8px;
 
 .modal-actions button{
 flex:1;
+
 padding:12px;
+
 border-radius:12px;
+
 border:0;
+
 color:#fff;
-background:rgba(255,255,255,.08);
+
+background:
+rgba(255,255,255,.08);
 }
 
 .modal-actions .confirm{
@@ -658,34 +1232,22 @@ background:#e91e43;
 }
 
 
+/* ================================================= */
+/* MOBILE */
+/* ================================================= */
+
 @media(max-width:600px){
 
 .header-inner{
-padding:13px 12px;
+padding:12px;
 }
 
 .logo{
-font-size:14px;
+font-size:13px;
 }
 
 .user-info{
 display:none;
-}
-
-.stats{
-grid-template-columns:repeat(3,1fr);
-}
-
-.stat{
-padding:12px 5px;
-}
-
-.stat-number{
-font-size:18px;
-}
-
-.stat-label{
-font-size:8px;
 }
 
 .container{
@@ -693,11 +1255,45 @@ padding-left:10px;
 padding-right:10px;
 }
 
+.tabs-wrap{
+top:51px;
+}
+
+.status-card{
+padding:13px 6px;
+}
+
+.status-number{
+font-size:19px;
+}
+
+.status-icon{
+font-size:14px;
+}
+
+.status-label{
+font-size:7px;
+}
+
+.tab{
+padding:9px 12px;
+font-size:9px;
+}
+
+.game-card{
+padding:18px;
+}
+
+.game-status{
+font-size:19px;
+}
+
 }
 
 </style>
 
 </head>
+
 
 <body>
 
@@ -864,6 +1460,7 @@ class="auth-message"
 </div>
 
 
+
 <!-- ================================================= -->
 <!-- PANEL -->
 <!-- ================================================= -->
@@ -902,7 +1499,9 @@ Logout
 <div class="container">
 
 
+<!-- ================================================= -->
 <!-- GAME -->
+<!-- ================================================= -->
 
 <div class="game-card">
 
@@ -934,50 +1533,94 @@ onclick="confirmResetGame()"
 </div>
 
 
-<!-- STATS -->
 
-<div class="stats">
+<!-- ================================================= -->
+<!-- STATUS BAR CLICKABLE -->
+<!-- ================================================= -->
 
-<div class="stat">
+<div class="status-bar">
+
+
+<div
+id="statusPending"
+class="status-card active-status"
+onclick="openStatusTab('pending')"
+>
+
+<span class="status-arrow">
+›
+</span>
+
+<div class="status-icon">
+⏳
+</div>
 
 <div
 id="pendingCount"
-class="stat-number"
+class="status-number"
 >
 0
 </div>
 
-<div class="stat-label">
+<div class="status-label">
 MENUNGGU
 </div>
 
 </div>
 
-<div class="stat">
+
+
+<div
+id="statusActive"
+class="status-card"
+onclick="openStatusTab('active')"
+>
+
+<span class="status-arrow">
+›
+</span>
+
+<div class="status-icon">
+🟢
+</div>
 
 <div
 id="activeCount"
-class="stat-number"
+class="status-number"
 >
 0
 </div>
 
-<div class="stat-label">
+<div class="status-label">
 AKTIF
 </div>
 
 </div>
 
-<div class="stat">
+
+
+<div
+id="statusSpam"
+class="status-card"
+onclick="openStatusTab('spam')"
+>
+
+<span class="status-arrow">
+›
+</span>
+
+<div class="status-icon">
+🚨
+</div>
 
 <div
 id="spamCount"
-class="stat-number"
+class="status-number"
 >
 0
 </div>
 
-<div class="stat-label">
+<div class="status-label">
 SPAM
 </div>
 
@@ -986,7 +1629,12 @@ SPAM
 </div>
 
 
+
+<!-- ================================================= -->
 <!-- TABS -->
+<!-- ================================================= -->
+
+<div class="tabs-wrap">
 
 <div class="tabs">
 
@@ -1038,13 +1686,18 @@ RIWAYAT
 class="tab"
 onclick="openTab('settings',this)"
 >
-PENGATURAN
+⚙ PENGATURAN
 </button>
 
 </div>
 
+</div>
 
+
+
+<!-- ================================================= -->
 <!-- PENDING -->
+<!-- ================================================= -->
 
 <section
 id="section-pending"
@@ -1063,7 +1716,10 @@ class="list"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- ACTIVE -->
+<!-- ================================================= -->
 
 <section
 id="section-active"
@@ -1082,7 +1738,10 @@ class="list"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- SPAM -->
+<!-- ================================================= -->
 
 <section
 id="section-spam"
@@ -1101,7 +1760,10 @@ class="list"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- POINTS -->
+<!-- ================================================= -->
 
 <section
 id="section-points"
@@ -1138,6 +1800,7 @@ onclick="saveScore()"
 
 </div>
 
+
 <div style="margin-top:18px">
 
 <div class="section-title">
@@ -1151,7 +1814,10 @@ onclick="saveScore()"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- OPERATORS -->
+<!-- ================================================= -->
 
 <section
 id="section-operators"
@@ -1162,6 +1828,26 @@ class="section"
 👑 PERMINTAAN OPERATOR
 </div>
 
+<div class="operator-summary">
+
+<div>
+
+<div class="operator-summary-title">
+Approval Operator
+</div>
+
+<div class="operator-summary-desc">
+Kelola permintaan akun Operator Game.
+</div>
+
+</div>
+
+<div class="operator-summary-icon">
+👑
+</div>
+
+</div>
+
 <div
 id="operatorList"
 class="list"
@@ -1170,7 +1856,10 @@ class="list"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- HISTORY -->
+<!-- ================================================= -->
 
 <section
 id="section-history"
@@ -1196,7 +1885,10 @@ class="list"
 </section>
 
 
+
+<!-- ================================================= -->
 <!-- SETTINGS -->
+<!-- ================================================= -->
 
 <section
 id="section-settings"
@@ -1207,6 +1899,22 @@ class="section"
 ⚙️ PENGATURAN
 </div>
 
+
+<div class="settings-intro">
+
+<div class="settings-intro-title">
+CONTROL CENTER
+</div>
+
+<div class="settings-intro-desc">
+Pilih menu pengaturan yang ingin digunakan.
+</div>
+
+</div>
+
+
+<!-- OPERATOR -->
+
 <div
 id="operatorManagement"
 class="hidden"
@@ -1214,12 +1922,41 @@ class="hidden"
 
 <div class="setting-card">
 
+<div
+class="setting-head"
+onclick="toggleSetting(this)"
+>
+
+<div class="setting-left">
+
+<div class="setting-icon">
+👑
+</div>
+
+<div>
+
 <div class="setting-title">
-👑 KELOLA OPERATOR
+KELOLA OPERATOR
 </div>
 
 <div class="setting-desc">
 Kelola akun Operator Game yang sudah disetujui.
+</div>
+
+</div>
+
+</div>
+
+<div class="setting-arrow">
+▼
+</div>
+
+</div>
+
+<div class="setting-content">
+
+<div class="setting-small-note">
+Gunakan menu ini untuk melihat dan memproses permintaan Operator.
 </div>
 
 <button
@@ -1233,15 +1970,49 @@ KELOLA OPERATOR
 
 </div>
 
+</div>
+
+
+
+<!-- RESET PEMAIN -->
 
 <div class="setting-card">
 
+<div
+class="setting-head"
+onclick="toggleSetting(this)"
+>
+
+<div class="setting-left">
+
+<div class="setting-icon">
+🗑️
+</div>
+
+<div>
+
 <div class="setting-title">
-🗑️ RESET PEMAIN
+RESET PEMAIN
 </div>
 
 <div class="setting-desc">
 Menghapus seluruh pemain dan status approval.
+</div>
+
+</div>
+
+</div>
+
+<div class="setting-arrow">
+▼
+</div>
+
+</div>
+
+<div class="setting-content">
+
+<div class="setting-small-note">
+Semua pemain, status approval, dan game aktif akan dihapus.
 </div>
 
 <button
@@ -1253,15 +2024,49 @@ RESET SEMUA PEMAIN
 
 </div>
 
+</div>
+
+
+
+<!-- PASSWORD -->
 
 <div class="setting-card">
 
+<div
+class="setting-head"
+onclick="toggleSetting(this)"
+>
+
+<div class="setting-left">
+
+<div class="setting-icon">
+🔑
+</div>
+
+<div>
+
 <div class="setting-title">
-🔑 GANTI PASSWORD
+GANTI PASSWORD
 </div>
 
 <div class="setting-desc">
-Password akun Firebase Authentication akan diganti.
+Ubah password akun Firebase Authentication.
+</div>
+
+</div>
+
+</div>
+
+<div class="setting-arrow">
+▼
+</div>
+
+</div>
+
+<div class="setting-content">
+
+<div class="setting-small-note">
+Kamu akan diminta memasukkan password lama sebelum membuat password baru.
 </div>
 
 <button
@@ -1273,19 +2078,49 @@ GANTI PASSWORD
 
 </div>
 
+</div>
+
+
+
+<!-- LOGOUT -->
 
 <div class="setting-card">
 
+<div
+class="setting-head"
+onclick="toggleSetting(this)"
+>
+
+<div class="setting-left">
+
+<div class="setting-icon">
+🚪
+</div>
+
+<div>
+
 <div class="setting-title">
-
-🚪 KELUAR
-
+KELUAR
 </div>
 
 <div class="setting-desc">
-
 Keluar dari Control Panel.
+</div>
 
+</div>
+
+</div>
+
+<div class="setting-arrow">
+▼
+</div>
+
+</div>
+
+<div class="setting-content">
+
+<div class="setting-small-note">
+Sesi login Firebase akan diakhiri.
 </div>
 
 <button
@@ -1297,11 +2132,15 @@ LOGOUT
 
 </div>
 
+</div>
+
+
 </section>
 
 </div>
 
 </div>
+
 
 
 <!-- ================================================= -->
@@ -1349,6 +2188,7 @@ YA
 </div>
 
 
+
 <script>
 
 /* ================================================= */
@@ -1383,7 +2223,9 @@ appId:
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const db = firebase.database();
+
 
 
 /* ================================================= */
@@ -1402,21 +2244,29 @@ error
 });
 
 
+
 /* ================================================= */
 /* GLOBAL */
 /* ================================================= */
 
 let currentUser = null;
+
 let currentAccount = null;
+
 let currentRole = null;
 
 let playersData = {};
+
 let rankingData = {};
+
 let operatorsData = {};
+
 let historyData = {};
 
 const SUPER_USERNAME = "aldi";
+
 const SUPER_EMAIL = "aldydasilva172@gmail.com";
+
 
 
 /* ================================================= */
@@ -1464,6 +2314,7 @@ error
 }
 
 
+
 /* ================================================= */
 /* MESSAGE */
 /* ================================================= */
@@ -1474,9 +2325,11 @@ const box =
 document.getElementById("authMessage");
 
 box.innerText = text;
+
 box.style.display = "block";
 
 }
+
 
 
 /* ================================================= */
@@ -1520,6 +2373,7 @@ document
 }
 
 
+
 /* ================================================= */
 /* SIGN UP */
 /* ================================================= */
@@ -1553,42 +2407,60 @@ document
 
 if(!username){
 
-showMessage("Username wajib diisi.");
+showMessage(
+"Username wajib diisi."
+);
+
 return;
 
 }
 
 if(username.length < 3){
 
-showMessage("Username minimal 3 karakter.");
+showMessage(
+"Username minimal 3 karakter."
+);
+
 return;
 
 }
 
 if(username === "aldi"){
 
-showMessage("Username aldi sudah digunakan.");
+showMessage(
+"Username aldi sudah digunakan."
+);
+
 return;
 
 }
 
 if(!email){
 
-showMessage("Email wajib diisi.");
+showMessage(
+"Email wajib diisi."
+);
+
 return;
 
 }
 
 if(password.length < 6){
 
-showMessage("Password minimal 6 karakter.");
+showMessage(
+"Password minimal 6 karakter."
+);
+
 return;
 
 }
 
 if(password !== confirm){
 
-showMessage("Konfirmasi password tidak sama.");
+showMessage(
+"Konfirmasi password tidak sama."
+);
+
 return;
 
 }
@@ -1630,10 +2502,15 @@ await db
 .set({
 
 username:username,
+
 email:email,
+
 role:"operator",
+
 status:"pending",
+
 uid:user.uid,
+
 createdAt:Date.now()
 
 });
@@ -1668,6 +2545,7 @@ getFirebaseError(error)
 }
 
 }
+
 
 
 /* ================================================= */
@@ -1721,7 +2599,6 @@ return;
 const account =
 snap.val();
 
-
 const email =
 account.email;
 
@@ -1738,7 +2615,9 @@ result.user;
 
 
 currentUser = user;
+
 currentAccount = account;
+
 currentRole = account.role;
 
 
@@ -1783,6 +2662,7 @@ getFirebaseError(error)
 }
 
 
+
 /* ================================================= */
 /* AUTH STATE */
 /* ================================================= */
@@ -1793,7 +2673,9 @@ async function(user){
 if(!user){
 
 currentUser=null;
+
 currentAccount=null;
+
 currentRole=null;
 
 document
@@ -1871,6 +2753,7 @@ return;
 
 
 currentAccount=account;
+
 currentRole=account.role;
 
 
@@ -1886,6 +2769,7 @@ error
 }
 
 });
+
 
 
 /* ================================================= */
@@ -1964,18 +2848,22 @@ document
 
 
 listenPlayers();
+
 listenGame();
+
 listenRanking();
 
 
 if(currentRole==="superadmin"){
 
 listenOperators();
+
 listenHistory();
 
 }
 
 }
+
 
 
 /* ================================================= */
@@ -1997,6 +2885,7 @@ console.error(error);
 location.reload();
 
 }
+
 
 
 /* ================================================= */
@@ -2061,6 +2950,7 @@ getFirebaseError(error)
 }
 
 }
+
 
 
 /* ================================================= */
@@ -2144,6 +3034,7 @@ getFirebaseError(error)
 }
 
 
+
 /* ================================================= */
 /* TAB */
 /* ================================================= */
@@ -2186,8 +3077,121 @@ button.classList.add("active");
 
 }
 
+
+/* UPDATE STATUS CARD */
+
+document
+.querySelectorAll(".status-card")
+.forEach(card=>{
+
+card.classList.remove(
+"active-status"
+);
+
+});
+
+
+if(name==="pending"){
+
+document
+.getElementById("statusPending")
+.classList.add(
+"active-status"
+);
+
 }
 
+if(name==="active"){
+
+document
+.getElementById("statusActive")
+.classList.add(
+"active-status"
+);
+
+}
+
+if(name==="spam"){
+
+document
+.getElementById("statusSpam")
+.classList.add(
+"active-status"
+);
+
+}
+
+}
+
+
+/* ================================================= */
+/* STATUS CARD NAVIGATION */
+/* ================================================= */
+
+function openStatusTab(name){
+
+const section =
+document.getElementById(
+"section-"+name
+);
+
+if(!section){
+
+return;
+
+}
+
+
+const tabs =
+document.querySelectorAll(".tab");
+
+let targetTab=null;
+
+
+tabs.forEach(tab=>{
+
+const text =
+tab.innerText
+.trim()
+.toLowerCase();
+
+if(
+(name==="pending" && text==="menunggu") ||
+(name==="active" && text==="aktif") ||
+(name==="spam" && text==="spam")
+){
+
+targetTab=tab;
+
+}
+
+});
+
+
+openTab(
+name,
+targetTab
+);
+
+
+setTimeout(()=>{
+
+document
+.querySelector(".tabs-wrap")
+?.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+},50);
+
+}
+
+
+
+/* ================================================= */
+/* OPEN TAB BY NAME */
+/* ================================================= */
 
 function openTabByName(name){
 
@@ -2205,13 +3209,54 @@ name==="operators" &&
 text.includes("operator")
 ){
 
-openTab(name,tab);
+openTab(
+name,
+tab
+);
 
 }
 
 });
 
 }
+
+
+
+/* ================================================= */
+/* SETTINGS ACCORDION */
+/* ================================================= */
+
+function toggleSetting(head){
+
+const card =
+head.closest(".setting-card");
+
+if(!card){
+
+return;
+
+}
+
+
+/* tutup setting lain */
+
+document
+.querySelectorAll(".setting-card")
+.forEach(item=>{
+
+if(item!==card){
+
+item.classList.remove("open");
+
+}
+
+});
+
+
+card.classList.toggle("open");
+
+}
+
 
 
 /* ================================================= */
@@ -2233,6 +3278,7 @@ renderPlayers();
 }
 
 
+
 function renderPlayers(){
 
 const pending =
@@ -2246,12 +3292,16 @@ document.getElementById("spamList");
 
 
 pending.innerHTML="";
+
 active.innerHTML="";
+
 spam.innerHTML="";
 
 
 let pendingCount=0;
+
 let activeCount=0;
+
 let spamCount=0;
 
 
@@ -2349,6 +3399,7 @@ emptyHTML(
 }
 
 }
+
 
 
 /* ================================================= */
@@ -2495,6 +3546,7 @@ onclick="keluarkanPlayer('${id}')"
 }
 
 
+
 /* ================================================= */
 /* PLAYER ACTIONS */
 /* ================================================= */
@@ -2511,6 +3563,7 @@ await db
 .update({
 
 status:"approved",
+
 spam:false
 
 });
@@ -2530,6 +3583,7 @@ error.code
 }
 
 }
+
 
 
 async function tolakPlayer(id){
@@ -2559,6 +3613,7 @@ alert(
 }
 
 
+
 async function bukaSpam(id){
 
 try{
@@ -2571,6 +3626,7 @@ await db
 .update({
 
 spam:false,
+
 status:"approved"
 
 });
@@ -2589,6 +3645,7 @@ alert(
 }
 
 }
+
 
 
 async function keluarkanPlayer(id){
@@ -2624,6 +3681,7 @@ await db
 .update({
 
 status:"pending",
+
 spam:false
 
 });
@@ -2642,6 +3700,7 @@ alert(
 }
 
 }
+
 
 
 /* ================================================= */
@@ -2687,6 +3746,7 @@ winner.innerText=
 }
 
 
+
 /* ================================================= */
 /* RESET GAME */
 /* ================================================= */
@@ -2700,6 +3760,7 @@ resetGame
 );
 
 }
+
 
 
 async function resetGame(){
@@ -2761,6 +3822,7 @@ error.code
 }
 
 
+
 /* ================================================= */
 /* RESET PLAYERS */
 /* ================================================= */
@@ -2774,6 +3836,7 @@ resetPlayers
 );
 
 }
+
 
 
 async function resetPlayers(){
@@ -2808,6 +3871,7 @@ error.code
 }
 
 
+
 /* ================================================= */
 /* RANKING */
 /* ================================================= */
@@ -2827,6 +3891,7 @@ encodeURIComponent(text)
 }
 
 
+
 function listenRanking(){
 
 db.ref("ranking")
@@ -2840,6 +3905,7 @@ renderRanking();
 });
 
 }
+
 
 
 function renderRanking(){
@@ -2909,6 +3975,7 @@ ${Number(item.score||0)}
 });
 
 }
+
 
 
 /* ================================================= */
@@ -3011,6 +4078,7 @@ error.code
 }
 
 
+
 /* ================================================= */
 /* OPERATORS */
 /* ================================================= */
@@ -3028,6 +4096,7 @@ renderOperators();
 });
 
 }
+
 
 
 function renderOperators(){
@@ -3124,6 +4193,7 @@ emptyHTML(
 }
 
 
+
 /* ================================================= */
 /* APPROVE OPERATOR */
 /* ================================================= */
@@ -3191,8 +4261,11 @@ return;
 await operatorRef.update({
 
 role:"operator",
+
 status:"approved",
+
 approvedAt:Date.now(),
+
 approvedBy:SUPER_USERNAME
 
 });
@@ -3227,6 +4300,7 @@ alert(
 }
 
 }
+
 
 
 /* ================================================= */
@@ -3301,6 +4375,7 @@ alert(
 }
 
 
+
 /* ================================================= */
 /* HISTORY */
 /* ================================================= */
@@ -3326,6 +4401,7 @@ renderHistory();
 });
 
 }
+
 
 
 function renderHistory(){
@@ -3438,6 +4514,7 @@ ${role}
 }
 
 
+
 /* ================================================= */
 /* CLEAR HISTORY */
 /* ================================================= */
@@ -3462,6 +4539,7 @@ clearHistory
 );
 
 }
+
 
 
 async function clearHistory(){
@@ -3496,6 +4574,7 @@ alert(
 }
 
 }
+
 
 
 /* ================================================= */
@@ -3536,6 +4615,7 @@ document
 }
 
 
+
 function closeModal(){
 
 document
@@ -3543,6 +4623,7 @@ document
 .classList.remove("show");
 
 }
+
 
 
 /* ================================================= */
@@ -3603,6 +4684,7 @@ error.message
 }
 
 
+
 /* ================================================= */
 /* EMPTY */
 /* ================================================= */
@@ -3616,6 +4698,7 @@ ${text}
 `;
 
 }
+
 
 
 /* ================================================= */
@@ -3632,6 +4715,7 @@ return String(text)
 .replace(/'/g,"&#039;");
 
 }
+
 
 
 /* ================================================= */
