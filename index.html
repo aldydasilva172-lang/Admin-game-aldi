@@ -34,8 +34,7 @@ color:#fff;
 min-height:100vh;
 }
 
-button,
-input{
+button,input{
 font-family:Poppins,sans-serif;
 }
 
@@ -144,16 +143,6 @@ color:#fff;
 font-weight:700;
 font-size:14px;
 margin-top:5px;
-}
-
-.secondary-btn{
-width:100%;
-padding:12px;
-border:1px solid rgba(255,255,255,.1);
-border-radius:14px;
-background:rgba(255,255,255,.05);
-color:#fff;
-margin-top:9px;
 }
 
 .forgot{
@@ -284,7 +273,6 @@ background:linear-gradient(135deg,#ff1744,#ff6d00);
 color:#fff;
 font-weight:800;
 font-size:14px;
-box-shadow:0 10px 25px rgba(255,23,68,.2);
 }
 
 /* STATS */
@@ -599,8 +587,6 @@ background:rgba(255,255,255,.08);
 background:#e91e43;
 }
 
-/* MOBILE */
-
 @media(max-width:600px){
 
 .header-inner{
@@ -644,7 +630,9 @@ padding-right:10px;
 
 <body>
 
+<!-- ================================================= -->
 <!-- AUTH PAGE -->
+<!-- ================================================= -->
 
 <div id="authPage">
 
@@ -796,7 +784,10 @@ class="auth-message"
 
 </div>
 
+
+<!-- ================================================= -->
 <!-- PANEL -->
+<!-- ================================================= -->
 
 <div id="panelPage">
 
@@ -828,7 +819,11 @@ Logout
 
 </header>
 
+
 <div class="container">
+
+
+<!-- GAME -->
 
 <div class="game-card">
 
@@ -858,6 +853,9 @@ onclick="confirmResetGame()"
 </button>
 
 </div>
+
+
+<!-- STATS -->
 
 <div class="stats">
 
@@ -908,6 +906,9 @@ SPAM
 
 </div>
 
+
+<!-- TABS -->
+
 <div class="tabs">
 
 <button
@@ -955,6 +956,9 @@ PENGATURAN
 
 </div>
 
+
+<!-- PENDING -->
+
 <section
 id="section-pending"
 class="section active"
@@ -970,6 +974,9 @@ class="list"
 ></div>
 
 </section>
+
+
+<!-- ACTIVE -->
 
 <section
 id="section-active"
@@ -987,6 +994,9 @@ class="list"
 
 </section>
 
+
+<!-- SPAM -->
+
 <section
 id="section-spam"
 class="section"
@@ -1002,6 +1012,9 @@ class="list"
 ></div>
 
 </section>
+
+
+<!-- POINTS -->
 
 <section
 id="section-points"
@@ -1044,13 +1057,14 @@ onclick="saveScore()"
 🏆 RANKING
 </div>
 
-<div
-id="rankingList"
-></div>
+<div id="rankingList"></div>
 
 </div>
 
 </section>
+
+
+<!-- OPERATORS -->
 
 <section
 id="section-operators"
@@ -1067,6 +1081,9 @@ class="list"
 ></div>
 
 </section>
+
+
+<!-- SETTINGS -->
 
 <section
 id="section-settings"
@@ -1103,6 +1120,7 @@ KELOLA OPERATOR
 
 </div>
 
+
 <div class="setting-card">
 
 <div class="setting-title">
@@ -1110,7 +1128,7 @@ KELOLA OPERATOR
 </div>
 
 <div class="setting-desc">
-Menghapus seluruh pemain dan status approval. Gunakan hanya jika ingin memulai daftar pemain dari awal.
+Menghapus seluruh pemain dan status approval.
 </div>
 
 <button
@@ -1121,6 +1139,7 @@ RESET SEMUA PEMAIN
 </button>
 
 </div>
+
 
 <div class="setting-card">
 
@@ -1140,6 +1159,7 @@ GANTI PASSWORD
 </button>
 
 </div>
+
 
 <div class="setting-card">
 
@@ -1165,6 +1185,7 @@ LOGOUT
 </div>
 
 </div>
+
 
 <!-- MODAL -->
 
@@ -1208,6 +1229,7 @@ YA
 
 </div>
 
+
 <script>
 
 /* ================================================= */
@@ -1243,6 +1265,22 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.database();
+
+
+/* ================================================= */
+/* FIREBASE AUTH PERSISTENCE */
+/* ================================================= */
+
+auth.setPersistence(
+firebase.auth.Auth.Persistence.LOCAL
+).catch(error=>{
+
+console.error(
+"PERSISTENCE ERROR:",
+error
+);
+
+});
 
 
 /* ================================================= */
@@ -1312,7 +1350,7 @@ type === "signup"
 
 document
 .getElementById("authMessage")
-.style.display = "none";
+.style.display="none";
 
 }
 
@@ -1400,7 +1438,10 @@ await db
 
 if(usernameSnap.exists()){
 
-showMessage("Username sudah digunakan.");
+showMessage(
+"Username sudah digunakan."
+);
+
 return;
 
 }
@@ -1418,8 +1459,6 @@ result.user;
 
 
 await user.sendEmailVerification();
-
-await user.getIdToken(true);
 
 
 await db
@@ -1517,6 +1556,7 @@ return;
 const account =
 snap.val();
 
+
 const email =
 account.email;
 
@@ -1537,7 +1577,7 @@ if(!user.emailVerified){
 await auth.signOut();
 
 showMessage(
-"📧 Email belum diverifikasi. Silakan cek email terlebih dahulu."
+"📧 Email belum diverifikasi."
 );
 
 return;
@@ -1560,13 +1600,13 @@ await auth.signOut();
 if(account.status === "pending"){
 
 showMessage(
-"⏳ Akun kamu masih menunggu persetujuan Super Admin."
+"⏳ Akun masih menunggu persetujuan Super Admin."
 );
 
 }else{
 
 showMessage(
-"❌ Akun kamu belum mendapatkan akses."
+"❌ Akun belum mendapatkan akses."
 );
 
 }
@@ -1598,22 +1638,41 @@ getFirebaseError(error)
 auth.onAuthStateChanged(
 async function(user){
 
+/*
+TIDAK ADA USER
+*/
+
 if(!user){
 
-currentUser = null;
-currentAccount = null;
-currentRole = null;
+currentUser=null;
+currentAccount=null;
+currentRole=null;
+
+document
+.getElementById("panelPage")
+.style.display="none";
+
+document
+.getElementById("authPage")
+.style.display="flex";
 
 return;
 
 }
 
 
+/*
+USER ADA
+*/
+
+currentUser=user;
+
+
+/*
+Cari akun berdasarkan email
+*/
+
 try{
-
-let account = null;
-let username = null;
-
 
 const snap =
 await db
@@ -1623,35 +1682,48 @@ await db
 const data =
 snap.val() || {};
 
+let account=null;
 
 Object
 .keys(data)
 .forEach(key=>{
 
+const item=data[key];
+
 if(
-data[key] &&
-data[key].email &&
-data[key].email.toLowerCase()
+item &&
+item.email &&
+item.email.toLowerCase()
 ===
 user.email.toLowerCase()
 ){
 
-username = key;
-account = data[key];
+account=item;
 
 }
 
 });
 
 
+/*
+Akun tidak ditemukan
+*/
+
 if(!account){
 
-await auth.signOut();
+console.error(
+"Data admins tidak ditemukan untuk:",
+user.email
+);
 
 return;
 
 }
 
+
+/*
+Cek akses operator
+*/
 
 if(
 account.role !== "superadmin" &&
@@ -1665,17 +1737,29 @@ return;
 }
 
 
-currentUser = user;
-currentAccount = account;
-currentRole = account.role;
+/*
+Simpan session
+*/
 
+currentAccount=account;
+currentRole=account.role;
+
+
+/*
+Tampilkan panel
+*/
 
 showPanel();
 
 }catch(error){
 
+/*
+JANGAN logout otomatis jika
+database gagal dibaca sementara.
+*/
+
 console.error(
-"AUTH STATE ERROR:",
+"AUTH STATE DATABASE ERROR:",
 error
 );
 
@@ -1689,6 +1773,13 @@ error
 /* ================================================= */
 
 function showPanel(){
+
+if(!currentUser){
+
+return;
+
+}
+
 
 document
 .getElementById("authPage")
@@ -1705,19 +1796,25 @@ document.getElementById("headerUser");
 
 if(currentAccount){
 
-header.innerHTML =
+header.innerHTML=
 `
-${currentAccount.username}
+${escapeHtml(currentAccount.username || "User")}
 <br>
 <span class="user-role">
-${currentRole === "superadmin"
+${
+currentRole === "superadmin"
 ? "SUPER ADMIN"
-: "OPERATOR"}
+: "OPERATOR"
+}
 </span>
 `;
 
 }
 
+
+/*
+SUPER ADMIN
+*/
 
 if(currentRole === "superadmin"){
 
@@ -1742,11 +1839,15 @@ document
 }
 
 
+/*
+Listener
+*/
+
 listenPlayers();
 listenGame();
 listenRanking();
 
-if(currentRole === "superadmin"){
+if(currentRole==="superadmin"){
 
 listenOperators();
 
@@ -1765,9 +1866,9 @@ try{
 
 await auth.signOut();
 
-}catch(e){
+}catch(error){
 
-console.error(e);
+console.error(error);
 
 }
 
@@ -1816,18 +1917,17 @@ return;
 const account =
 snap.val();
 
-const email =
-account.email;
-
 
 await auth
-.sendPasswordResetEmail(email);
+.sendPasswordResetEmail(
+account.email
+);
 
 
 alert(
 "✅ Link reset password sudah dikirim ke:\n\n"
 +
-email
+account.email
 );
 
 }catch(error){
@@ -1847,6 +1947,17 @@ getFirebaseError(error)
 
 function showChangePassword(){
 
+if(!currentUser){
+
+alert(
+"❌ Sesi Firebase tidak ditemukan. Silakan login kembali."
+);
+
+return;
+
+}
+
+
 const oldPassword =
 prompt(
 "Masukkan password lama:"
@@ -1863,7 +1974,7 @@ prompt(
 if(!newPassword)return;
 
 
-if(newPassword.length < 6){
+if(newPassword.length<6){
 
 alert(
 "Password minimal 6 karakter."
@@ -1928,7 +2039,7 @@ section.classList.remove("active");
 
 const target =
 document.getElementById(
-"section-" + name
+"section-"+name
 );
 
 if(target){
@@ -1959,19 +2070,17 @@ button.classList.add("active");
 function openTabByName(name){
 
 const tabs =
-document
-.querySelectorAll(".tab");
+document.querySelectorAll(".tab");
 
 tabs.forEach(tab=>{
 
-if(
+const text =
 tab.innerText
-.toLowerCase()
-.includes(
-name === "operators"
-? "operator"
-: name
-)
+.toLowerCase();
+
+if(
+name==="operators" &&
+text.includes("operator")
 ){
 
 openTab(name,tab);
@@ -1984,7 +2093,7 @@ openTab(name,tab);
 
 
 /* ================================================= */
-/* PLAYERS LISTENER */
+/* PLAYERS */
 /* ================================================= */
 
 function listenPlayers(){
@@ -2001,10 +2110,6 @@ renderPlayers();
 
 }
 
-
-/* ================================================= */
-/* RENDER PLAYERS */
-/* ================================================= */
 
 function renderPlayers(){
 
@@ -2028,18 +2133,14 @@ let activeCount=0;
 let spamCount=0;
 
 
-Object
-.keys(playersData)
+Object.keys(playersData)
 .forEach(id=>{
 
-const p =
+const p=
 playersData[id] || {};
 
-
-const name =
-escapeHtml(
-p.name || id
-);
+const name=
+escapeHtml(p.name || id);
 
 
 if(p.spam){
@@ -2058,9 +2159,7 @@ return;
 }
 
 
-if(
-p.status === "approved"
-){
+if(p.status==="approved"){
 
 activeCount++;
 
@@ -2089,23 +2188,20 @@ name,
 
 document
 .getElementById("pendingCount")
-.innerText =
-pendingCount;
+.innerText=pendingCount;
 
 document
 .getElementById("activeCount")
-.innerText =
-activeCount;
+.innerText=activeCount;
 
 document
 .getElementById("spamCount")
-.innerText =
-spamCount;
+.innerText=spamCount;
 
 
 if(!pendingCount){
 
-pending.innerHTML =
+pending.innerHTML=
 emptyHTML(
 "🎉 Tidak ada pemain menunggu."
 );
@@ -2114,7 +2210,7 @@ emptyHTML(
 
 if(!activeCount){
 
-active.innerHTML =
+active.innerHTML=
 emptyHTML(
 "Belum ada pemain aktif."
 );
@@ -2123,7 +2219,7 @@ emptyHTML(
 
 if(!spamCount){
 
-spam.innerHTML =
+spam.innerHTML=
 emptyHTML(
 "✅ Tidak ada pemain spam."
 );
@@ -2139,7 +2235,7 @@ emptyHTML(
 
 function playerHTML(id,name,type){
 
-if(type === "pending"){
+if(type==="pending"){
 
 return `
 <div class="item">
@@ -2188,7 +2284,7 @@ onclick="tolakPlayer('${id}')"
 }
 
 
-if(type === "spam"){
+if(type==="spam"){
 
 return `
 <div class="item">
@@ -2278,14 +2374,15 @@ onclick="keluarkanPlayer('${id}')"
 
 
 /* ================================================= */
-/* APPROVE PLAYER */
+/* PLAYER ACTIONS */
 /* ================================================= */
 
-function approvePlayer(id){
+async function approvePlayer(id){
 
-db.ref(
-"players/" + id
-)
+try{
+
+await db
+.ref("players/"+id)
 .update({
 
 status:"approved",
@@ -2293,32 +2390,43 @@ spam:false
 
 });
 
+}catch(error){
+
+alert(
+"❌ Gagal menerima pemain.\n\n"+
+error.code
+);
+
+}
+
 }
 
 
-/* ================================================= */
-/* TOLAK PLAYER */
-/* ================================================= */
+async function tolakPlayer(id){
 
-function tolakPlayer(id){
+try{
 
-db.ref(
-"players/" + id
-)
+await db
+.ref("players/"+id)
 .remove();
 
+}catch(error){
+
+alert(
+"❌ Gagal menolak pemain."
+);
+
+}
+
 }
 
 
-/* ================================================= */
-/* BUKA SPAM */
-/* ================================================= */
+async function bukaSpam(id){
 
-function bukaSpam(id){
+try{
 
-db.ref(
-"players/" + id
-)
+await db
+.ref("players/"+id)
 .update({
 
 spam:false,
@@ -2326,27 +2434,33 @@ status:"approved"
 
 });
 
+}catch(error){
+
+alert(
+"❌ Gagal membuka spam."
+);
+
+}
+
 }
 
 
-/* ================================================= */
-/* KELUARKAN PLAYER */
-/* ================================================= */
-
 async function keluarkanPlayer(id){
 
-const gameSnap =
+try{
+
+const gameSnap=
 await db
 .ref("game")
 .once("value");
 
-const game =
+const game=
 gameSnap.val();
 
 
 if(
 game &&
-game.playerID === id
+game.playerID===id
 ){
 
 await db
@@ -2357,7 +2471,7 @@ await db
 
 
 await db
-.ref("players/" + id)
+.ref("players/"+id)
 .update({
 
 status:"pending",
@@ -2365,11 +2479,19 @@ spam:false
 
 });
 
+}catch(error){
+
+alert(
+"❌ Gagal mengeluarkan pemain."
+);
+
+}
+
 }
 
 
 /* ================================================= */
-/* GAME LISTENER */
+/* GAME */
 /* ================================================= */
 
 function listenGame(){
@@ -2377,25 +2499,22 @@ function listenGame(){
 db.ref("game")
 .on("value",snapshot=>{
 
-const data =
+const data=
 snapshot.val();
 
+const status=
+document.getElementById("gameStatus");
 
-const status =
-document
-.getElementById("gameStatus");
-
-const winner =
-document
-.getElementById("gameWinner");
+const winner=
+document.getElementById("gameWinner");
 
 
 if(!data){
 
-status.innerText =
+status.innerText=
 "🔥 SIAP DIMAINKAN";
 
-winner.innerText =
+winner.innerText=
 "Belum ada pemenang";
 
 return;
@@ -2403,12 +2522,11 @@ return;
 }
 
 
-status.innerText =
+status.innerText=
 "🏆 PEMENANG";
 
-winner.innerText =
-"🥇 " +
-(data.player || "Unknown");
+winner.innerText=
+"🥇 "+(data.player || "Unknown");
 
 });
 
@@ -2439,24 +2557,22 @@ await db
 .remove();
 
 
-const snap =
+const snap=
 await db
 .ref("players")
 .once("value");
 
-const players =
+const players=
 snap.val() || {};
-
 
 const updates={};
 
 
-Object
-.keys(players)
+Object.keys(players)
 .forEach(id=>{
 
 updates[
-id + "/spam"
+id+"/spam"
 ]=false;
 
 });
@@ -2478,10 +2594,9 @@ alert(
 }catch(error){
 
 alert(
-"❌ Gagal reset game."
+"❌ Gagal reset game.\n\n"+
+error.code
 );
-
-console.error(error);
 
 }
 
@@ -2522,10 +2637,9 @@ alert(
 }catch(error){
 
 alert(
-"❌ Gagal reset pemain."
+"❌ Gagal reset pemain.\n\n"+
+error.code
 );
-
-console.error(error);
 
 }
 
@@ -2556,7 +2670,7 @@ function listenRanking(){
 db.ref("ranking")
 .on("value",snapshot=>{
 
-rankingData =
+rankingData=
 snapshot.val() || {};
 
 renderRanking();
@@ -2568,7 +2682,7 @@ renderRanking();
 
 function renderRanking(){
 
-const box =
+const box=
 document.getElementById(
 "rankingList"
 );
@@ -2576,9 +2690,8 @@ document.getElementById(
 box.innerHTML="";
 
 
-const arr =
-Object
-.keys(rankingData)
+const arr=
+Object.keys(rankingData)
 .map(key=>({
 
 key:key,
@@ -2595,7 +2708,7 @@ Number(a.score||0)
 
 if(!arr.length){
 
-box.innerHTML =
+box.innerHTML=
 emptyHTML(
 "Belum ada ranking."
 );
@@ -2617,12 +2730,8 @@ box.innerHTML += `
 #${index+1}
 </div>
 
-<div>
-
 <div class="item-name">
 ${escapeHtml(item.name || "-")}
-</div>
-
 </div>
 
 </div>
@@ -2646,13 +2755,13 @@ ${Number(item.score||0)}
 
 async function saveScore(){
 
-const name =
+const name=
 document
 .getElementById("scoreName")
 .value
 .trim();
 
-const score =
+const score=
 Number(
 document
 .getElementById("scoreValue")
@@ -2681,31 +2790,28 @@ return;
 }
 
 
-const key =
+const key=
 safeKey(name);
 
 
 try{
 
-const ref =
-db.ref(
-"ranking/" + key
-);
+const ref=
+db.ref("ranking/"+key);
 
-const snap =
+const snap=
 await ref.once("value");
 
-const old =
+const old=
 snap.val() || {};
 
 
 await ref.set({
 
 name:name,
+
 score:
-Number(old.score||0)
-+
-score
+Number(old.score||0)+score
 
 });
 
@@ -2726,10 +2832,9 @@ alert(
 }catch(error){
 
 alert(
-"❌ Gagal menyimpan poin."
+"❌ Gagal menyimpan poin.\n\n"+
+error.code
 );
-
-console.error(error);
 
 }
 
@@ -2745,7 +2850,7 @@ function listenOperators(){
 db.ref("admins")
 .on("value",snapshot=>{
 
-operatorsData =
+operatorsData=
 snapshot.val() || {};
 
 renderOperators();
@@ -2755,15 +2860,12 @@ renderOperators();
 }
 
 
-/* ================================================= */
-/* RENDER OPERATORS */
-/* ================================================= */
-
 function renderOperators(){
 
-const box =
-document
-.getElementById("operatorList");
+const box=
+document.getElementById(
+"operatorList"
+);
 
 box.innerHTML="";
 
@@ -2771,19 +2873,17 @@ box.innerHTML="";
 let count=0;
 
 
-Object
-.keys(operatorsData)
+Object.keys(operatorsData)
 .forEach(username=>{
 
-const op =
+const op=
 operatorsData[username];
-
 
 if(!op)return;
 
-if(op.role !== "operator")return;
+if(op.role!=="operator")return;
 
-if(op.status !== "pending")return;
+if(op.status!=="pending")return;
 
 
 count++;
@@ -2844,7 +2944,7 @@ onclick="rejectOperator('${username}')"
 
 if(!count){
 
-box.innerHTML =
+box.innerHTML=
 emptyHTML(
 "Tidak ada permintaan Operator."
 );
@@ -2860,19 +2960,18 @@ emptyHTML(
 
 async function approveOperator(username){
 
-/* CEK AKUN FIREBASE AKTIF */
+if(!currentUser){
 
 alert(
-auth.currentUser
-? "AKUN FIREBASE AKTIF\n\nEmail:\n" +
-  auth.currentUser.email +
-  "\n\nUID:\n" +
-  auth.currentUser.uid
-: "❌ TIDAK ADA USER FIREBASE AKTIF"
+"❌ Sesi Firebase tidak ditemukan.\nSilakan logout lalu login kembali sebagai ALDI."
 );
 
+return;
 
-if(currentRole !== "superadmin"){
+}
+
+
+if(currentRole!=="superadmin"){
 
 alert(
 "❌ Hanya Super Admin yang dapat melakukan ini."
@@ -2885,38 +2984,68 @@ return;
 
 try{
 
-await db
-.ref(
-"admins/" + username
-)
-.update({
+const operatorRef=
+db.ref(
+"admins/"+username
+);
+
+const snap=
+await operatorRef.once("value");
+
+if(!snap.exists()){
+
+alert(
+"❌ Data operator tidak ditemukan."
+);
+
+return;
+
+}
+
+
+const operator=
+snap.val();
+
+
+if(operator.status!=="pending"){
+
+alert(
+"Operator ini sudah diproses."
+);
+
+return;
+
+}
+
+
+await operatorRef.update({
 
 role:"operator",
 status:"approved",
 approvedAt:Date.now(),
-approvedBy:"aldi"
+approvedBy:SUPER_USERNAME
 
 });
 
 
 alert(
-"✅ Operator " +
-username +
+"✅ Operator "+
+username+
 " berhasil disetujui."
 );
 
 }catch(error){
 
-alert(
-"❌ Gagal menyetujui operator.\n\n" +
-(error.code || "") +
-"\n" +
-(error.message || "")
-);
-
 console.error(
 "APPROVE OPERATOR ERROR:",
 error
+);
+
+alert(
+"❌ Gagal menyetujui operator.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
 );
 
 }
@@ -2930,7 +3059,18 @@ error
 
 async function rejectOperator(username){
 
-if(currentRole !== "superadmin"){
+if(!currentUser){
+
+alert(
+"❌ Sesi Firebase tidak ditemukan."
+);
+
+return;
+
+}
+
+
+if(currentRole!=="superadmin"){
 
 alert(
 "❌ Hanya Super Admin yang dapat melakukan ini."
@@ -2941,19 +3081,19 @@ return;
 }
 
 
-if(
-!confirm(
+if(!confirm(
 "Tolak permintaan Operator ini?"
-)
-)return;
+)){
+
+return;
+
+}
 
 
 try{
 
 await db
-.ref(
-"admins/" + username
-)
+.ref("admins/"+username)
 .update({
 
 status:"rejected"
@@ -2968,13 +3108,11 @@ alert(
 }catch(error){
 
 alert(
-"❌ Gagal menolak operator.\n\n" +
-(error.code || "") +
-"\n" +
+"❌ Gagal menolak operator.\n\n"+
+(error.code || "")+
+"\n"+
 (error.message || "")
 );
-
-console.error(error);
 
 }
 
@@ -2993,18 +3131,16 @@ callback
 
 document
 .getElementById("modalTitle")
-.innerText =
-title;
+.innerText=title;
 
 document
 .getElementById("modalText")
-.innerText =
-text;
+.innerText=text;
 
 
 document
 .getElementById("modalConfirm")
-.onclick =
+.onclick=
 async function(){
 
 closeModal();
@@ -3036,10 +3172,14 @@ document
 
 function getFirebaseError(error){
 
-if(!error)
+if(!error){
+
 return "Terjadi kesalahan.";
 
-const code =
+}
+
+
+const code=
 error.code || "";
 
 
@@ -3067,14 +3207,19 @@ const errors={
 "Terlalu banyak percobaan. Coba lagi nanti.",
 
 "auth/network-request-failed":
-"Koneksi internet bermasalah."
+"Koneksi internet bermasalah.",
+
+"auth/requires-recent-login":
+"Silakan login kembali lalu coba lagi."
 
 };
 
 
 return errors[code]
-|| error.message
-|| "Terjadi kesalahan.";
+||
+error.message
+||
+"Terjadi kesalahan.";
 
 }
 
