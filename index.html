@@ -351,6 +351,24 @@ margin-top:8px;
 }
 
 
+.open-spam{
+
+width:100%;
+
+background:#00b894;
+
+margin-top:12px;
+
+}
+
+
+.open-spam:active{
+
+transform:scale(.98);
+
+}
+
+
 /* ================= NEW CONTROL ================= */
 
 .section-title{
@@ -410,6 +428,8 @@ background:#00b894;
 }
 
 
+/* ================= FAST ================= */
+
 .fast-card{
 
 background:#172033;
@@ -466,6 +486,8 @@ background:#d63031;
 
 }
 
+
+/* ================= NOTICE ================= */
 
 .notice{
 
@@ -568,6 +590,8 @@ font-weight:bold;
 
 color:#ff4d4d;
 
+word-break:break-word;
+
 }
 
 
@@ -578,6 +602,8 @@ font-size:12px;
 color:#ffaaaa;
 
 margin-top:5px;
+
+line-height:1.5;
 
 }
 
@@ -1749,9 +1775,19 @@ Pemain terkena double tap / spam.
 
 <br>
 
-Menunggu RESET GAME.
+Status: 🔴 SPAM
 
 </div>
+
+
+<button
+class="open-spam"
+onclick="bukaSpam('${id}')"
+>
+
+🔓 BUKA SPAM
+
+</button>
 
 </div>
 
@@ -1872,6 +1908,98 @@ false
 
 
 // =================================================
+// BUKA SPAM
+// =================================================
+
+async function bukaSpam(
+playerID
+){
+
+if(loading)
+return;
+
+
+if(!cekPass()){
+
+alert("Password salah");
+
+return;
+
+}
+
+
+if(!playerID){
+
+alert(
+"ID player tidak ditemukan"
+);
+
+return;
+
+}
+
+
+if(
+!confirm(
+"Buka SPAM pemain ini?\n\nPemain akan kembali normal tanpa mereset game."
+)
+){
+
+return;
+
+}
+
+
+loading = true;
+
+
+try{
+
+/*
+  PENTING:
+
+  HANYA mengubah status SPAM pemain.
+
+  TIDAK:
+  - menghapus game
+  - mereset game
+  - mengubah pemenang
+  - mengubah pemain lain
+*/
+
+await db
+.ref(
+"players/" +
+playerID
+)
+.update({
+
+spam:
+false,
+
+status:
+"approved"
+
+});
+
+
+}catch(error){
+
+console.log(error);
+
+alert(
+"Gagal membuka spam"
+);
+
+}
+
+
+loading = false;
+
+}
+
+
+// =================================================
 // KELUARKAN PLAYER KAPAN SAJA
 // =================================================
 
@@ -1944,6 +2072,14 @@ await db
 const gameData =
 gameSnap.val();
 
+
+/*
+  Kalau pemain yang dikeluarkan adalah
+  pemenang, game dihapus.
+
+  Kalau pemain bukan pemenang,
+  game tetap dipertahankan.
+*/
 
 if(
 gameData &&
@@ -2104,17 +2240,9 @@ return;
 
 
 /*
-  PENTING:
-
   LANJUT TIDAK MENGHAPUS game.
 
-  Jadi HP pemain tetap menampilkan:
-
-  KAMU BOLEH JAWAB!✅
-
-  atau
-
-  KAMU KALAH CEPAT DARI ❌
+  Jadi tampilan hasil pemain tetap.
 */
 
 alert(
@@ -2172,6 +2300,15 @@ loading = true;
 
 try{
 
+/*
+  Pemenang dikeluarkan menjadi pending.
+
+  Karena pemain ini bisa saja sedang menjadi
+  winner, game akan dihapus.
+
+  Pemain lain akan kembali ke ronde baru.
+*/
+
 await db
 .ref(
 "players/" +
@@ -2188,9 +2325,26 @@ false
 });
 
 
+const gameSnap =
+await db
+.ref("game")
+.once("value");
+
+
+const gameData =
+gameSnap.val();
+
+
+if(
+gameData &&
+gameData.playerID === playerID
+){
+
 await db
 .ref("game")
 .remove();
+
+}
 
 
 }catch(error){
