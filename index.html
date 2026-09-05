@@ -541,6 +541,64 @@ background:#006cff;
 }
 
 
+/* HISTORY */
+
+.history-item{
+padding:15px;
+border-radius:17px;
+background:rgba(255,255,255,.045);
+border:1px solid rgba(255,255,255,.07);
+margin-bottom:9px;
+}
+
+.history-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+.history-user{
+font-weight:600;
+font-size:13px;
+}
+
+.history-time{
+font-size:9px;
+opacity:.45;
+text-align:right;
+}
+
+.history-action{
+font-size:11px;
+margin-top:6px;
+line-height:1.5;
+opacity:.8;
+}
+
+.history-role{
+display:inline-block;
+margin-top:7px;
+padding:4px 8px;
+border-radius:8px;
+font-size:8px;
+background:rgba(0,217,255,.1);
+color:#00d9ff;
+}
+
+.history-clear{
+width:100%;
+margin-bottom:12px;
+padding:12px;
+border:0;
+border-radius:12px;
+background:#d71945;
+color:#fff;
+font-weight:700;
+font-size:11px;
+}
+
+
 /* MODAL */
 
 .modal{
@@ -969,6 +1027,14 @@ OPERATOR
 </button>
 
 <button
+id="historyTab"
+class="tab hidden"
+onclick="openTab('history',this)"
+>
+RIWAYAT
+</button>
+
+<button
 class="tab"
 onclick="openTab('settings',this)"
 >
@@ -1104,6 +1170,32 @@ class="list"
 </section>
 
 
+<!-- HISTORY -->
+
+<section
+id="section-history"
+class="section"
+>
+
+<div class="section-title">
+📋 RIWAYAT AKTIVITAS
+</div>
+
+<button
+class="history-clear"
+onclick="confirmClearHistory()"
+>
+🗑️ HAPUS SEMUA RIWAYAT
+</button>
+
+<div
+id="historyList"
+class="list"
+></div>
+
+</section>
+
+
 <!-- SETTINGS -->
 
 <section
@@ -1185,11 +1277,15 @@ GANTI PASSWORD
 <div class="setting-card">
 
 <div class="setting-title">
+
 🚪 KELUAR
+
 </div>
 
 <div class="setting-desc">
+
 Keluar dari Control Panel.
+
 </div>
 
 <button
@@ -1262,7 +1358,7 @@ YA
 const firebaseConfig = {
 
 apiKey:
-"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI2UevOg921xrI",
 
 authDomain:
 "game-aldi.firebaseapp.com",
@@ -1317,9 +1413,55 @@ let currentRole = null;
 let playersData = {};
 let rankingData = {};
 let operatorsData = {};
+let historyData = {};
 
 const SUPER_USERNAME = "aldi";
 const SUPER_EMAIL = "aldydasilva172@gmail.com";
+
+
+/* ================================================= */
+/* ACTIVITY LOG */
+/* ================================================= */
+
+async function logActivity(action){
+
+try{
+
+if(!currentAccount){
+
+return;
+
+}
+
+const ref =
+db.ref("activityLogs").push();
+
+await ref.set({
+
+username:
+currentAccount.username || "unknown",
+
+role:
+currentRole || "unknown",
+
+action:
+action,
+
+timestamp:
+firebase.database.ServerValue.TIMESTAMP
+
+});
+
+}catch(error){
+
+console.error(
+"ACTIVITY LOG ERROR:",
+error
+);
+
+}
+
+}
 
 
 /* ================================================= */
@@ -1797,6 +1939,10 @@ document
 .classList.remove("hidden");
 
 document
+.getElementById("historyTab")
+.classList.remove("hidden");
+
+document
 .getElementById("operatorManagement")
 .classList.remove("hidden");
 
@@ -1804,6 +1950,10 @@ document
 
 document
 .getElementById("operatorTab")
+.classList.add("hidden");
+
+document
+.getElementById("historyTab")
 .classList.add("hidden");
 
 document
@@ -1821,6 +1971,7 @@ listenRanking();
 if(currentRole==="superadmin"){
 
 listenOperators();
+listenHistory();
 
 }
 
@@ -2352,6 +2503,9 @@ async function approvePlayer(id){
 
 try{
 
+const player =
+playersData[id] || {};
+
 await db
 .ref("players/"+id)
 .update({
@@ -2360,6 +2514,11 @@ status:"approved",
 spam:false
 
 });
+
+await logActivity(
+"✓ Menyetujui pemain: " +
+(player.name || id)
+);
 
 }catch(error){
 
@@ -2377,9 +2536,17 @@ async function tolakPlayer(id){
 
 try{
 
+const player =
+playersData[id] || {};
+
 await db
 .ref("players/"+id)
 .remove();
+
+await logActivity(
+"✕ Menolak pemain: " +
+(player.name || id)
+);
 
 }catch(error){
 
@@ -2396,6 +2563,9 @@ async function bukaSpam(id){
 
 try{
 
+const player =
+playersData[id] || {};
+
 await db
 .ref("players/"+id)
 .update({
@@ -2404,6 +2574,11 @@ spam:false,
 status:"approved"
 
 });
+
+await logActivity(
+"🔓 Membuka spam pemain: " +
+(player.name || id)
+);
 
 }catch(error){
 
@@ -2419,6 +2594,9 @@ alert(
 async function keluarkanPlayer(id){
 
 try{
+
+const player =
+playersData[id] || {};
 
 const gameSnap=
 await db
@@ -2449,6 +2627,11 @@ status:"pending",
 spam:false
 
 });
+
+await logActivity(
+"✕ Mengeluarkan pemain: " +
+(player.name || id)
+);
 
 }catch(error){
 
@@ -2558,6 +2741,10 @@ await db
 }
 
 
+await logActivity(
+"🔄 Melakukan RESET GAME"
+);
+
 alert(
 "✅ Game berhasil di-reset."
 );
@@ -2600,6 +2787,10 @@ await db
 await db
 .ref("game")
 .remove();
+
+await logActivity(
+"🗑️ Melakukan RESET SEMUA PEMAIN"
+);
 
 alert(
 "✅ Semua pemain berhasil di-reset."
@@ -2785,6 +2976,14 @@ score:
 Number(old.score||0)+score
 
 });
+
+
+await logActivity(
+"🏆 Menambahkan poin " +
+score +
+" untuk pemain: " +
+name
+);
 
 
 document
@@ -2999,6 +3198,12 @@ approvedBy:SUPER_USERNAME
 });
 
 
+await logActivity(
+"👑 Menyetujui Operator: " +
+username
+);
+
+
 alert(
 "✅ Operator "+
 username+
@@ -3072,6 +3277,12 @@ status:"rejected"
 });
 
 
+await logActivity(
+"❌ Menolak Operator: " +
+username
+);
+
+
 alert(
 "Operator ditolak."
 );
@@ -3080,6 +3291,203 @@ alert(
 
 alert(
 "❌ Gagal menolak operator.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
+);
+
+}
+
+}
+
+
+/* ================================================= */
+/* HISTORY */
+/* ================================================= */
+
+function listenHistory(){
+
+if(currentRole!=="superadmin"){
+
+return;
+
+}
+
+
+db.ref("activityLogs")
+.orderByChild("timestamp")
+.on("value",snapshot=>{
+
+historyData =
+snapshot.val() || {};
+
+renderHistory();
+
+});
+
+}
+
+
+function renderHistory(){
+
+const box =
+document.getElementById(
+"historyList"
+);
+
+box.innerHTML="";
+
+
+const arr =
+Object.keys(historyData)
+.map(key=>({
+
+key:key,
+...historyData[key]
+
+}))
+.sort(
+(a,b)=>
+Number(b.timestamp||0) -
+Number(a.timestamp||0)
+);
+
+
+if(!arr.length){
+
+box.innerHTML =
+emptyHTML(
+"Belum ada riwayat aktivitas."
+);
+
+return;
+
+}
+
+
+/* BATASI 200 RIWAYAT TERBARU */
+
+arr
+.slice(0,200)
+.forEach(item=>{
+
+const date =
+item.timestamp
+? new Date(
+item.timestamp
+)
+: null;
+
+
+const time =
+date
+? date.toLocaleString(
+"id-ID",
+{
+day:"2-digit",
+month:"2-digit",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+}
+)
+: "-";
+
+
+const role =
+item.role === "superadmin"
+? "SUPER ADMIN"
+: "OPERATOR";
+
+
+box.innerHTML += `
+
+<div class="history-item">
+
+<div class="history-top">
+
+<div class="history-user">
+👤 ${escapeHtml(
+item.username || "-"
+)}
+</div>
+
+<div class="history-time">
+${time}
+</div>
+
+</div>
+
+<div class="history-action">
+${escapeHtml(
+item.action || "-"
+)}
+</div>
+
+<div class="history-role">
+${role}
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* ================================================= */
+/* CLEAR HISTORY */
+/* ================================================= */
+
+function confirmClearHistory(){
+
+if(currentRole!=="superadmin"){
+
+alert(
+"❌ Hanya Super Admin yang dapat menghapus riwayat."
+);
+
+return;
+
+}
+
+
+openConfirm(
+"HAPUS RIWAYAT",
+"Semua riwayat aktivitas akan dihapus. Tindakan ini tidak bisa dibatalkan.",
+clearHistory
+);
+
+}
+
+
+async function clearHistory(){
+
+if(currentRole!=="superadmin"){
+
+return;
+
+}
+
+
+try{
+
+await db
+.ref("activityLogs")
+.remove();
+
+
+alert(
+"✅ Semua riwayat berhasil dihapus."
+);
+
+}catch(error){
+
+alert(
+"❌ Gagal menghapus riwayat.\n\n"+
 (error.code || "")+
 "\n"+
 (error.message || "")
