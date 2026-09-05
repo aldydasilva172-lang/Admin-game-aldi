@@ -523,6 +523,38 @@ box-shadow:
 
 
 /* ================================================= */
+/* KELUARKAN PEMENANG */
+/* ================================================= */
+
+.winner-remove-btn{
+width:100%;
+
+margin-top:10px;
+
+padding:12px;
+
+border:1px solid rgba(233,30,67,.25);
+
+border-radius:13px;
+
+background:
+rgba(233,30,67,.14);
+
+color:#ff5475;
+
+font-weight:700;
+
+font-size:11px;
+
+transition:.2s;
+}
+
+.winner-remove-btn:active{
+transform:scale(.98);
+}
+
+
+/* ================================================= */
 /* STATUS BAR */
 /* ================================================= */
 
@@ -1837,6 +1869,16 @@ class="game-winner"
 >
 Belum ada pemenang
 </div>
+
+<!-- TAMBAHAN: KELUARKAN PEMENANG -->
+
+<button
+id="winnerRemoveBtn"
+class="winner-remove-btn hidden"
+onclick="confirmRemoveWinner()"
+>
+✕ KELUARKAN PEMENANG
+</button>
 
 <button
 class="reset-game-btn"
@@ -4240,6 +4282,11 @@ document.getElementById(
 "gameWinner"
 );
 
+const removeBtn=
+document.getElementById(
+"winnerRemoveBtn"
+);
+
 
 if(!data){
 
@@ -4248,6 +4295,10 @@ status.innerText=
 
 winner.innerText=
 "Belum ada pemenang";
+
+removeBtn.classList.add(
+"hidden"
+);
 
 return;
 
@@ -4263,7 +4314,136 @@ data.player ||
 "Unknown"
 );
 
+removeBtn.classList.remove(
+"hidden"
+);
+
 });
+
+}
+
+
+
+/* ================================================= */
+/* KELUARKAN PEMENANG */
+/* ================================================= */
+
+function confirmRemoveWinner(){
+
+db.ref("game")
+.once("value")
+.then(snapshot=>{
+
+const game =
+snapshot.val();
+
+if(!game){
+
+alert(
+"❌ Tidak ada pemenang."
+);
+
+return;
+
+}
+
+
+const playerID =
+game.playerID;
+
+const playerName =
+game.player ||
+"Unknown";
+
+
+openConfirm(
+"KELUARKAN PEMENANG",
+"Apakah pemain \""+
+playerName+
+"\" ingin dikeluarkan dari game? Pemain akan kembali ke status MENUNGGU.",
+function(){
+
+return removeWinner(
+playerID,
+playerName
+);
+
+}
+
+);
+
+});
+
+}
+
+
+
+async function removeWinner(
+playerID,
+playerName
+){
+
+try{
+
+/*
+HAPUS GAME TERLEBIH DAHULU
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+/*
+KEMBALIKAN PEMAIN KE MENUNGGU
+*/
+
+if(playerID){
+
+await db
+.ref("players/"+playerID)
+.update({
+
+status:"pending",
+
+spam:false
+
+});
+
+}
+
+
+/*
+CATAT RIWAYAT
+*/
+
+await logActivity(
+"✕ Mengeluarkan pemenang: " +
+playerName
+);
+
+
+alert(
+"✅ Pemenang berhasil dikeluarkan.\n\n"+
+playerName+
+" kembali ke daftar MENUNGGU."
+);
+
+}catch(error){
+
+console.error(
+"REMOVE WINNER ERROR:",
+error
+);
+
+alert(
+"❌ Gagal mengeluarkan pemenang.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
+);
+
+}
 
 }
 
@@ -5725,6 +5905,9 @@ const errors={
 "Password salah.",
 
 "auth/invalid-credential":
+"Username atau password salah.",
+
+"auth/invalid-login-credentials":
 "Username atau password salah.",
 
 "auth/email-already-in-use":
