@@ -3055,59 +3055,78 @@ emptyHTML(
 /* ================================================= */
 
 async function approveOperator(username){
+
+  console.log("TERIMA OPERATOR DIKLIK:", username);
+
+  if(!auth.currentUser){
+
+    alert("❌ Sesi login Firebase tidak ditemukan.\nSilakan logout lalu login kembali sebagai ALDI.");
+
+    return;
+  }
+
+
   alert(
-  "AUTH UID:\n" +
-  auth.currentUser.uid +
-  "\n\nEMAIL:\n" +
-  auth.currentUser.email
-);
+    "TERIMA OPERATOR\n\n" +
+    "Username: " + username +
+    "\n\nAUTH UID:\n" +
+    auth.currentUser.uid +
+    "\n\nEMAIL:\n" +
+    auth.currentUser.email
+  );
 
-if(currentRole !== "superadmin"){
 
-alert(
-"❌ Hanya Super Admin yang dapat melakukan ini."
-);
+  if(currentRole !== "superadmin"){
 
-return;
+    alert(
+      "❌ Hanya Super Admin yang dapat melakukan ini."
+    );
+
+    return;
+  }
+
+
+  try{
+
+    await db
+      .ref("admins/" + username)
+      .update({
+
+        role:"operator",
+        status:"approved",
+        approvedAt:Date.now(),
+        approvedBy:"aldi"
+
+      });
+
+
+    alert(
+      "✅ Operator " +
+      username +
+      " berhasil disetujui."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "APPROVE OPERATOR ERROR:",
+      error
+    );
+
+
+    alert(
+      "❌ Gagal menyetujui operator.\n\n" +
+      "Kode: " +
+      (error.code || "-") +
+      "\n\n" +
+      "Pesan:\n" +
+      (error.message || error)
+    );
+
+  }
 
 }
-
-
-try{
-
-await db
-.ref(
-"admins/" + username
-)
-.update({
-
-role:"operator",
-status:"approved",
-approvedAt:Date.now(),
-approvedBy:"aldi"
-
-});
-
-
-alert(
-"✅ Operator berhasil disetujui."
-);
-
-}catch(error){
-
-alert(
-"❌ Gagal menyetujui operator.\n\n" +
-error.code +
-"\n" +
-error.message
-);
-
-console.error(error);
-
-}
-}
-
-
 /* ================================================= */
 /* REJECT OPERATOR */
 /* ================================================= */
