@@ -40,6 +40,7 @@ scroll-behavior:smooth;
 
 body{
 font-family:Poppins,sans-serif;
+
 background:
 radial-gradient(
 circle at 20% 0%,
@@ -57,6 +58,7 @@ linear-gradient(
 #05060c 55%,
 #03040a 100%
 );
+
 color:#fff;
 min-height:100vh;
 }
@@ -82,16 +84,20 @@ display:none !important;
 
 #authPage{
 min-height:100vh;
+
 display:flex;
 align-items:center;
 justify-content:center;
+
 padding:20px;
 }
 
 .auth-card{
 width:100%;
 max-width:430px;
+
 padding:34px 25px;
+
 border-radius:30px;
 
 background:
@@ -113,39 +119,58 @@ backdrop-filter:blur(24px);
 
 .auth-logo{
 text-align:center;
+
 font-family:Orbitron,sans-serif;
+
 font-size:25px;
 font-weight:800;
+
 letter-spacing:2px;
+
 margin-bottom:7px;
 }
 
 .auth-subtitle{
 text-align:center;
+
 font-size:11px;
+
 opacity:.55;
+
 letter-spacing:1px;
+
 margin-bottom:28px;
 }
 
 .auth-tabs{
 display:flex;
+
 gap:7px;
+
 padding:4px;
+
 margin-bottom:22px;
 
 background:rgba(0,0,0,.20);
+
 border:1px solid rgba(255,255,255,.06);
+
 border-radius:15px;
 }
 
 .auth-tabs button{
 flex:1;
+
 padding:11px;
+
 border:0;
+
 border-radius:11px;
+
 background:transparent;
+
 color:#888;
+
 transition:.25s;
 }
 
@@ -156,8 +181,11 @@ linear-gradient(
 #006cff,
 #00d9ff
 );
+
 color:#fff;
+
 font-weight:600;
+
 box-shadow:
 0 7px 20px rgba(0,160,255,.22);
 }
@@ -168,25 +196,37 @@ margin-bottom:14px;
 
 .field label{
 display:block;
+
 font-size:10px;
+
 opacity:.65;
+
 margin-bottom:6px;
+
 letter-spacing:.5px;
 }
 
 .field input{
 width:100%;
+
 padding:13px 14px;
+
 border-radius:13px;
+
 border:1px solid rgba(255,255,255,.10);
+
 background:rgba(0,0,0,.25);
+
 color:#fff;
+
 outline:none;
+
 transition:.25s;
 }
 
 .field input:focus{
 border-color:#00cfff;
+
 box-shadow:
 0 0 0 2px rgba(0,207,255,.08),
 0 0 20px rgba(0,207,255,.08);
@@ -194,21 +234,31 @@ box-shadow:
 
 .main-btn{
 width:100%;
+
 padding:14px;
+
 border:0;
+
 border-radius:14px;
+
 background:
 linear-gradient(
 135deg,
 #006cff,
 #00d9ff
 );
+
 color:#fff;
+
 font-weight:700;
+
 font-size:13px;
+
 margin-top:5px;
+
 box-shadow:
 0 10px 25px rgba(0,120,255,.18);
+
 transition:.2s;
 }
 
@@ -218,22 +268,35 @@ transform:scale(.98);
 
 .forgot{
 display:block;
+
 text-align:center;
+
 margin-top:14px;
+
 font-size:11px;
+
 color:#00d9ff;
+
 cursor:pointer;
 }
 
 .auth-message{
 margin-top:15px;
+
 padding:11px;
+
 border-radius:12px;
+
 background:rgba(255,255,255,.05);
+
 border:1px solid rgba(255,255,255,.05);
+
 font-size:11px;
+
 text-align:center;
+
 display:none;
+
 white-space:pre-line;
 }
 
@@ -253,7 +316,9 @@ display:none;
 
 .header{
 position:sticky;
+
 top:0;
+
 z-index:100;
 
 background:
@@ -262,7 +327,8 @@ rgba(4,6,15,.78);
 backdrop-filter:blur(20px);
 -webkit-backdrop-filter:blur(20px);
 
-border-bottom:1px solid rgba(255,255,255,.07);
+border-bottom:
+1px solid rgba(255,255,255,.07);
 
 box-shadow:
 0 10px 35px rgba(0,0,0,.20);
@@ -270,19 +336,27 @@ box-shadow:
 
 .header-inner{
 max-width:1100px;
+
 margin:auto;
+
 padding:14px 16px;
 
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
 gap:12px;
 }
 
 .logo{
 font-family:Orbitron,sans-serif;
+
 font-size:16px;
+
 font-weight:800;
+
 letter-spacing:1px;
 }
 
@@ -292,25 +366,35 @@ color:#00d9ff;
 
 .user-info{
 text-align:right;
+
 font-size:9px;
+
 opacity:.75;
+
 line-height:1.5;
 }
 
 .user-role{
 color:#00d9ff;
+
 font-weight:600;
 }
 
 .logout-btn{
 margin-left:8px;
+
 padding:8px 11px;
 
 border-radius:10px;
-border:1px solid rgba(255,255,255,.09);
 
-background:rgba(255,255,255,.045);
+border:
+1px solid rgba(255,255,255,.09);
+
+background:
+rgba(255,255,255,.045);
+
 color:#fff;
+
 font-size:10px;
 
 transition:.2s;
@@ -327,7 +411,9 @@ transform:scale(.95);
 
 .container{
 max-width:1100px;
+
 margin:auto;
+
 padding:18px 14px 55px;
 }
 
@@ -338,9 +424,11 @@ padding:18px 14px 55px;
 
 .game-card{
 position:relative;
+
 overflow:hidden;
 
 padding:20px;
+
 border-radius:23px;
 
 background:
@@ -350,7 +438,8 @@ rgba(0,105,255,.20),
 rgba(0,220,255,.045)
 );
 
-border:1px solid rgba(0,210,255,.16);
+border:
+1px solid rgba(0,210,255,.16);
 
 box-shadow:
 0 20px 55px rgba(0,0,0,.30),
@@ -359,9 +448,12 @@ inset 0 1px rgba(255,255,255,.05);
 
 .game-card::before{
 content:"";
+
 position:absolute;
+
 width:180px;
 height:180px;
+
 right:-90px;
 top:-90px;
 
@@ -377,29 +469,39 @@ pointer-events:none;
 
 .game-title{
 font-family:Orbitron,sans-serif;
+
 font-size:10px;
+
 opacity:.55;
+
 letter-spacing:1px;
+
 margin-bottom:8px;
 }
 
 .game-status{
 font-size:21px;
+
 font-weight:700;
 }
 
 .game-winner{
 margin-top:7px;
+
 font-size:12px;
+
 color:#00eaff;
 }
 
 .reset-game-btn{
 width:100%;
+
 margin-top:17px;
+
 padding:14px;
 
 border:0;
+
 border-radius:14px;
 
 background:
@@ -410,7 +512,9 @@ linear-gradient(
 );
 
 color:#fff;
+
 font-weight:800;
+
 font-size:13px;
 
 box-shadow:
@@ -424,13 +528,18 @@ box-shadow:
 
 .status-bar{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+
+grid-template-columns:
+repeat(3,1fr);
+
 gap:9px;
+
 margin:14px 0 15px;
 }
 
 .status-card{
 position:relative;
+
 overflow:hidden;
 
 padding:14px 8px;
@@ -444,7 +553,8 @@ rgba(255,255,255,.065),
 rgba(255,255,255,.025)
 );
 
-border:1px solid rgba(255,255,255,.075);
+border:
+1px solid rgba(255,255,255,.075);
 
 text-align:center;
 
@@ -458,10 +568,14 @@ cursor:pointer;
 
 .status-card::after{
 content:"";
+
 position:absolute;
+
 left:15%;
 right:15%;
+
 bottom:-18px;
+
 height:35px;
 
 background:
@@ -479,7 +593,8 @@ transform:scale(.96);
 }
 
 .status-card.active-status{
-border-color:rgba(0,210,255,.38);
+border-color:
+rgba(0,210,255,.38);
 
 background:
 linear-gradient(
@@ -494,39 +609,52 @@ box-shadow:
 
 .status-icon{
 font-size:15px;
+
 margin-bottom:4px;
 }
 
 .status-number{
 font-family:Orbitron,sans-serif;
+
 font-size:21px;
+
 font-weight:700;
+
 line-height:1.2;
 }
 
 .status-label{
 font-size:8px;
+
 opacity:.55;
+
 margin-top:4px;
+
 letter-spacing:.6px;
 }
 
 .status-arrow{
 position:absolute;
+
 top:7px;
+
 right:8px;
+
 font-size:8px;
+
 opacity:.25;
 }
 
 
 /* ================================================= */
-/* NAVIGATION TABS */
+/* NAVIGATION */
 /* ================================================= */
 
 .tabs-wrap{
 position:sticky;
+
 top:58px;
+
 z-index:80;
 
 padding:7px 0 9px;
@@ -545,7 +673,9 @@ backdrop-filter:blur(10px);
 
 .tabs{
 display:flex;
+
 gap:7px;
+
 overflow-x:auto;
 
 padding:3px 1px 5px;
@@ -566,7 +696,8 @@ padding:10px 14px;
 
 border-radius:12px;
 
-border:1px solid rgba(255,255,255,.07);
+border:
+1px solid rgba(255,255,255,.07);
 
 background:
 rgba(255,255,255,.035);
@@ -574,6 +705,7 @@ rgba(255,255,255,.035);
 color:#888;
 
 font-size:10px;
+
 font-weight:600;
 
 transition:.22s;
@@ -581,12 +713,15 @@ transition:.22s;
 
 .tab::after{
 content:"";
+
 position:absolute;
 
 left:50%;
+
 bottom:-4px;
 
 width:0;
+
 height:2px;
 
 border-radius:5px;
@@ -620,7 +755,7 @@ width:18px;
 
 
 /* ================================================= */
-/* SECTIONS */
+/* SECTION */
 /* ================================================= */
 
 .section{
@@ -638,11 +773,13 @@ display:block;
 
 from{
 opacity:0;
+
 transform:translateY(5px);
 }
 
 to{
 opacity:1;
+
 transform:translateY(0);
 }
 
@@ -650,8 +787,11 @@ transform:translateY(0);
 
 .section-title{
 font-family:Orbitron,sans-serif;
+
 font-size:13px;
+
 letter-spacing:.4px;
+
 margin:10px 0 12px;
 }
 
@@ -662,7 +802,9 @@ margin:10px 0 12px;
 
 .list{
 display:flex;
+
 flex-direction:column;
+
 gap:9px;
 }
 
@@ -678,7 +820,8 @@ rgba(255,255,255,.055),
 rgba(255,255,255,.025)
 );
 
-border:1px solid rgba(255,255,255,.065);
+border:
+1px solid rgba(255,255,255,.065);
 
 box-shadow:
 0 7px 25px rgba(0,0,0,.12);
@@ -688,20 +831,27 @@ transition:.2s;
 
 .item-main{
 display:flex;
+
 justify-content:space-between;
+
 gap:10px;
+
 align-items:center;
 }
 
 .item-name{
 font-weight:600;
+
 font-size:13px;
 }
 
 .item-email{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:3px;
+
 word-break:break-all;
 }
 
@@ -717,24 +867,31 @@ font-size:8px;
 background:
 rgba(255,255,255,.07);
 
-border:1px solid rgba(255,255,255,.04);
+border:
+1px solid rgba(255,255,255,.04);
 }
 
 .actions{
 display:flex;
+
 flex-wrap:wrap;
+
 gap:7px;
+
 margin-top:12px;
 }
 
 .action{
 border:0;
+
 border-radius:10px;
 
 padding:9px 11px;
 
 font-size:9px;
+
 font-weight:600;
+
 color:#fff;
 
 background:
@@ -777,7 +934,8 @@ border-radius:16px;
 background:
 rgba(255,255,255,.025);
 
-border:1px solid rgba(255,255,255,.04);
+border:
+1px solid rgba(255,255,255,.04);
 }
 
 
@@ -797,13 +955,15 @@ rgba(255,255,255,.055),
 rgba(255,255,255,.025)
 );
 
-border:1px solid rgba(255,255,255,.07);
+border:
+1px solid rgba(255,255,255,.07);
 }
 
 .points-box label{
 display:block;
 
 font-size:10px;
+
 opacity:.55;
 
 margin-bottom:6px;
@@ -816,9 +976,11 @@ padding:12px;
 
 border-radius:12px;
 
-border:1px solid rgba(255,255,255,.09);
+border:
+1px solid rgba(255,255,255,.09);
 
-background:rgba(0,0,0,.25);
+background:
+rgba(0,0,0,.25);
 
 color:#fff;
 
@@ -833,7 +995,9 @@ border-color:#00d9ff;
 
 .ranking-item{
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
 
 padding:13px;
@@ -843,27 +1007,52 @@ border-radius:14px;
 background:
 rgba(255,255,255,.04);
 
-border:1px solid rgba(255,255,255,.05);
+border:
+1px solid rgba(255,255,255,.05);
 
 margin-bottom:7px;
+
+transition:
+transform .18s,
+background .18s,
+border-color .18s;
+}
+
+.ranking-item:hover{
+background:
+rgba(255,255,255,.065);
+
+border-color:
+rgba(0,210,255,.15);
+}
+
+.ranking-item:active{
+transform:scale(.98);
 }
 
 .rank-left{
 display:flex;
+
 gap:10px;
+
 align-items:center;
 }
 
 .rank-number{
 font-family:Orbitron,sans-serif;
+
 font-size:11px;
+
 opacity:.55;
+
 width:25px;
 }
 
 .rank-score{
 font-family:Orbitron,sans-serif;
+
 color:#00d9ff;
+
 font-size:13px;
 }
 
@@ -874,7 +1063,9 @@ font-size:13px;
 
 .operator-summary{
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
 
 padding:15px;
@@ -890,17 +1081,21 @@ rgba(0,110,255,.11),
 rgba(0,210,255,.035)
 );
 
-border:1px solid rgba(0,210,255,.10);
+border:
+1px solid rgba(0,210,255,.10);
 }
 
 .operator-summary-title{
 font-weight:600;
+
 font-size:12px;
 }
 
 .operator-summary-desc{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:3px;
 }
 
@@ -921,33 +1116,43 @@ border-radius:17px;
 background:
 rgba(255,255,255,.045);
 
-border:1px solid rgba(255,255,255,.06);
+border:
+1px solid rgba(255,255,255,.06);
 
 margin-bottom:9px;
 }
 
 .history-top{
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 gap:10px;
 }
 
 .history-user{
 font-weight:600;
+
 font-size:12px;
 }
 
 .history-time{
 font-size:8px;
+
 opacity:.4;
+
 text-align:right;
 }
 
 .history-action{
 font-size:10px;
+
 margin-top:6px;
+
 line-height:1.5;
+
 opacity:.75;
 }
 
@@ -976,6 +1181,7 @@ margin-bottom:12px;
 padding:12px;
 
 border:0;
+
 border-radius:12px;
 
 background:#d71945;
@@ -983,12 +1189,13 @@ background:#d71945;
 color:#fff;
 
 font-weight:700;
+
 font-size:10px;
 }
 
 
 /* ================================================= */
-/* SETTINGS COMPACT */
+/* SETTINGS */
 /* ================================================= */
 
 .settings-intro{
@@ -1003,19 +1210,23 @@ rgba(0,110,255,.12),
 rgba(0,210,255,.035)
 );
 
-border:1px solid rgba(0,210,255,.09);
+border:
+1px solid rgba(0,210,255,.09);
 
 margin-bottom:11px;
 }
 
 .settings-intro-title{
 font-family:Orbitron,sans-serif;
+
 font-size:12px;
 }
 
 .settings-intro-desc{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:4px;
 }
 
@@ -1029,7 +1240,8 @@ border-radius:16px;
 background:
 rgba(255,255,255,.038);
 
-border:1px solid rgba(255,255,255,.06);
+border:
+1px solid rgba(255,255,255,.06);
 
 margin-bottom:8px;
 
@@ -1046,8 +1258,11 @@ rgba(0,210,255,.18);
 
 .setting-head{
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
 gap:10px;
 
 cursor:pointer;
@@ -1055,16 +1270,21 @@ cursor:pointer;
 
 .setting-left{
 display:flex;
+
 align-items:center;
+
 gap:11px;
 }
 
 .setting-icon{
 width:35px;
+
 height:35px;
 
 display:flex;
+
 align-items:center;
+
 justify-content:center;
 
 border-radius:11px;
@@ -1077,18 +1297,23 @@ font-size:15px;
 
 .setting-title{
 font-weight:600;
+
 font-size:11px;
 }
 
 .setting-desc{
 font-size:8px;
+
 opacity:.42;
+
 margin-top:3px;
+
 line-height:1.45;
 }
 
 .setting-arrow{
 font-size:10px;
+
 opacity:.4;
 
 transition:.2s;
@@ -1102,6 +1327,7 @@ transform:rotate(180deg);
 display:none;
 
 padding-top:12px;
+
 margin-top:12px;
 
 border-top:
@@ -1127,6 +1353,7 @@ background:
 rgba(255,255,255,.08);
 
 font-size:10px;
+
 font-weight:600;
 }
 
@@ -1140,9 +1367,64 @@ background:#006cff;
 
 .setting-small-note{
 font-size:8px;
+
 opacity:.4;
+
 line-height:1.5;
+
 margin-bottom:9px;
+}
+
+
+/* ================================================= */
+/* POINT MODAL */
+/* ================================================= */
+
+.point-modal-name{
+font-size:16px;
+
+font-weight:700;
+
+margin-bottom:4px;
+}
+
+.point-modal-score{
+font-family:Orbitron,sans-serif;
+
+font-size:12px;
+
+color:#00d9ff;
+}
+
+.point-edit-input{
+width:100%;
+
+padding:13px;
+
+border-radius:12px;
+
+border:
+1px solid rgba(255,255,255,.10);
+
+background:
+rgba(0,0,0,.28);
+
+color:#fff;
+
+outline:none;
+
+font-family:Poppins,sans-serif;
+
+font-size:14px;
+
+margin-bottom:10px;
+}
+
+.point-edit-input:focus{
+border-color:#00d9ff;
+
+box-shadow:
+0 0 0 2px rgba(0,217,255,.08);
 }
 
 
@@ -1152,12 +1434,15 @@ margin-bottom:9px;
 
 .modal{
 position:fixed;
+
 inset:0;
+
 z-index:500;
 
 display:none;
 
 align-items:center;
+
 justify-content:center;
 
 padding:20px;
@@ -1175,6 +1460,7 @@ display:flex;
 
 .modal-box{
 width:100%;
+
 max-width:420px;
 
 padding:22px;
@@ -1188,27 +1474,55 @@ linear-gradient(
 #0c0f21
 );
 
-border:1px solid rgba(255,255,255,.10);
+border:
+1px solid rgba(255,255,255,.10);
 
 box-shadow:
 0 30px 80px rgba(0,0,0,.65);
+
+animation:
+modalIn .2s ease;
+}
+
+@keyframes modalIn{
+
+from{
+opacity:0;
+
+transform:scale(.96)
+translateY(5px);
+}
+
+to{
+opacity:1;
+
+transform:scale(1)
+translateY(0);
+}
+
 }
 
 .modal-title{
 font-family:Orbitron,sans-serif;
+
 font-size:14px;
+
 margin-bottom:15px;
 }
 
 .modal-text{
 font-size:11px;
+
 line-height:1.6;
+
 opacity:.65;
+
 margin-bottom:15px;
 }
 
 .modal-actions{
 display:flex;
+
 gap:8px;
 }
 
@@ -1277,6 +1591,7 @@ font-size:7px;
 
 .tab{
 padding:9px 12px;
+
 font-size:9px;
 }
 
@@ -1535,7 +1850,7 @@ onclick="confirmResetGame()"
 
 
 <!-- ================================================= -->
-<!-- STATUS BAR CLICKABLE -->
+<!-- STATUS BAR -->
 <!-- ================================================= -->
 
 <div class="status-bar">
@@ -1808,6 +2123,23 @@ onclick="saveScore()"
 </div>
 
 <div id="rankingList"></div>
+
+<div
+id="pointEditHint"
+style="
+display:none;
+margin-top:10px;
+padding:11px;
+border-radius:12px;
+background:rgba(0,217,255,.07);
+border:1px solid rgba(0,217,255,.12);
+font-size:9px;
+color:#00d9ff;
+text-align:center;
+"
+>
+💡 Klik pemain untuk edit atau hapus poin.
+</div>
 
 </div>
 
@@ -2144,7 +2476,7 @@ LOGOUT
 
 
 <!-- ================================================= -->
-<!-- MODAL -->
+<!-- CONFIRM MODAL -->
 <!-- ================================================= -->
 
 <div
@@ -2189,6 +2521,124 @@ YA
 
 
 
+<!-- ================================================= -->
+<!-- POINT ACTION MODAL -->
+<!-- ================================================= -->
+
+<div
+id="pointModal"
+class="modal"
+>
+
+<div class="modal-box">
+
+<div
+id="pointModalTitle"
+class="modal-title"
+>
+🏆 KELOLA POIN
+</div>
+
+<div
+id="pointModalText"
+class="modal-text"
+>
+Pilih tindakan untuk pemain.
+</div>
+
+
+<div
+id="pointActionMenu"
+>
+
+<div
+style="
+display:flex;
+flex-direction:column;
+gap:8px;
+"
+>
+
+<button
+class="setting-btn blue"
+onclick="startEditPoint()"
+>
+✏️ EDIT POIN
+</button>
+
+<button
+class="setting-btn red"
+onclick="deleteSelectedPoint()"
+>
+🗑️ HAPUS PEMAIN
+</button>
+
+<button
+class="setting-btn"
+onclick="closePointModal()"
+>
+BATAL
+</button>
+
+</div>
+
+</div>
+
+
+<div
+id="pointEditForm"
+style="display:none;"
+>
+
+<div
+style="
+font-size:9px;
+opacity:.5;
+margin-bottom:6px;
+"
+>
+POIN BARU
+</div>
+
+<input
+id="editPointValue"
+class="point-edit-input"
+type="number"
+min="0"
+placeholder="Masukkan poin baru"
+>
+
+<div
+style="
+display:flex;
+gap:8px;
+"
+>
+
+<button
+class="setting-btn"
+onclick="cancelEditPoint()"
+>
+BATAL
+</button>
+
+<button
+class="setting-btn blue"
+onclick="saveEditedPoint()"
+>
+💾 SIMPAN
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
 <script>
 
 /* ================================================= */
@@ -2222,9 +2672,11 @@ appId:
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
+const auth =
+firebase.auth();
 
-const db = firebase.database();
+const db =
+firebase.database();
 
 
 
@@ -2263,9 +2715,13 @@ let operatorsData = {};
 
 let historyData = {};
 
-const SUPER_USERNAME = "aldi";
+let selectedPointKey = null;
 
-const SUPER_EMAIL = "aldydasilva172@gmail.com";
+const SUPER_USERNAME =
+"aldi";
+
+const SUPER_EMAIL =
+"aldydasilva172@gmail.com";
 
 
 
@@ -2322,11 +2778,14 @@ error
 function showMessage(text){
 
 const box =
-document.getElementById("authMessage");
+document.getElementById(
+"authMessage"
+);
 
 box.innerText = text;
 
-box.style.display = "block";
+box.style.display =
+"block";
 
 }
 
@@ -2795,15 +3254,21 @@ document
 
 
 const header =
-document.getElementById("headerUser");
+document.getElementById(
+"headerUser"
+);
 
 
 if(currentAccount){
 
 header.innerHTML=
 `
-${escapeHtml(currentAccount.username || "User")}
+${escapeHtml(
+currentAccount.username ||
+"User"
+)}
 <br>
+
 <span class="user-role">
 ${
 currentRole === "superadmin"
@@ -2820,29 +3285,41 @@ if(currentRole === "superadmin"){
 
 document
 .getElementById("operatorTab")
-.classList.remove("hidden");
+.classList.remove(
+"hidden"
+);
 
 document
 .getElementById("historyTab")
-.classList.remove("hidden");
+.classList.remove(
+"hidden"
+);
 
 document
 .getElementById("operatorManagement")
-.classList.remove("hidden");
+.classList.remove(
+"hidden"
+);
 
 }else{
 
 document
 .getElementById("operatorTab")
-.classList.add("hidden");
+.classList.add(
+"hidden"
+);
 
 document
 .getElementById("historyTab")
-.classList.add("hidden");
+.classList.add(
+"hidden"
+);
 
 document
 .getElementById("operatorManagement")
-.classList.add("hidden");
+.classList.add(
+"hidden"
+);
 
 }
 
@@ -3045,7 +3522,9 @@ document
 .querySelectorAll(".section")
 .forEach(section=>{
 
-section.classList.remove("active");
+section.classList.remove(
+"active"
+);
 
 });
 
@@ -3057,7 +3536,9 @@ document.getElementById(
 
 if(target){
 
-target.classList.add("active");
+target.classList.add(
+"active"
+);
 
 }
 
@@ -3066,19 +3547,23 @@ document
 .querySelectorAll(".tab")
 .forEach(tab=>{
 
-tab.classList.remove("active");
+tab.classList.remove(
+"active"
+);
 
 });
 
 
 if(button){
 
-button.classList.add("active");
+button.classList.add(
+"active"
+);
 
 }
 
 
-/* UPDATE STATUS CARD */
+/* STATUS ACTIVE */
 
 document
 .querySelectorAll(".status-card")
@@ -3124,6 +3609,7 @@ document
 }
 
 
+
 /* ================================================= */
 /* STATUS CARD NAVIGATION */
 /* ================================================= */
@@ -3156,9 +3642,14 @@ tab.innerText
 .toLowerCase();
 
 if(
-(name==="pending" && text==="menunggu") ||
-(name==="active" && text==="aktif") ||
-(name==="spam" && text==="spam")
+(name==="pending" &&
+text==="menunggu")
+||
+(name==="active" &&
+text==="aktif")
+||
+(name==="spam" &&
+text==="spam")
 ){
 
 targetTab=tab;
@@ -3229,7 +3720,9 @@ tab
 function toggleSetting(head){
 
 const card =
-head.closest(".setting-card");
+head.closest(
+".setting-card"
+);
 
 if(!card){
 
@@ -3238,22 +3731,26 @@ return;
 }
 
 
-/* tutup setting lain */
-
 document
-.querySelectorAll(".setting-card")
+.querySelectorAll(
+".setting-card"
+)
 .forEach(item=>{
 
 if(item!==card){
 
-item.classList.remove("open");
+item.classList.remove(
+"open"
+);
 
 }
 
 });
 
 
-card.classList.toggle("open");
+card.classList.toggle(
+"open"
+);
 
 }
 
@@ -3282,13 +3779,19 @@ renderPlayers();
 function renderPlayers(){
 
 const pending =
-document.getElementById("pendingList");
+document.getElementById(
+"pendingList"
+);
 
 const active =
-document.getElementById("activeList");
+document.getElementById(
+"activeList"
+);
 
 const spam =
-document.getElementById("spamList");
+document.getElementById(
+"spamList"
+);
 
 
 pending.innerHTML="";
@@ -3312,7 +3815,9 @@ const p=
 playersData[id] || {};
 
 const name=
-escapeHtml(p.name || id);
+escapeHtml(
+p.name || id
+);
 
 
 if(p.spam){
@@ -3359,15 +3864,21 @@ name,
 
 
 document
-.getElementById("pendingCount")
+.getElementById(
+"pendingCount"
+)
 .innerText=pendingCount;
 
 document
-.getElementById("activeCount")
+.getElementById(
+"activeCount"
+)
 .innerText=activeCount;
 
 document
-.getElementById("spamCount")
+.getElementById(
+"spamCount"
+)
 .innerText=spamCount;
 
 
@@ -3406,7 +3917,11 @@ emptyHTML(
 /* PLAYER HTML */
 /* ================================================= */
 
-function playerHTML(id,name,type){
+function playerHTML(
+id,
+name,
+type
+){
 
 if(type==="pending"){
 
@@ -3716,10 +4231,14 @@ const data=
 snapshot.val();
 
 const status=
-document.getElementById("gameStatus");
+document.getElementById(
+"gameStatus"
+);
 
 const winner=
-document.getElementById("gameWinner");
+document.getElementById(
+"gameWinner"
+);
 
 
 if(!data){
@@ -3739,7 +4258,10 @@ status.innerText=
 "🏆 PEMENANG";
 
 winner.innerText=
-"🥇 "+(data.player || "Unknown");
+"🥇 "+(
+data.player ||
+"Unknown"
+);
 
 });
 
@@ -3897,7 +4419,7 @@ function listenRanking(){
 db.ref("ranking")
 .on("value",snapshot=>{
 
-rankingData=
+rankingData =
 snapshot.val() || {};
 
 renderRanking();
@@ -3910,7 +4432,7 @@ renderRanking();
 
 function renderRanking(){
 
-const box=
+const box =
 document.getElementById(
 "rankingList"
 );
@@ -3918,11 +4440,12 @@ document.getElementById(
 box.innerHTML="";
 
 
-const arr=
+const arr =
 Object.keys(rankingData)
 .map(key=>({
 
 key:key,
+
 ...rankingData[key]
 
 }))
@@ -3936,10 +4459,21 @@ Number(a.score||0)
 
 if(!arr.length){
 
-box.innerHTML=
+box.innerHTML =
 emptyHTML(
 "Belum ada ranking."
 );
+
+const hint =
+document.getElementById(
+"pointEditHint"
+);
+
+if(hint){
+
+hint.style.display="none";
+
+}
 
 return;
 
@@ -3950,7 +4484,10 @@ arr.forEach((item,index)=>{
 
 box.innerHTML += `
 
-<div class="ranking-item">
+<div
+class="ranking-item"
+onclick="openPointAction('${item.key}')"
+>
 
 <div class="rank-left">
 
@@ -3958,14 +4495,49 @@ box.innerHTML += `
 #${index+1}
 </div>
 
+<div>
+
 <div class="item-name">
-${escapeHtml(item.name || "-")}
+${escapeHtml(
+item.name || "-"
+)}
+</div>
+
+<div
+style="
+font-size:8px;
+opacity:.35;
+margin-top:2px;
+"
+>
+Tap untuk kelola poin
 </div>
 
 </div>
+
+</div>
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:8px;
+"
+>
 
 <div class="rank-score">
 ${Number(item.score||0)}
+</div>
+
+<div
+style="
+font-size:15px;
+opacity:.3;
+"
+>
+›
+</div>
+
 </div>
 
 </div>
@@ -3973,6 +4545,495 @@ ${Number(item.score||0)}
 `;
 
 });
+
+
+const hint =
+document.getElementById(
+"pointEditHint"
+);
+
+if(hint){
+
+hint.style.display="block";
+
+}
+
+}
+
+
+
+/* ================================================= */
+/* POINT ACTION MODAL */
+/* ================================================= */
+
+function openPointAction(key){
+
+const item =
+rankingData[key];
+
+if(!item){
+
+return;
+
+}
+
+
+selectedPointKey =
+key;
+
+
+document
+.getElementById(
+"pointModalTitle"
+)
+.innerText =
+"🏆 KELOLA POIN";
+
+
+document
+.getElementById(
+"pointModalText"
+)
+.innerHTML =
+`
+<div class="point-modal-name">
+${escapeHtml(
+item.name || "-"
+)}
+</div>
+
+<div class="point-modal-score">
+POIN SAAT INI: ${
+Number(item.score || 0)
+}
+</div>
+`;
+
+
+document
+.getElementById(
+"pointActionMenu"
+)
+.style.display="block";
+
+
+document
+.getElementById(
+"pointEditForm"
+)
+.style.display="none";
+
+
+document
+.getElementById(
+"pointModal"
+)
+.classList.add("show");
+
+}
+
+
+
+/* ================================================= */
+/* START EDIT POINT */
+/* ================================================= */
+
+function startEditPoint(){
+
+if(!selectedPointKey){
+
+return;
+
+}
+
+
+const item =
+rankingData[
+selectedPointKey
+];
+
+if(!item){
+
+return;
+
+}
+
+
+document
+.getElementById(
+"pointActionMenu"
+)
+.style.display="none";
+
+
+document
+.getElementById(
+"pointEditForm"
+)
+.style.display="block";
+
+
+document
+.getElementById(
+"pointModalTitle"
+)
+.innerText =
+"✏️ EDIT POIN";
+
+
+document
+.getElementById(
+"pointModalText"
+)
+.innerHTML =
+`
+<div class="point-modal-name">
+${escapeHtml(
+item.name || "-"
+)}
+</div>
+
+<div class="point-modal-score">
+POIN SAAT INI: ${
+Number(item.score || 0)
+}
+</div>
+`;
+
+
+const input =
+document.getElementById(
+"editPointValue"
+);
+
+input.value =
+Number(item.score || 0);
+
+
+setTimeout(()=>{
+
+input.focus();
+
+input.select();
+
+},100);
+
+}
+
+
+
+/* ================================================= */
+/* CANCEL EDIT POINT */
+/* ================================================= */
+
+function cancelEditPoint(){
+
+if(!selectedPointKey){
+
+closePointModal();
+
+return;
+
+}
+
+
+const item =
+rankingData[
+selectedPointKey
+];
+
+
+document
+.getElementById(
+"pointEditForm"
+)
+.style.display="none";
+
+
+document
+.getElementById(
+"pointActionMenu"
+)
+.style.display="block";
+
+
+document
+.getElementById(
+"pointModalTitle"
+)
+.innerText =
+"🏆 KELOLA POIN";
+
+
+document
+.getElementById(
+"pointModalText"
+)
+.innerHTML =
+`
+<div class="point-modal-name">
+${escapeHtml(
+item?.name || "-"
+)}
+</div>
+
+<div class="point-modal-score">
+POIN SAAT INI: ${
+Number(item?.score || 0)
+}
+</div>
+`;
+
+}
+
+
+
+/* ================================================= */
+/* SAVE EDITED POINT */
+/* ================================================= */
+
+async function saveEditedPoint(){
+
+if(!selectedPointKey){
+
+return;
+
+}
+
+
+const item =
+rankingData[
+selectedPointKey
+];
+
+if(!item){
+
+return;
+
+}
+
+
+const input =
+document.getElementById(
+"editPointValue"
+);
+
+const valueText =
+input.value.trim();
+
+
+if(valueText===""){
+
+alert(
+"❌ Masukkan jumlah poin."
+);
+
+return;
+
+}
+
+
+const newScore =
+Number(valueText);
+
+
+if(
+!Number.isFinite(newScore) ||
+newScore < 0
+){
+
+alert(
+"❌ Jumlah poin tidak valid."
+);
+
+return;
+
+}
+
+
+const oldScore =
+Number(item.score || 0);
+
+
+try{
+
+await db
+.ref(
+"ranking/"+selectedPointKey
+)
+.update({
+
+name:item.name,
+
+score:newScore
+
+});
+
+
+await logActivity(
+"✏️ Mengubah poin pemain: "+
+(item.name ||
+selectedPointKey)+
+" dari "+
+oldScore+
+" menjadi "+
+newScore
+);
+
+
+closePointModal();
+
+
+alert(
+"✅ Poin berhasil diubah."
+);
+
+}catch(error){
+
+console.error(
+"EDIT POINT ERROR:",
+error
+);
+
+alert(
+"❌ Gagal mengubah poin.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
+);
+
+}
+
+}
+
+
+
+/* ================================================= */
+/* DELETE SELECTED POINT */
+/* ================================================= */
+
+async function deleteSelectedPoint(){
+
+if(!selectedPointKey){
+
+return;
+
+}
+
+
+const item =
+rankingData[
+selectedPointKey
+];
+
+if(!item){
+
+return;
+
+}
+
+
+const yakin =
+confirm(
+"🗑️ HAPUS POIN\n\n"+
+"Nama: "+
+(item.name || "-")+
+"\nPoin: "+
+Number(item.score || 0)+
+"\n\n"+
+"Yakin ingin menghapus pemain ini dari ranking?"
+);
+
+
+if(!yakin){
+
+return;
+
+}
+
+
+try{
+
+await db
+.ref(
+"ranking/"+selectedPointKey
+)
+.remove();
+
+
+await logActivity(
+"🗑️ Menghapus ranking pemain: "+
+(item.name ||
+selectedPointKey)+
+" dengan "+
+Number(item.score || 0)+
+" poin"
+);
+
+
+closePointModal();
+
+
+alert(
+"✅ Pemain berhasil dihapus dari ranking."
+);
+
+}catch(error){
+
+console.error(
+"DELETE POINT ERROR:",
+error
+);
+
+alert(
+"❌ Gagal menghapus poin.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
+);
+
+}
+
+}
+
+
+
+/* ================================================= */
+/* CLOSE POINT MODAL */
+/* ================================================= */
+
+function closePointModal(){
+
+document
+.getElementById(
+"pointModal"
+)
+.classList.remove("show");
+
+
+selectedPointKey =
+null;
+
+
+document
+.getElementById(
+"pointActionMenu"
+)
+.style.display="block";
+
+
+document
+.getElementById(
+"pointEditForm"
+)
+.style.display="none";
+
+
+document
+.getElementById(
+"editPointValue"
+)
+.value="";
 
 }
 
@@ -4026,7 +5087,9 @@ safeKey(name);
 try{
 
 const ref=
-db.ref("ranking/"+key);
+db.ref(
+"ranking/"+key
+);
 
 const snap=
 await ref.once("value");
@@ -4198,7 +5261,9 @@ emptyHTML(
 /* APPROVE OPERATOR */
 /* ================================================= */
 
-async function approveOperator(username){
+async function approveOperator(
+username
+){
 
 if(!currentUser){
 
@@ -4247,7 +5312,9 @@ const operator=
 snap.val();
 
 
-if(operator.status!=="pending"){
+if(
+operator.status!=="pending"
+){
 
 alert(
 "Operator ini sudah diproses."
@@ -4307,7 +5374,9 @@ alert(
 /* REJECT OPERATOR */
 /* ================================================= */
 
-async function rejectOperator(username){
+async function rejectOperator(
+username
+){
 
 if(!currentUser){
 
@@ -4419,6 +5488,7 @@ Object.keys(historyData)
 .map(key=>({
 
 key:key,
+
 ...historyData[key]
 
 }))
@@ -4723,7 +5793,9 @@ return String(text)
 /* ================================================= */
 
 document
-.getElementById("loginUsername")
+.getElementById(
+"loginUsername"
+)
 .focus();
 
 </script>
