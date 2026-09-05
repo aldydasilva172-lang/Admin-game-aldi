@@ -1,3380 +1,2333 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
 
 <meta charset="UTF-8">
 
 <meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 >
 
 <title>ADMIN PANEL ALDI</title>
 
-<!-- FIREBASE -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
-<!-- FONT -->
-
-<link
-href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet"
->
 
 <style>
 
-/* ================================================= */
-/* GLOBAL */
-/* ================================================= */
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
 }
 
 body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(0,240,255,.10),transparent 30%),
+    radial-gradient(circle at 80% 90%,rgba(0,100,255,.12),transparent 30%),
+    #070b16;
+
+  color:#fff;
 
   font-family:'Poppins',sans-serif;
 
-  min-height:100vh;
-
-  color:white;
-
-  background:
-
-  radial-gradient(
-    circle at 10% 0%,
-    rgba(0,240,255,.12),
-    transparent 30%
-  ),
-
-  radial-gradient(
-    circle at 90% 100%,
-    rgba(138,46,255,.13),
-    transparent 30%
-  ),
-
-  #070d18;
-
-  padding:0 12px 30px;
-
+  padding:12px;
 }
 
 
-/* ================================================= */
-/* HEADER */
-/* ================================================= */
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+  width:100%;
+  max-width:600px;
+  margin:auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
-
-  position:sticky;
-
-  top:0;
-
-  z-index:5000;
-
-  margin:0 -12px 15px;
-
-  padding:18px 15px;
-
   text-align:center;
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:21px;
-
-  font-weight:900;
-
-  letter-spacing:1.5px;
-
-  background:
-  rgba(7,13,24,.88);
-
-  backdrop-filter:blur(20px);
-
-  -webkit-backdrop-filter:blur(20px);
-
-  border-bottom:
-  1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-  0 8px 30px rgba(0,0,0,.25);
-
-}
-
-
-/* ================================================= */
-/* DASHBOARD */
-/* ================================================= */
-
-.dashboard{
-
-  width:100%;
-
-  max-width:700px;
-
-  margin:auto;
-
-}
-
-
-/* ================================================= */
-/* GAME STATUS */
-/* ================================================= */
-
-.game-status{
-
-  position:relative;
-
-  overflow:hidden;
-
-  background:
-  linear-gradient(
-    145deg,
-    rgba(0,210,255,.12),
-    rgba(30,40,65,.7)
-  );
-
-  border:
-  1px solid rgba(0,240,255,.18);
-
-  border-radius:24px;
-
-  padding:18px;
-
   margin-bottom:12px;
-
-  box-shadow:
-  0 12px 35px rgba(0,0,0,.25);
-
 }
 
-.game-status::before{
-
-  content:'';
-
-  position:absolute;
-
-  width:150px;
-
-  height:150px;
-
-  border-radius:50%;
-
-  background:
-  rgba(0,240,255,.08);
-
-  filter:blur(50px);
-
-  right:-50px;
-
-  top:-70px;
-
-  pointer-events:none;
-
-}
-
-.status-label{
-
-  font-size:10px;
-
-  color:#00dfff;
-
+.header h1{
   font-family:'Orbitron',sans-serif;
-
+  font-size:20px;
+  font-weight:800;
   letter-spacing:1px;
 
-  margin-bottom:7px;
+  color:#00f0ff;
 
+  text-shadow:
+    0 0 10px rgba(0,240,255,.6);
+}
+
+.header p{
+  margin-top:3px;
+  font-size:10px;
+  color:#71809b;
+  letter-spacing:1px;
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
+
+.card{
+  background:rgba(15,20,38,.70);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:18px;
+
+  padding:13px;
+
+  margin-bottom:10px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.28),
+    inset 0 1px rgba(255,255,255,.03);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+
+/* =========================================================
+   GAME STATUS
+========================================================= */
+
+.game-card{
+  text-align:center;
+}
+
+.game-label{
+  font-size:9px;
+  color:#73809a;
+  letter-spacing:1.5px;
+  margin-bottom:4px;
 }
 
 #gameStatusText{
-
-  font-size:22px;
-
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
   font-weight:700;
-
-  line-height:1.35;
-
+  color:#00f0ff;
 }
-
-.status-sub{
-
-  color:#9ca8b8;
-
-  font-size:11px;
-
-  margin-top:5px;
-
-}
-
-
-/* ================================================= */
-/* RESET GAME */
-/* ================================================= */
 
 .main-reset{
-
   width:100%;
 
-  height:54px;
-
-  border:none;
-
-  border-radius:16px;
-
-  background:
-  linear-gradient(
-    145deg,
-    #ff3b4e,
-    #b7192d
-  );
-
-  color:white;
-
-  font-family:'Poppins',sans-serif;
-
-  font-size:15px;
-
-  font-weight:700;
-
-  cursor:pointer;
-
-  box-shadow:
-  0 8px 25px rgba(255,40,60,.2);
-
-  margin-bottom:12px;
-
-  transition:.2s;
-
-}
-
-.main-reset:active{
-
-  transform:scale(.98);
-
-}
-
-
-/* ================================================= */
-/* QUICK STATS */
-/* ================================================= */
-
-.quick-stats{
-
-  display:grid;
-
-  grid-template-columns:
-  repeat(3,1fr);
-
-  gap:8px;
-
-  margin-bottom:12px;
-
-}
-
-.stat-box{
-
-  background:
-  rgba(18,28,45,.82);
-
-  border:
-  1px solid rgba(255,255,255,.07);
-
-  border-radius:16px;
-
-  padding:12px 7px;
-
-  text-align:center;
-
-}
-
-.stat-icon{
-
-  font-size:18px;
-
-}
-
-.stat-number{
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:20px;
-
-  font-weight:900;
-
-  margin-top:3px;
-
-}
-
-.stat-name{
-
-  color:#8995a6;
-
-  font-size:9px;
-
-  margin-top:2px;
-
-}
-
-
-/* ================================================= */
-/* CARD */
-/* ================================================= */
-
-.card{
-
-  background:
-  rgba(16,25,41,.82);
-
-  border:
-  1px solid rgba(255,255,255,.07);
-
-  border-radius:22px;
-
-  padding:16px;
-
-  margin-bottom:12px;
-
-  box-shadow:
-  0 10px 30px rgba(0,0,0,.18);
-
-}
-
-
-/* ================================================= */
-/* SECTION HEADER */
-/* ================================================= */
-
-.section-header{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:10px;
-
-  margin-bottom:12px;
-
-}
-
-.section-title{
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:13px;
-
-  font-weight:700;
-
-  color:#eafcff;
-
-}
-
-.section-count{
-
-  min-width:25px;
-
-  height:25px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:0 7px;
-
-  border-radius:9px;
-
-  background:
-  rgba(0,210,255,.12);
-
-  border:
-  1px solid rgba(0,210,255,.2);
-
-  color:#00dfff;
-
-  font-size:11px;
-
-  font-weight:700;
-
-}
-
-
-/* ================================================= */
-/* WINNER */
-/* ================================================= */
-
-.winner-card{
-
-  background:
-
-  linear-gradient(
-    145deg,
-    rgba(255,215,0,.10),
-    rgba(19,28,45,.88)
-  );
-
-  border:
-  1px solid rgba(255,215,0,.18);
-
-}
-
-.fast-icon{
-
-  text-align:center;
-
-  font-size:42px;
-
-  margin-bottom:3px;
-
-}
-
-#fastName{
-
-  text-align:center;
-
-  font-family:'Orbitron',sans-serif;
-
-  font-size:27px;
-
-  font-weight:900;
-
-  color:gold;
-
-  word-break:break-word;
-
-  text-shadow:
-  0 0 18px rgba(255,215,0,.25);
-
-}
-
-#fastTime{
-
-  text-align:center;
-
-  font-size:11px;
-
-  color:#aeb8c7;
-
-  margin-top:4px;
-
-}
-
-.winner-control{
-
-  margin-top:13px;
-
-}
-
-.fast-card{
-
-  background:
-  rgba(255,255,255,.035);
-
-  border:
-  1px solid rgba(255,215,0,.12);
-
-  border-radius:16px;
-
-  padding:12px;
-
-}
-
-.fast-player-name{
-
-  display:none;
-
-}
-
-.fast-player-info{
-
-  text-align:center;
-
-  color:#9da9b9;
-
-  font-size:10px;
-
-  margin-bottom:10px;
-
-}
-
-
-/* ================================================= */
-/* BUTTON */
-/* ================================================= */
-
-button{
-
-  border:none;
-
-  outline:none;
-
-  font-family:'Poppins',sans-serif;
-
-  font-weight:700;
-
-  cursor:pointer;
-
-  transition:.2s;
-
-}
-
-button:disabled{
-
-  opacity:.5;
-
-  cursor:not-allowed;
-
-}
-
-.btn-group{
-
-  display:flex;
-
-  gap:8px;
-
-}
-
-.btn-group button{
-
-  flex:1;
-
-  min-height:45px;
-
-  border-radius:12px;
-
-  font-size:12px;
-
-}
-
-.continue{
-
-  background:#00b894;
-
-  color:white;
-
-}
-
-.remove{
-
-  background:#d63031;
-
-  color:white;
-
-}
-
-
-/* ================================================= */
-/* PENDING */
-/* ================================================= */
-
-.pending-player{
-
-  background:
-  rgba(255,255,255,.035);
-
-  border:
-  1px solid rgba(255,255,255,.06);
-
-  padding:13px;
-
-  border-radius:15px;
-
-  margin-top:9px;
-
-}
-
-.pending-name{
-
-  font-size:16px;
-
-  font-weight:700;
-
-  word-break:break-word;
-
-}
-
-.pending-info{
-
-  font-size:10px;
-
-  color:#8f9aaa;
-
-  margin:3px 0 10px;
-
-}
-
-.approve{
-
-  width:100%;
-
-  height:43px;
-
-  border-radius:11px;
-
-  background:#00b894;
-
-  color:white;
-
-  font-size:12px;
-
-}
-
-
-/* ================================================= */
-/* ACTIVE */
-/* ================================================= */
-
-.active-player{
-
-  background:
-  rgba(255,255,255,.035);
-
-  border:
-  1px solid rgba(255,255,255,.055);
-
-  padding:12px;
-
-  border-radius:14px;
-
-  margin-top:8px;
-
-}
-
-.active-name{
-
-  font-size:15px;
-
-  font-weight:700;
-
-  word-break:break-word;
-
-}
-
-.active-info{
-
-  font-size:10px;
-
-  color:#8793a3;
-
-  margin:3px 0 8px;
-
-  line-height:1.5;
-
-}
-
-.active-buttons{
-
-  display:flex;
-
-}
-
-.keluarkan-player{
-
-  width:100%;
-
-  height:38px;
-
-  border-radius:10px;
-
-  background:#d63031;
-
-  color:white;
-
-  font-size:11px;
-
-}
-
-
-/* ================================================= */
-/* SPAM */
-/* ================================================= */
-
-.spam-card{
-
-  border:
-  1px solid rgba(255,55,70,.18);
-
-  background:
-  linear-gradient(
-    145deg,
-    rgba(100,20,30,.18),
-    rgba(16,25,41,.85)
-  );
-
-}
-
-.spam-player{
-
-  background:
-  rgba(255,40,60,.08);
-
-  border:
-  1px solid rgba(255,40,60,.2);
-
-  padding:13px;
-
-  border-radius:15px;
-
-  margin-top:9px;
-
-}
-
-.spam-name{
-
-  font-size:16px;
-
-  font-weight:700;
-
-  color:#ff5b65;
-
-  word-break:break-word;
-
-}
-
-.spam-info{
-
-  font-size:10px;
-
-  color:#ff9b9f;
-
-  margin-top:4px;
-
-  margin-bottom:10px;
-
-  line-height:1.5;
-
-}
-
-.open-spam{
-
-  width:100%;
-
-  height:43px;
-
-  border-radius:11px;
-
-  background:#00b894;
-
-  color:white;
-
-  font-size:12px;
-
-}
-
-
-/* ================================================= */
-/* NOTICE */
-/* ================================================= */
-
-.notice{
-
-  text-align:center;
-
-  padding:12px;
-
-  border-radius:12px;
-
-  background:
-  rgba(255,255,255,.025);
-
-  color:#7f8b9b;
-
-  font-size:11px;
-
-}
-
-
-/* ================================================= */
-/* RANKING */
-/* ================================================= */
-
-.player{
-
-  background:
-  rgba(255,255,255,.025);
-
-  padding:12px;
-
-  border-radius:14px;
-
-  margin-top:9px;
-
-}
-
-.player h3{
-
-  font-size:13px;
-
-  line-height:1.4;
-
-  word-break:break-word;
-
-}
-
-.bar{
-
-  width:100%;
-
-  height:9px;
-
-  background:#273346;
-
-  border-radius:20px;
-
-  overflow:hidden;
-
-  margin-top:9px;
-
-}
-
-.fill{
-
-  height:100%;
-
-  background:
-  linear-gradient(
-    90deg,
-    #00d2ff,
-    #8a2eff,
-    #ff00d4
-  );
-
-  border-radius:20px;
-
-}
-
-.player .btn-group{
-
-  margin-top:9px;
-
-}
-
-.player .btn-group button{
-
-  min-height:38px;
-
-}
-
-.edit{
-
-  background:#fdcb6e;
-
-  color:#171717;
-
-}
-
-.delete{
-
-  background:#e84393;
-
-  color:white;
-
-}
-
-
-/* ================================================= */
-/* SETTINGS BUTTON */
-/* ================================================= */
-
-.settings-button{
-
-  width:100%;
-
-  height:50px;
-
-  border-radius:15px;
-
-  background:
-  rgba(255,255,255,.06);
-
-  border:
-  1px solid rgba(255,255,255,.08);
-
-  color:#dce5ef;
-
-  font-size:13px;
-
-  margin-bottom:12px;
-
-}
-
-.settings-button:active{
-
-  transform:scale(.98);
-
-}
-
-
-/* ================================================= */
-/* SETTINGS */
-/* ================================================= */
-
-#settingsPanel{
-
-  display:none;
-
-}
-
-.settings-panel{
-
-  background:
-  rgba(13,21,35,.95);
-
-  border:
-  1px solid rgba(255,255,255,.08);
-
-  border-radius:22px;
-
-  padding:16px;
-
-  margin-bottom:12px;
-
-}
-
-.settings-label{
-
-  font-size:11px;
-
-  color:#00dfff;
-
-  font-family:'Orbitron',sans-serif;
-
-  margin-bottom:8px;
-
-}
-
-input{
-
-  width:100%;
-
-  height:48px;
-
-  border:none;
-
-  outline:none;
-
-  border-radius:12px;
-
-  padding:0 14px;
-
-  margin-top:8px;
-
-  background:#1b2739;
-
-  border:
-  1px solid rgba(255,255,255,.05);
-
-  color:white;
-
-  font-size:15px;
-
-}
-
-input:focus{
-
-  border-color:#00dfff;
-
-  box-shadow:
-  0 0 12px rgba(0,220,255,.15);
-
-}
-
-input::placeholder{
-
-  color:#7e8998;
-
-}
-
-.save{
-
-  background:#00b894;
-
-  color:white;
-
-}
-
-
-/* ================================================= */
-/* RESET PEMAIN */
-/* ================================================= */
-
-.reset-all-button{
-
-  width:100%;
-
-  height:48px;
-
-  border-radius:12px;
-
-  background:#d63031;
-
-  color:white;
-
-  font-size:12px;
+  border:0;
 
   margin-top:10px;
 
-}
+  padding:13px;
 
-
-/* ================================================= */
-/* EMPTY */
-/* ================================================= */
-
-.empty{
-
-  text-align:center;
-
-  padding:17px 8px;
-
-  color:#687587;
-
-  font-size:11px;
-
-}
-
-
-/* ================================================= */
-/* POPUP */
-/* ================================================= */
-
-#popup{
-
-  display:none;
-
-  position:fixed;
-
-  inset:0;
+  border-radius:12px;
 
   background:
-  rgba(0,0,0,.78);
+    linear-gradient(135deg,#ff3030,#b50000);
 
-  justify-content:center;
+  color:#fff;
 
+  font-family:'Orbitron',sans-serif;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  letter-spacing:.7px;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 6px 18px rgba(255,0,0,.20);
+
+  transition:.2s;
+}
+
+.main-reset:active{
+  transform:scale(.97);
+}
+
+
+/* =========================================================
+   WINNER
+========================================================= */
+
+.winner-card{
+  display:none;
+}
+
+.winner-title{
+  font-size:9px;
+  color:#77849c;
+  letter-spacing:1.3px;
+  margin-bottom:5px;
+}
+
+#winnerBox{
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:#00ff91;
+  word-break:break-word;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.tabs-card{
+  padding:6px;
+}
+
+.tabs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:5px;
+}
+
+.tab{
+  min-width:0;
+
+  border:1px solid rgba(255,255,255,.07);
+
+  background:rgba(255,255,255,.035);
+
+  color:#77849a;
+
+  border-radius:11px;
+
+  padding:8px 3px;
+
+  font-family:'Poppins',sans-serif;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.tab-icon{
+  display:block;
+  font-size:15px;
+  line-height:17px;
+}
+
+.tab-name{
+  display:block;
+  margin-top:2px;
+
+  font-size:8px;
+  font-weight:700;
+
+  letter-spacing:.3px;
+
+  white-space:nowrap;
+}
+
+.tab-count{
+  display:block;
+
+  margin-top:2px;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:9px;
+
+  font-weight:700;
+
+  color:#fff;
+}
+
+.tab.active{
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,240,255,.18),
+      rgba(0,100,255,.10)
+    );
+
+  border-color:rgba(0,240,255,.45);
+
+  color:#00f0ff;
+
+  box-shadow:
+    0 0 14px rgba(0,240,255,.08);
+}
+
+.tab.active .tab-count{
+  color:#00f0ff;
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-head{
+  display:flex;
   align-items:center;
-
-  padding:20px;
-
-  z-index:99999;
-
-  backdrop-filter:blur(8px);
-
-}
-
-.popup-content{
-
-  background:#111c2d;
-
-  padding:20px;
-
-  border-radius:20px;
-
-  width:100%;
-
-  max-width:320px;
-
-  border:
-  1px solid rgba(255,255,255,.08);
-
-}
-
-.popup-content h2{
-
-  font-size:17px;
+  justify-content:space-between;
 
   margin-bottom:10px;
+}
 
+.panel-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  font-weight:700;
+}
+
+.panel-subtitle{
+  font-size:9px;
+  color:#66748e;
 }
 
 
-/* ================================================= */
-/* RESET PEMAIN POPUP */
-/* ================================================= */
+/* =========================================================
+   PLAYER LIST
+========================================================= */
 
-#resetPlayerPopup{
+.player-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
 
-  display:none;
+.player{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
+  gap:8px;
+
+  padding:10px;
+
+  background:rgba(255,255,255,.035);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  border-radius:12px;
+}
+
+.player-info{
+  min-width:0;
+  flex:1;
+}
+
+.player-name{
+  font-size:12px;
+  font-weight:600;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.player-meta{
+  margin-top:2px;
+
+  font-size:8px;
+
+  color:#65728a;
+}
+
+.player-actions{
+  display:flex;
+  gap:5px;
+  flex-shrink:0;
+}
+
+.btn{
+  border:0;
+
+  border-radius:8px;
+
+  padding:7px 9px;
+
+  font-family:'Poppins',sans-serif;
+
+  font-size:8px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.btn-approve{
+  background:#00d084;
+  color:#001b10;
+}
+
+.btn-edit{
+  background:#008cff;
+  color:#fff;
+}
+
+.btn-delete{
+  background:#ff3030;
+  color:#fff;
+}
+
+.btn-open{
+  background:#00c8ff;
+  color:#00151b;
+}
+
+.btn-remove{
+  background:#ff9d00;
+  color:#241400;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+  padding:25px 10px;
+
+  text-align:center;
+
+  font-size:10px;
+
+  color:#5e6b82;
+}
+
+.empty-icon{
+  font-size:25px;
+  margin-bottom:5px;
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+.settings-group{
+  margin-bottom:12px;
+}
+
+.settings-label{
+  display:block;
+
+  font-size:9px;
+
+  color:#78859b;
+
+  margin-bottom:5px;
+}
+
+input{
+  width:100%;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  background:rgba(255,255,255,.045);
+
+  color:#fff;
+
+  outline:none;
+
+  border-radius:10px;
+
+  padding:10px;
+
+  font-family:'Poppins',sans-serif;
+
+  font-size:11px;
+}
+
+input:focus{
+  border-color:rgba(0,240,255,.45);
+}
+
+.save-btn{
+  width:100%;
+
+  border:0;
+
+  border-radius:10px;
+
+  padding:11px;
+
+  background:
+    linear-gradient(135deg,#00f0ff,#0066ff);
+
+  color:#fff;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:10px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   RANKING
+========================================================= */
+
+.ranking-title{
+  font-family:'Orbitron',sans-serif;
+
+  font-size:11px;
+
+  margin:15px 0 8px;
+
+  color:#00f0ff;
+}
+
+.ranking-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.rank-item{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:9px;
+
+  background:rgba(255,255,255,.035);
+
+  border-radius:10px;
+
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.rank-number{
+  width:25px;
+
+  font-family:'Orbitron',sans-serif;
+
+  font-size:10px;
+
+  font-weight:700;
+
+  color:#00f0ff;
+
+  text-align:center;
+}
+
+.rank-name{
+  flex:1;
+
+  min-width:0;
+
+  font-size:10px;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+.rank-score{
+  font-family:'Orbitron',sans-serif;
+
+  font-size:10px;
+
+  color:#00ff91;
+
+  font-weight:700;
+}
+
+.rank-actions{
+  display:flex;
+  gap:4px;
+}
+
+
+/* =========================================================
+   RESET ALL
+========================================================= */
+
+.reset-all{
+  width:100%;
+
+  margin-top:15px;
+
+  border:1px solid rgba(255,50,50,.25);
+
+  background:rgba(255,0,0,.07);
+
+  color:#ff5555;
+
+  padding:10px;
+
+  border-radius:10px;
+
+  font-size:9px;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   POPUP
+========================================================= */
+
+.popup{
   position:fixed;
 
   inset:0;
 
-  background:
-  rgba(0,0,0,.82);
+  background:rgba(0,0,0,.72);
 
-  justify-content:center;
+  display:none;
 
   align-items:center;
 
-  padding:20px;
+  justify-content:center;
 
-  z-index:100000;
+  padding:15px;
+
+  z-index:9999;
 
   backdrop-filter:blur(8px);
-
+  -webkit-backdrop-filter:blur(8px);
 }
 
-.reset-player-content{
-
-  background:#111c2d;
-
-  padding:20px;
-
-  border-radius:20px;
-
+.popup-box{
   width:100%;
+  max-width:390px;
 
-  max-width:340px;
+  background:#101628;
 
-  border:
-  1px solid rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
 
+  border-radius:18px;
+
+  padding:16px;
+
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
 }
 
-.reset-player-content h2{
+.popup-title{
+  font-family:'Orbitron',sans-serif;
 
-  font-size:17px;
+  font-size:13px;
 
+  color:#00f0ff;
+
+  margin-bottom:12px;
 }
 
-.reset-warning{
+.popup-buttons{
+  display:flex;
 
-  text-align:center;
+  gap:7px;
 
-  color:#ff7675;
-
-  font-size:11px;
-
-  line-height:1.6;
-
-  margin-top:8px;
-
+  margin-top:10px;
 }
 
-.reset-player-content .btn-group{
-
-  margin-top:12px;
-
-}
-
-
-/* ================================================= */
-/* DESKTOP */
-/* ================================================= */
-
-@media(min-width:700px){
-
-  body{
-
-    padding-left:20px;
-
-    padding-right:20px;
-
-  }
-
-  .header{
-
-    margin-left:-20px;
-
-    margin-right:-20px;
-
-  }
-
+.popup-buttons button{
+  flex:1;
 }
 
 
-/* ================================================= */
-/* SMALL PHONE */
-/* ================================================= */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:360px){
 
-  .quick-stats{
-
-    gap:5px;
-
+  body{
+    padding:8px;
   }
 
-  .stat-number{
-
-    font-size:17px;
-
+  .header h1{
+    font-size:18px;
   }
 
-  #gameStatusText{
-
-    font-size:19px;
-
+  .tab{
+    padding:7px 2px;
   }
 
-  .btn-group button{
+  .tab-icon{
+    font-size:13px;
+  }
 
+  .tab-name{
+    font-size:7px;
+  }
+
+  .tab-count{
+    font-size:8px;
+  }
+
+  .player{
+    padding:8px;
+  }
+
+  .player-name{
     font-size:11px;
-
   }
 
+  .btn{
+    padding:6px 7px;
+    font-size:7px;
+  }
 }
 
 </style>
 
 </head>
 
-
 <body>
 
+<div class="container">
 
-<!-- ================================================= -->
-<!-- HEADER -->
-<!-- ================================================= -->
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-<div class="header">
+  <div class="header">
 
-🎮 CONTROL GAME ALDI
+    <h1>🎮 CONTROL GAME ALDI</h1>
+
+    <p>RM KEMANG GAMES • ADMIN PANEL</p>
+
+  </div>
+
+
+  <!-- =====================================================
+       GAME STATUS
+  ====================================================== -->
+
+  <div class="card game-card">
+
+    <div class="game-label">
+      STATUS GAME
+    </div>
+
+    <div id="gameStatusText">
+      🔥 SIAP
+    </div>
+
+    <button
+      type="button"
+      class="main-reset"
+      onclick="resetGame()"
+    >
+      🔄 RESET GAME
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       WINNER
+  ====================================================== -->
+
+  <div
+    class="card winner-card"
+    id="winnerCard"
+  >
+
+    <div class="winner-title">
+      🏆 PEMENANG TERCEPAT
+    </div>
+
+    <div id="winnerBox">
+      -
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TABS
+  ====================================================== -->
+
+  <div class="card tabs-card">
+
+    <div class="tabs">
+
+      <button
+        type="button"
+        class="tab active"
+        id="tabPending"
+        onclick="openPanel('pending')"
+      >
+
+        <span class="tab-icon">⏳</span>
+
+        <span class="tab-name">
+          MENUNGGU
+        </span>
+
+        <span
+          class="tab-count"
+          id="pendingCount"
+        >
+          0
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="tab"
+        id="tabActive"
+        onclick="openPanel('active')"
+      >
+
+        <span class="tab-icon">🟢</span>
+
+        <span class="tab-name">
+          AKTIF
+        </span>
+
+        <span
+          class="tab-count"
+          id="activeCount"
+        >
+          0
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="tab"
+        id="tabSpam"
+        onclick="openPanel('spam')"
+      >
+
+        <span class="tab-icon">🔴</span>
+
+        <span class="tab-name">
+          SPAM
+        </span>
+
+        <span
+          class="tab-count"
+          id="spamCount"
+        >
+          0
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="tab"
+        id="tabSettings"
+        onclick="openPanel('settings')"
+      >
+
+        <span class="tab-icon">⚙️</span>
+
+        <span class="tab-name">
+          PENGATURAN
+        </span>
+
+        <span class="tab-count">
+          •
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       PENDING PANEL
+  ====================================================== -->
+
+  <div
+    class="card panel active"
+    id="pendingPanel"
+  >
+
+    <div class="panel-head">
+
+      <div class="panel-title">
+        ⏳ MENUNGGU APPROVAL
+      </div>
+
+      <div class="panel-subtitle">
+        Permintaan player
+      </div>
+
+    </div>
+
+    <div
+      class="player-list"
+      id="pendingList"
+    ></div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ACTIVE PANEL
+  ====================================================== -->
+
+  <div
+    class="card panel"
+    id="activePanel"
+  >
+
+    <div class="panel-head">
+
+      <div class="panel-title">
+        🟢 PLAYER AKTIF
+      </div>
+
+      <div class="panel-subtitle">
+        Player bisa bermain
+      </div>
+
+    </div>
+
+    <div
+      class="player-list"
+      id="activeList"
+    ></div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SPAM PANEL
+  ====================================================== -->
+
+  <div
+    class="card panel"
+    id="spamPanel"
+  >
+
+    <div class="panel-head">
+
+      <div class="panel-title">
+        🔴 PLAYER SPAM
+      </div>
+
+      <div class="panel-subtitle">
+        Perlu dibuka kembali
+      </div>
+
+    </div>
+
+    <div
+      class="player-list"
+      id="spamList"
+    ></div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SETTINGS PANEL
+  ====================================================== -->
+
+  <div
+    class="card panel"
+    id="settingsPanel"
+  >
+
+    <div class="panel-head">
+
+      <div class="panel-title">
+        ⚙️ PENGATURAN
+      </div>
+
+      <div class="panel-subtitle">
+        Admin control
+      </div>
+
+    </div>
+
+
+    <div class="settings-group">
+
+      <label class="settings-label">
+        PASSWORD ADMIN
+      </label>
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Masukkan password"
+      >
+
+    </div>
+
+
+    <div class="settings-group">
+
+      <label class="settings-label">
+        NAMA PLAYER
+      </label>
+
+      <input
+        type="text"
+        id="scoreName"
+        placeholder="Nama player"
+      >
+
+    </div>
+
+
+    <div class="settings-group">
+
+      <label class="settings-label">
+        POINT
+      </label>
+
+      <input
+        type="number"
+        id="scoreValue"
+        placeholder="Masukkan point"
+      >
+
+    </div>
+
+
+    <button
+      type="button"
+      class="save-btn"
+      onclick="saveScore()"
+    >
+      💾 SIMPAN POINT
+    </button>
+
+
+    <div class="ranking-title">
+      🏆 RANKING PLAYER
+    </div>
+
+
+    <div
+      class="ranking-list"
+      id="rankingBox"
+    ></div>
+
+
+    <button
+      type="button"
+      class="reset-all"
+      onclick="bukaResetPemain()"
+    >
+      ⚠️ RESET SEMUA PLAYER
+    </button>
+
+  </div>
 
 </div>
 
 
-<div class="dashboard">
-
-
-<!-- ================================================= -->
-<!-- GAME STATUS -->
-<!-- ================================================= -->
-
-<div class="game-status">
-
-<div class="status-label">
-GAME STATUS
-</div>
-
-<div id="gameStatusText">
-🔥 MENUNGGU BUZZER
-</div>
-
-<div class="status-sub">
-Kontrol utama permainan
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- RESET GAME -->
-<!-- ================================================= -->
-
-<button
-class="main-reset"
-onclick="resetGame()"
->
-
-🔄 RESET GAME
-
-</button>
-
-
-<!-- ================================================= -->
-<!-- QUICK STATS -->
-<!-- ================================================= -->
-
-<div class="quick-stats">
-
-<div class="stat-box">
-
-<div class="stat-icon">
-⏳
-</div>
+<!-- =========================================================
+     EDIT PLAYER POPUP
+========================================================= -->
 
 <div
-class="stat-number"
-id="pendingCount"
+  class="popup"
+  id="editPopup"
 >
-0
+
+  <div class="popup-box">
+
+    <div class="popup-title">
+      ✏️ EDIT PLAYER
+    </div>
+
+    <input
+      type="hidden"
+      id="editID"
+    >
+
+    <input
+      type="text"
+      id="editName"
+      placeholder="Nama player"
+    >
+
+    <div class="popup-buttons">
+
+      <button
+        type="button"
+        class="btn btn-approve"
+        onclick="saveEdit()"
+      >
+        SIMPAN
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-delete"
+        onclick="closePopup()"
+      >
+        BATAL
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="stat-name">
-MENUNGGU
-</div>
 
-</div>
-
-
-<div class="stat-box">
-
-<div class="stat-icon">
-🟢
-</div>
+<!-- =========================================================
+     RESET PLAYER POPUP
+========================================================= -->
 
 <div
-class="stat-number"
-id="activeCount"
->
-0
-</div>
-
-<div class="stat-name">
-AKTIF
-</div>
-
-</div>
-
-
-<div class="stat-box">
-
-<div class="stat-icon">
-🔴
-</div>
-
-<div
-class="stat-number"
-id="spamCount"
->
-0
-</div>
-
-<div class="stat-name">
-SPAM
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- PLAYER TERCEPAT -->
-<!-- ================================================= -->
-
-<div class="card winner-card">
-
-<div class="section-header">
-
-<div class="section-title">
-🏆 PLAYER TERCEPAT
-</div>
-
-</div>
-
-
-<div class="fast-icon">
-🥇
-</div>
-
-
-<div id="fastName">
-Belum ada
-</div>
-
-
-<div id="fastTime">
-Menunggu pemain menekan buzzer
-</div>
-
-
-<div id="winnerControl">
-
-<div class="notice">
-🔥 Menunggu pemain menekan buzzer
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- PEMAIN MENUNGGU -->
-<!-- ================================================= -->
-
-<div class="card">
-
-<div class="section-header">
-
-<div class="section-title">
-⏳ PEMAIN MENUNGGU
-</div>
-
-<div
-class="section-count"
-id="pendingBadge"
->
-0
-</div>
-
-</div>
-
-
-<div id="pendingList">
-
-<div class="empty">
-Tidak ada pemain menunggu.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- PEMAIN AKTIF -->
-<!-- ================================================= -->
-
-<div class="card">
-
-<div class="section-header">
-
-<div class="section-title">
-🟢 PEMAIN AKTIF
-</div>
-
-<div
-class="section-count"
-id="activeBadge"
->
-0
-</div>
-
-</div>
-
-
-<div id="activeList">
-
-<div class="empty">
-Belum ada pemain aktif.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- PEMAIN SPAM -->
-<!-- ================================================= -->
-
-<div class="card spam-card">
-
-<div class="section-header">
-
-<div class="section-title">
-🔴 PEMAIN SPAM
-</div>
-
-<div
-class="section-count"
-id="spamBadge"
->
-0
-</div>
-
-</div>
-
-
-<div id="spamList">
-
-<div class="empty">
-Belum ada pemain terkena spam.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- SETTINGS BUTTON -->
-<!-- ================================================= -->
-
-<button
-class="settings-button"
-onclick="toggleSettings()"
+  class="popup"
+  id="resetPopup"
 >
 
-⚙️ PENGATURAN & RANKING
-
-</button>
-
-
-<!-- ================================================= -->
-<!-- SETTINGS PANEL -->
-<!-- ================================================= -->
-
-<div
-id="settingsPanel"
-class="settings-panel"
->
-
-
-<div class="settings-label">
-TAMBAH / UBAH POIN
-</div>
-
-
-<input
-type="password"
-id="pass"
-placeholder="PASSWORD ADMIN"
-autocomplete="off"
->
-
-
-<input
-type="text"
-id="nama"
-placeholder="NAMA PLAYER"
->
-
-
-<input
-type="number"
-id="score"
-placeholder="POIN"
->
-
-
-<div
-class="btn-group"
-style="margin-top:10px;"
->
-
-<button
-class="save"
-onclick="saveScore()"
->
-
-💾 SIMPAN
-
-</button>
-
-</div>
-
-
-<div class="settings-label" style="margin-top:22px;">
-RANKING PLAYER
-</div>
-
-
-<div id="ranking">
-
-<div class="empty">
-Belum ada player
-</div>
-
-</div>
-
-
-<div class="settings-label" style="margin-top:22px;">
-DANGER ZONE
-</div>
-
-
-<button
-class="reset-all-button"
-onclick="bukaResetPemain()"
->
-
-🗑️ RESET SEMUA PEMAIN
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- POPUP EDIT -->
-<!-- ================================================= -->
-
-<div id="popup">
-
-<div class="popup-content">
-
-
-<h2 id="editTitle">
-EDIT PLAYER
-</h2>
-
-
-<input
-type="number"
-id="editScore"
-placeholder="POIN"
->
-
-
-<div
-class="btn-group"
-style="margin-top:10px;"
->
-
-<button
-class="save"
-onclick="saveEdit()"
->
-
-SAVE
-
-</button>
-
-
-<button
-class="reset"
-onclick="closePopup()"
-style="background:#d63031;color:white;"
->
-
-BATAL
-
-</button>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- ================================================= -->
-<!-- POPUP RESET PEMAIN -->
-<!-- ================================================= -->
-
-<div id="resetPlayerPopup">
-
-<div class="reset-player-content">
-
-<h2>
-🗑️ RESET PEMAIN
-</h2>
-
-
-<div class="reset-warning">
-
-Semua nama pemain yang sudah terdaftar akan dihapus.
-
-Semua HP pemain akan kembali ke tampilan
-
-<b>MASUKKAN NAMA</b>.
-
-<br><br>
-
-Password tetap menggunakan password admin.
-
-</div>
-
-
-<input
-type="password"
-id="resetPlayerPassword"
-placeholder="PASSWORD"
-autocomplete="off"
->
-
-
-<div class="btn-group">
-
-
-<button
-class="save"
-onclick="prosesResetPemain()"
->
-
-RESET
-
-</button>
-
-
-<button
-class="reset"
-onclick="tutupResetPemain()"
-style="background:#d63031;color:white;"
->
-
-BATAL
-
-</button>
-
-
-</div>
-
-</div>
+  <div class="popup-box">
+
+    <div class="popup-title">
+      ⚠️ RESET SEMUA PLAYER
+    </div>
+
+    <p
+      style="
+        font-size:10px;
+        color:#7d8aa1;
+        line-height:1.6;
+        margin-bottom:12px;
+      "
+    >
+      Semua data player akan dihapus.
+      Pastikan password admin benar.
+    </p>
+
+    <input
+      type="password"
+      id="resetPassword"
+      placeholder="Password admin"
+    >
+
+    <div class="popup-buttons">
+
+      <button
+        type="button"
+        class="btn btn-delete"
+        onclick="prosesResetPemain()"
+      >
+        RESET
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-edit"
+        onclick="tutupResetPemain()"
+      >
+        BATAL
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-
-// =================================================
-// FIREBASE
-// =================================================
+/* =========================================================
+   FIREBASE
+========================================================= */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyD36RSQ5epBRSbeI9JnEkI2UevOg921xrI",
+  apiKey:
+    "AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
 
-authDomain:
-"game-aldi.firebaseapp.com",
+  authDomain:
+    "game-aldi.firebaseapp.com",
 
-databaseURL:
-"https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL:
+    "https://game-aldi-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-projectId:
-"game-aldi",
+  projectId:
+    "game-aldi",
 
-storageBucket:
-"game-aldi.firebasestorage.app",
+  storageBucket:
+    "game-aldi.firebasestorage.app",
 
-messagingSenderId:
-"184345142676",
+  messagingSenderId:
+    "184345142676",
 
-appId:
-"1:184345142676:web:f19d19999c897d0ca95b81"
+  appId:
+    "1:184345142676:web:f19d19999c897d0ca95b81"
 
 };
 
 
-firebase.initializeApp(
-firebaseConfig
-);
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
 
 
-const db =
-firebase.database();
+/* =========================================================
+   GLOBAL
+========================================================= */
 
-
-// =================================================
-// ELEMENT
-// =================================================
-
-const rankingBox =
-document.getElementById(
-"ranking"
-);
-
-
-const popup =
-document.getElementById(
-"popup"
-);
-
-
-const editScore =
-document.getElementById(
-"editScore"
-);
-
-
-const editTitle =
-document.getElementById(
-"editTitle"
-);
-
-
-const fastName =
-document.getElementById(
-"fastName"
-);
-
-
-const fastTime =
-document.getElementById(
-"fastTime"
-);
-
-
-const pendingList =
-document.getElementById(
-"pendingList"
-);
-
-
-const activeList =
-document.getElementById(
-"activeList"
-);
-
-
-const spamList =
-document.getElementById(
-"spamList"
-);
-
-
-const winnerControl =
-document.getElementById(
-"winnerControl"
-);
-
-
-const resetPlayerPopup =
-document.getElementById(
-"resetPlayerPopup"
-);
-
-
-const resetPlayerPassword =
-document.getElementById(
-"resetPlayerPassword"
-);
-
-
-// =================================================
-// STATE
-// =================================================
-
-let currentKey = "";
+let currentGame = null;
 
 let loading = false;
 
+let allPlayers = {};
 
-// =================================================
-// PASSWORD
-// =================================================
+
+/* =========================================================
+   TAB SYSTEM
+========================================================= */
+
+function openPanel(panel){
+
+  const panels = [
+    "pending",
+    "active",
+    "spam",
+    "settings"
+  ];
+
+  panels.forEach(name => {
+
+    const panelElement =
+      document.getElementById(name + "Panel");
+
+    const tabElement =
+      document.getElementById(
+        "tab" +
+        name.charAt(0).toUpperCase() +
+        name.slice(1)
+      );
+
+    if(name === panel){
+
+      panelElement.classList.add("active");
+
+      if(tabElement){
+        tabElement.classList.add("active");
+      }
+
+    }else{
+
+      panelElement.classList.remove("active");
+
+      if(tabElement){
+        tabElement.classList.remove("active");
+      }
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
 
 function cekPass(){
 
-return document
-.getElementById("pass")
-.value === "00";
+  const pass =
+    document.getElementById("password").value.trim();
+
+  return pass === "00";
 
 }
 
 
-// =================================================
-// SAFE KEY
-// =================================================
+/* =========================================================
+   SAFE KEY
+========================================================= */
 
 function safeKey(text){
 
-return btoa(
-unescape(
-encodeURIComponent(text)
-)
-)
-.replace(/=/g,'');
+  return btoa(
+    unescape(
+      encodeURIComponent(text)
+    )
+  )
+  .replace(/\//g,"_")
+  .replace(/\+/g,"-")
+  .replace(/=/g,"");
 
 }
 
 
-// =================================================
-// SETTINGS TOGGLE
-// =================================================
+/* =========================================================
+   SAVE SCORE
+========================================================= */
 
-function toggleSettings(){
+function saveScore(){
 
-const panel =
-document.getElementById(
-"settingsPanel"
-);
+  if(!cekPass()){
 
-if(
-panel.style.display === "block"
-){
+    alert("Password salah!");
 
-panel.style.display =
-"none";
+    return;
 
-}else{
+  }
 
-panel.style.display =
-"block";
+  const name =
+    document.getElementById("scoreName")
+      .value
+      .trim();
 
-}
+  const score =
+    Number(
+      document.getElementById("scoreValue")
+        .value
+    );
 
-}
+  if(!name){
 
+    alert("Masukkan nama!");
 
-// =================================================
-// SAVE SCORE
-// =================================================
+    return;
 
-async function saveScore(){
+  }
 
-if(loading)
-return;
+  if(isNaN(score)){
 
+    alert("Masukkan point!");
 
-if(!cekPass()){
+    return;
 
-alert("Password salah");
+  }
 
-return;
+  const key = safeKey(name);
 
-}
+  db.ref("ranking/" + key)
+    .once("value")
+    .then(snapshot => {
 
+      let oldScore = 0;
 
-const nama =
-document
-.getElementById("nama")
-.value
-.trim();
+      if(snapshot.exists()){
 
+        oldScore =
+          Number(
+            snapshot.val().score || 0
+          );
 
-const score =
-Number(
-document
-.getElementById("score")
-.value
-);
+      }
 
+      return db.ref("ranking/" + key)
+        .set({
 
-if(
-!nama ||
-isNaN(score)
-){
+          name:name,
 
-alert("Isi data");
+          score:oldScore + score
 
-return;
+        });
 
-}
+    })
+    .then(() => {
 
+      alert("Point berhasil disimpan!");
 
-loading = true;
+      document.getElementById("scoreName").value = "";
 
+      document.getElementById("scoreValue").value = "";
 
-try{
+    })
+    .catch(error => {
 
-await db
-.ref(
-"ranking/" +
-safeKey(nama)
-)
-.set({
+      alert(
+        "Gagal menyimpan: " +
+        error.message
+      );
 
-name:nama,
-
-score:score
-
-});
-
-
-document
-.getElementById("nama")
-.value="";
-
-
-document
-.getElementById("score")
-.value="";
-
-
-}catch(error){
-
-alert("Gagal simpan");
+    });
 
 }
 
 
-loading = false;
+/* =========================================================
+   RESET GAME
+========================================================= */
+
+function resetGame(){
+
+  if(!cekPass()){
+
+    alert(
+      "Masukkan password admin di menu PENGATURAN terlebih dahulu!"
+    );
+
+    return;
+
+  }
+
+  if(!confirm(
+    "Reset game sekarang?"
+  )){
+
+    return;
+
+  }
+
+  loading = true;
+
+  db.ref("game")
+    .remove()
+    .then(() => {
+
+      return db.ref("players")
+        .once("value");
+
+    })
+    .then(snapshot => {
+
+      const updates = {};
+
+      snapshot.forEach(child => {
+
+        updates[
+          child.key + "/spam"
+        ] = false;
+
+      });
+
+      return db.ref("players")
+        .update(updates);
+
+    })
+    .then(() => {
+
+      loading = false;
+
+      alert("Game berhasil di-reset!");
+
+    })
+    .catch(error => {
+
+      loading = false;
+
+      alert(
+        "Gagal reset game: " +
+        error.message
+      );
+
+    });
 
 }
 
 
-// =================================================
-// RESET GAME
-// =================================================
-
-async function resetGame(){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(
-!confirm("Reset game?")
-){
-
-return;
-
-}
-
-
-loading = true;
-
-
-try{
-
-/*
-  RESET GAME:
-  1. Hapus hasil buzzer.
-  2. Buka semua pemain yang SPAM.
-  3. Pemain approved tetap approved.
-*/
-
-await db
-.ref("game")
-.remove();
-
-
-const snap =
-await db
-.ref("players")
-.once("value");
-
-
-const data =
-snap.val() || {};
-
-
-const updates = {};
-
-
-Object.keys(data)
-.forEach(
-id => {
-
-if(
-data[id] &&
-data[id].spam === true
-){
-
-updates[
-id + "/spam"
-] = false;
-
-}
-
-});
-
-
-if(
-Object.keys(updates).length
-){
-
-await db
-.ref("players")
-.update(
-updates
-);
-
-}
-
-
-}catch(error){
-
-console.log(error);
-
-alert("Gagal reset");
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// RESET PEMAIN POPUP
-// =================================================
+/* =========================================================
+   RESET SEMUA PLAYER
+========================================================= */
 
 function bukaResetPemain(){
 
-if(loading)
-return;
+  document.getElementById(
+    "resetPopup"
+  ).style.display = "flex";
 
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
+  document.getElementById(
+    "resetPassword"
+  ).value = "";
 
 }
 
 
-resetPlayerPassword.value =
-"";
+function prosesResetPemain(){
 
+  const pass =
+    document.getElementById(
+      "resetPassword"
+    ).value.trim();
 
-resetPlayerPopup.style.display =
-"flex";
+  if(pass !== "00"){
 
+    alert("Password salah!");
 
-setTimeout(
-() => {
+    return;
 
-resetPlayerPassword.focus();
+  }
 
-},
-100
-);
+  if(!confirm(
+    "Yakin hapus SEMUA player?"
+  )){
 
-}
+    return;
 
+  }
 
-// =================================================
-// PROSES RESET PEMAIN
-// =================================================
+  db.ref("players")
+    .remove()
+    .then(() => {
 
-async function prosesResetPemain(){
+      return db.ref("game")
+        .remove();
 
-if(loading)
-return;
+    })
+    .then(() => {
 
+      alert(
+        "Semua player berhasil di-reset!"
+      );
 
-const password =
-resetPlayerPassword
-.value;
+      tutupResetPemain();
 
+    })
+    .catch(error => {
 
-if(password !== "00"){
+      alert(
+        "Gagal reset: " +
+        error.message
+      );
 
-alert("Password salah");
-
-return;
-
-}
-
-
-if(
-!confirm(
-"RESET SEMUA PEMAIN?\n\nSemua nama pemain akan dihapus dan semua HP kembali ke MASUKKAN NAMA."
-)
-){
-
-return;
+    });
 
 }
 
-
-loading = true;
-
-
-try{
-
-await db
-.ref("players")
-.remove();
-
-
-await db
-.ref("game")
-.remove();
-
-
-tutupResetPemain();
-
-
-}catch(error){
-
-console.log(error);
-
-alert(
-"Gagal reset pemain"
-);
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// TUTUP POPUP RESET PEMAIN
-// =================================================
 
 function tutupResetPemain(){
 
-resetPlayerPopup.style.display =
-"none";
-
-resetPlayerPassword.value =
-"";
+  document.getElementById(
+    "resetPopup"
+  ).style.display = "none";
 
 }
 
 
-// =================================================
-// EDIT
-// =================================================
+/* =========================================================
+   EDIT PLAYER
+========================================================= */
 
-function editPlayer(
-key,
-name,
-score
-){
+function editPlayer(id,name){
 
-currentKey =
-key;
+  document.getElementById(
+    "editID"
+  ).value = id;
 
+  document.getElementById(
+    "editName"
+  ).value = name;
 
-popup.style.display =
-"flex";
-
-
-editTitle.innerText =
-"EDIT " + name;
-
-
-editScore.value =
-score;
+  document.getElementById(
+    "editPopup"
+  ).style.display = "flex";
 
 }
 
 
-// =================================================
-// SAVE EDIT
-// =================================================
+function saveEdit(){
 
-async function saveEdit(){
+  const id =
+    document.getElementById(
+      "editID"
+    ).value;
 
-if(loading)
-return;
+  const name =
+    document.getElementById(
+      "editName"
+    ).value.trim();
 
+  if(!name){
 
-if(!cekPass()){
+    alert("Nama tidak boleh kosong!");
 
-alert("Password salah");
+    return;
 
-return;
+  }
 
-}
+  db.ref("players/" + id)
+    .update({
 
+      name:name
 
-const score =
-Number(
-editScore.value
-);
+    })
+    .then(() => {
 
+      alert("Nama berhasil diubah!");
 
-if(isNaN(score)){
+      closePopup();
 
-alert("Isi poin");
+    })
+    .catch(error => {
 
-return;
+      alert(
+        "Gagal mengubah nama: " +
+        error.message
+      );
 
-}
-
-
-loading = true;
-
-
-try{
-
-await db
-.ref(
-"ranking/" +
-currentKey
-)
-.update({
-
-score:score
-
-});
-
-
-popup.style.display =
-"none";
-
-
-}catch(error){
-
-alert("Gagal edit");
+    });
 
 }
 
 
-loading = false;
+function hapusPlayer(id){
+
+  if(!confirm(
+    "Hapus player ini?"
+  )){
+
+    return;
+
+  }
+
+  db.ref("players/" + id)
+    .remove()
+    .then(() => {
+
+      alert("Player berhasil dihapus!");
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal menghapus: " +
+        error.message
+      );
+
+    });
 
 }
 
-
-// =================================================
-// DELETE
-// =================================================
-
-async function hapusPlayer(
-key
-){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(
-!confirm("Hapus player?")
-){
-
-return;
-
-}
-
-
-loading = true;
-
-
-try{
-
-await db
-.ref(
-"ranking/" +
-key
-)
-.remove();
-
-
-}catch(error){
-
-alert("Gagal hapus");
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// CLOSE POPUP
-// =================================================
 
 function closePopup(){
 
-popup.style.display =
-"none";
+  document.getElementById(
+    "editPopup"
+  ).style.display = "none";
 
 }
 
 
-// =================================================
-// PLAYERS REALTIME
-// =================================================
-
-db.ref("players")
-.on(
-"value",
-snap => {
-
-const data =
-snap.val() || {};
-
-
-let pendingHTML = "";
-
-let activeHTML = "";
-
-let spamHTML = "";
-
-
-let pendingCount = 0;
-
-let activeCount = 0;
-
-let spamCount = 0;
-
-
-Object.keys(data)
-.forEach(
-id => {
-
-const player =
-data[id] || {};
-
-
-const nama =
-player.name ||
-"Unknown";
-
-
-/* =============================================
-   PENDING
-============================================= */
-
-if(
-player.status === "pending"
-){
-
-pendingCount++;
-
-
-pendingHTML += `
-
-<div class="pending-player">
-
-<div class="pending-name">
-
-${escapeHTML(nama)}
-
-</div>
-
-
-<div class="pending-info">
-
-⏳ Meminta izin bermain
-
-</div>
-
-
-<button
-class="approve"
-onclick="approvePlayer('${id}')"
->
-
-✅ SETUJUI
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-/* =============================================
-   ACTIVE
-============================================= */
-
-if(
-player.status === "approved"
-){
-
-activeCount++;
-
-
-activeHTML += `
-
-<div class="active-player">
-
-<div class="active-name">
-
-${escapeHTML(nama)}
-
-</div>
-
-
-<div class="active-info">
-
-🟢 Pemain sudah disetujui
-
-${
-player.spam === true
-? "<br>🔴 Status: SPAM"
-: ""
-}
-
-</div>
-
-
-<div class="active-buttons">
-
-<button
-class="keluarkan-player"
-onclick="keluarkanPlayer('${id}')"
->
-
-❌ KELUARKAN
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-/* =============================================
-   SPAM
-============================================= */
-
-if(
-player.spam === true
-){
-
-spamCount++;
-
-
-spamHTML += `
-
-<div class="spam-player">
-
-<div class="spam-name">
-
-⚠️ ${escapeHTML(nama)}
-
-</div>
-
-
-<div class="spam-info">
-
-Pemain terkena double tap / spam.
-
-<br>
-
-Status: 🔴 SPAM
-
-</div>
-
-
-<button
-class="open-spam"
-onclick="bukaSpam('${id}')"
->
-
-🔓 BUKA SPAM
-
-</button>
-
-</div>
-
-`;
-
-}
-
-});
-
-
-/* =============================================
-   UPDATE COUNTERS
-============================================= */
-
-document
-.getElementById("pendingCount")
-.innerText =
-pendingCount;
-
-document
-.getElementById("activeCount")
-.innerText =
-activeCount;
-
-document
-.getElementById("spamCount")
-.innerText =
-spamCount;
-
-
-document
-.getElementById("pendingBadge")
-.innerText =
-pendingCount;
-
-document
-.getElementById("activeBadge")
-.innerText =
-activeCount;
-
-document
-.getElementById("spamBadge")
-.innerText =
-spamCount;
-
-
-/* =============================================
-   PENDING
-============================================= */
-
-if(
-pendingCount === 0
-){
-
-pendingHTML = `
-
-<div class="empty">
-
-Tidak ada pemain menunggu.
-
-</div>
-
-`;
-
-}
-
-
-pendingList.innerHTML =
-pendingHTML;
-
-
-/* =============================================
-   ACTIVE
-============================================= */
-
-if(
-activeCount === 0
-){
-
-activeHTML = `
-
-<div class="empty">
-
-Belum ada pemain aktif.
-
-</div>
-
-`;
-
-}
-
-
-activeList.innerHTML =
-activeHTML;
-
-
-/* =============================================
-   SPAM
-============================================= */
-
-if(
-spamCount === 0
-){
-
-spamHTML = `
-
-<div class="empty">
-
-Belum ada pemain terkena spam.
-
-</div>
-
-`;
-
-}
-
-
-spamList.innerHTML =
-spamHTML;
-
-});
-
-
-// =================================================
-// APPROVE PLAYER
-// =================================================
-
-function approvePlayer(id){
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-db.ref(
-"players/" +
-id
-)
-.update({
-
-status:
-"approved",
-
-spam:
-false
-
-});
-
-}
-
-
-// =================================================
-// BUKA SPAM
-// =================================================
-
-async function bukaSpam(
-playerID
-){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(!playerID){
-
-alert(
-"ID player tidak ditemukan"
-);
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Buka SPAM pemain ini?\n\nPemain akan kembali normal tanpa mereset game."
-)
-){
-
-return;
-
-}
-
-
-loading = true;
-
-
-try{
-
-/*
-  PENTING:
-
-  HANYA mengubah status SPAM pemain.
-
-  TIDAK:
-  - menghapus game
-  - mereset game
-  - mengubah pemenang
-  - mengubah pemain lain
-*/
-
-await db
-.ref(
-"players/" +
-playerID
-)
-.update({
-
-spam:
-false,
-
-status:
-"approved"
-
-});
-
-
-}catch(error){
-
-console.log(error);
-
-alert(
-"Gagal membuka spam"
-);
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// KELUARKAN PLAYER KAPAN SAJA
-// =================================================
-
-async function keluarkanPlayer(
-playerID
-){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(!playerID){
-
-alert(
-"ID player tidak ditemukan"
-);
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Keluarkan pemain ini dari game?"
-)
-){
-
-return;
-
-}
-
-
-loading = true;
-
-
-try{
-
-await db
-.ref(
-"players/" +
-playerID
-)
-.update({
-
-status:
-"pending",
-
-spam:
-false
-
-});
-
-
-const gameSnap =
-await db
-.ref("game")
-.once("value");
-
-
-const gameData =
-gameSnap.val();
-
-
-/*
-  Kalau pemain yang dikeluarkan adalah
-  pemenang, game dihapus.
-
-  Kalau pemain bukan pemenang,
-  game tetap dipertahankan.
-*/
-
-if(
-gameData &&
-gameData.playerID === playerID
-){
-
-await db
-.ref("game")
-.remove();
-
-}
-
-
-}catch(error){
-
-console.log(error);
-
-alert(
-"Gagal mengeluarkan pemain"
-);
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// GAME / PLAYER TERCEPAT
-// =================================================
-
-db.ref("game")
-.on(
-"value",
-snap => {
-
-const data =
-snap.val();
-
-
-if(
-data &&
-data.clicked === true
-){
-
-fastName.innerText =
-data.player ||
-"Unknown";
-
-
-fastTime.innerText =
-"BOLEH JAWAB";
-
-
-winnerControl.innerHTML = `
-
-<div class="fast-card">
-
-<div class="fast-player-name">
-
-${escapeHTML(
-data.player ||
-"Unknown"
-)}
-
-</div>
-
-
-<div class="fast-player-info">
-
-🔔 PEMAIN BERHAK MENJAWAB
-
-</div>
-
-
-<div class="btn-group">
-
-<button
-class="continue"
-onclick="continueGame()"
->
-
-▶ LANJUT
-
-</button>
-
-
-<button
-class="remove"
-onclick="removeWinner('${data.playerID}')"
->
-
-❌ KELUARKAN
-
-</button>
-
-</div>
-
-</div>
-
-`;
-
-
-/* =============================================
-   UPDATE GAME STATUS
-============================================= */
-
-document
-.getElementById("gameStatusText")
-.innerHTML =
-"🏆 " +
-escapeHTML(
-data.player ||
-"PLAYER"
-) +
-" — BOLEH JAWAB";
-
-
-}else{
-
-fastName.innerText =
-"Belum ada";
-
-
-fastTime.innerText =
-"Menunggu pemain menekan buzzer";
-
-
-winnerControl.innerHTML = `
-
-<div class="notice">
-
-🔥 Menunggu pemain menekan buzzer
-
-</div>
-
-`;
-
-
-/* =============================================
-   UPDATE GAME STATUS
-============================================= */
-
-document
-.getElementById("gameStatusText")
-.innerHTML =
-"🔥 MENUNGGU BUZZER";
-
-}
-
-});
-
-
-// =================================================
-// LANJUT
-// =================================================
-
-async function continueGame(){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Lanjutkan game?\n\nTampilan menang/kalah di HP pemain tetap ditampilkan."
-)
-){
-
-return;
-
-}
-
-
-/*
-  LANJUT TIDAK MENGHAPUS game.
-
-  Jadi tampilan hasil pemain tetap.
-*/
-
-alert(
-"Game dilanjutkan.\n\nTampilan hasil pemain tetap."
-);
-
-}
-
-
-// =================================================
-// KELUARKAN PEMENANG
-// =================================================
-
-async function removeWinner(
-playerID
-){
-
-if(loading)
-return;
-
-
-if(!cekPass()){
-
-alert("Password salah");
-
-return;
-
-}
-
-
-if(!playerID){
-
-alert(
-"ID player tidak ditemukan"
-);
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Keluarkan pemain ini dari game?"
-)
-){
-
-return;
-
-}
-
-
-loading = true;
-
-
-try{
-
-/*
-  Pemenang dikeluarkan menjadi pending.
-
-  Karena pemain ini bisa saja sedang menjadi
-  winner, game akan dihapus.
-
-  Pemain lain akan kembali ke ronde baru.
-*/
-
-await db
-.ref(
-"players/" +
-playerID
-)
-.update({
-
-status:
-"pending",
-
-spam:
-false
-
-});
-
-
-const gameSnap =
-await db
-.ref("game")
-.once("value");
-
-
-const gameData =
-gameSnap.val();
-
-
-if(
-gameData &&
-gameData.playerID === playerID
-){
-
-await db
-.ref("game")
-.remove();
-
-}
-
-
-}catch(error){
-
-alert(
-"Gagal mengeluarkan pemain"
-);
-
-}
-
-
-loading = false;
-
-}
-
-
-// =================================================
-// RANKING
-// =================================================
-
-db.ref("ranking")
-.on(
-"value",
-snap => {
-
-const data =
-snap.val() || {};
-
-
-let arr = [];
-
-
-for(
-let key in data
-){
-
-arr.push({
-
-key:key,
-
-name:
-data[key].name ||
-"Unknown",
-
-score:
-data[key].score ||
-0
-
-});
-
-}
-
-
-arr.sort(
-(a,b) =>
-b.score - a.score
-);
-
-
-rankingBox.innerHTML =
-"";
-
-
-if(!arr.length){
-
-rankingBox.innerHTML =
-
-"<div class='empty'>" +
-"Belum ada player" +
-"</div>";
-
-return;
-
-}
-
-
-const max =
-arr[0].score || 1;
-
-
-arr.forEach(
-(item,index) => {
-
-const persen =
-(item.score / max) *
-100;
-
-
-const div =
-document.createElement(
-"div"
-);
-
-
-div.className =
-"player";
-
-
-div.innerHTML = `
-
-<h3>
-
-${index+1}.
-${escapeHTML(item.name)}
-—
-${item.score} poin
-
-</h3>
-
-
-<div class="bar">
-
-<div
-class="fill"
-style="width:${persen}%"
-></div>
-
-</div>
-
-
-<div class="btn-group">
-
-<button
-class="edit"
->
-
-EDIT
-
-</button>
-
-
-<button
-class="delete"
->
-
-HAPUS
-
-</button>
-
-</div>
-
-`;
-
-
-div.querySelector(
-".edit"
-)
-.onclick = () => {
-
-editPlayer(
-item.key,
-item.name,
-item.score
-);
-
-};
-
-
-div.querySelector(
-".delete"
-)
-.onclick = () => {
-
-hapusPlayer(
-item.key
-);
-
-};
-
-
-rankingBox.appendChild(
-div
-);
-
-});
-
-});
-
-
-// =================================================
-// ESCAPE HTML
-// =================================================
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHTML(text){
 
-const div =
-document.createElement("div");
-
-
-div.textContent =
-text || "";
-
-
-return div.innerHTML;
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
+
+
+/* =========================================================
+   PLAYER LISTENER
+========================================================= */
+
+db.ref("players")
+  .on("value", snapshot => {
+
+    allPlayers = {};
+
+    const pending = [];
+    const active = [];
+    const spam = [];
+
+    snapshot.forEach(child => {
+
+      const id = child.key;
+
+      const data = child.val();
+
+      allPlayers[id] = data;
+
+      if(data.spam === true){
+
+        spam.push({
+          id:id,
+          data:data
+        });
+
+      }else if(
+        data.status === "approved"
+      ){
+
+        active.push({
+          id:id,
+          data:data
+        });
+
+      }else{
+
+        pending.push({
+          id:id,
+          data:data
+        });
+
+      }
+
+    });
+
+
+    /* =====================================================
+       COUNTS
+    ===================================================== */
+
+    document.getElementById(
+      "pendingCount"
+    ).textContent = pending.length;
+
+    document.getElementById(
+      "activeCount"
+    ).textContent = active.length;
+
+    document.getElementById(
+      "spamCount"
+    ).textContent = spam.length;
+
+
+    /* =====================================================
+       PENDING
+    ===================================================== */
+
+    const pendingList =
+      document.getElementById(
+        "pendingList"
+      );
+
+    if(!pending.length){
+
+      pendingList.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">📭</div>
+          Tidak ada player menunggu approval
+        </div>
+      `;
+
+    }else{
+
+      pendingList.innerHTML =
+        pending.map(item => {
+
+          const d = item.data;
+
+          return `
+
+            <div class="player">
+
+              <div class="player-info">
+
+                <div class="player-name">
+                  ${escapeHTML(d.name || "-")}
+                </div>
+
+                <div class="player-meta">
+                  Status: Menunggu approval
+                </div>
+
+              </div>
+
+              <div class="player-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-approve"
+                  onclick="approvePlayer('${item.id}')"
+                >
+                  ✓
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-edit"
+                  onclick="editPlayer(
+                    '${item.id}',
+                    '${String(d.name || "")
+                      .replace(/'/g,"&#039;")}'
+                  )"
+                >
+                  ✏
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-delete"
+                  onclick="hapusPlayer('${item.id}')"
+                >
+                  🗑
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* =====================================================
+       ACTIVE
+    ===================================================== */
+
+    const activeList =
+      document.getElementById(
+        "activeList"
+      );
+
+    if(!active.length){
+
+      activeList.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">👥</div>
+          Belum ada player aktif
+        </div>
+      `;
+
+    }else{
+
+      activeList.innerHTML =
+        active.map(item => {
+
+          const d = item.data;
+
+          return `
+
+            <div class="player">
+
+              <div class="player-info">
+
+                <div class="player-name">
+                  ${escapeHTML(d.name || "-")}
+                </div>
+
+                <div class="player-meta">
+                  🟢 Siap bermain
+                </div>
+
+              </div>
+
+              <div class="player-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-edit"
+                  onclick="editPlayer(
+                    '${item.id}',
+                    '${String(d.name || "")
+                      .replace(/'/g,"&#039;")}'
+                  )"
+                >
+                  ✏
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-remove"
+                  onclick="keluarkanPlayer('${item.id}')"
+                >
+                  KELUARKAN
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+
+    /* =====================================================
+       SPAM
+    ===================================================== */
+
+    const spamList =
+      document.getElementById(
+        "spamList"
+      );
+
+    if(!spam.length){
+
+      spamList.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🟢</div>
+          Tidak ada player spam
+        </div>
+      `;
+
+    }else{
+
+      spamList.innerHTML =
+        spam.map(item => {
+
+          const d = item.data;
+
+          return `
+
+            <div class="player">
+
+              <div class="player-info">
+
+                <div class="player-name">
+                  ${escapeHTML(d.name || "-")}
+                </div>
+
+                <div class="player-meta">
+                  🔴 Terkena spam
+                </div>
+
+              </div>
+
+              <div class="player-actions">
+
+                <button
+                  type="button"
+                  class="btn btn-open"
+                  onclick="bukaSpam('${item.id}')"
+                >
+                  BUKA
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+  });
+
+
+/* =========================================================
+   APPROVE PLAYER
+========================================================= */
+
+function approvePlayer(id){
+
+  db.ref("players/" + id)
+    .update({
+
+      status:"approved",
+
+      spam:false
+
+    })
+    .then(() => {
+
+      alert(
+        "Player berhasil di-approve!"
+      );
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal approve: " +
+        error.message
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   BUKA SPAM
+========================================================= */
+
+function bukaSpam(playerID){
+
+  db.ref("players/" + playerID)
+    .update({
+
+      spam:false,
+
+      status:"approved"
+
+    })
+    .then(() => {
+
+      alert(
+        "Player sudah dibuka kembali!"
+      );
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal membuka spam: " +
+        error.message
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   KELUARKAN PLAYER
+========================================================= */
+
+function keluarkanPlayer(playerID){
+
+  if(!confirm(
+    "Keluarkan player ini?"
+  )){
+
+    return;
+
+  }
+
+  db.ref("players/" + playerID)
+    .update({
+
+      status:"pending",
+
+      spam:false
+
+    })
+    .then(() => {
+
+      if(
+        currentGame &&
+        currentGame.playerID === playerID
+      ){
+
+        return db.ref("game")
+          .remove();
+
+      }
+
+    })
+    .then(() => {
+
+      alert(
+        "Player dikembalikan ke menunggu."
+      );
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal mengeluarkan player: " +
+        error.message
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   GAME LISTENER
+========================================================= */
+
+db.ref("game")
+  .on("value", snapshot => {
+
+    if(!snapshot.exists()){
+
+      currentGame = null;
+
+      document.getElementById(
+        "gameStatusText"
+      ).textContent =
+        "🔥 SIAPKAN JARI!";
+
+      document.getElementById(
+        "winnerCard"
+      ).style.display = "none";
+
+      document.getElementById(
+        "winnerBox"
+      ).textContent = "-";
+
+      return;
+
+    }
+
+
+    const data = snapshot.val();
+
+    currentGame = data;
+
+
+    document.getElementById(
+      "gameStatusText"
+    ).textContent =
+      "🏆 ADA PEMENANG!";
+
+
+    document.getElementById(
+      "winnerCard"
+    ).style.display = "block";
+
+
+    document.getElementById(
+      "winnerBox"
+    ).textContent =
+      data.player || "-";
+
+  });
+
+
+/* =========================================================
+   CONTINUE GAME
+========================================================= */
+
+function continueGame(){
+
+  alert(
+    "Game dilanjutkan. Gunakan RESET GAME jika ingin memulai ronde baru."
+  );
+
+}
+
+
+/* =========================================================
+   REMOVE WINNER
+========================================================= */
+
+function removeWinner(playerID){
+
+  if(!playerID){
+
+    return;
+
+  }
+
+  if(!confirm(
+    "Keluarkan pemenang dari game?"
+  )){
+
+    return;
+
+  }
+
+  db.ref("players/" + playerID)
+    .update({
+
+      status:"pending",
+
+      spam:false
+
+    })
+    .then(() => {
+
+      if(
+        currentGame &&
+        currentGame.playerID === playerID
+      ){
+
+        return db.ref("game")
+          .remove();
+
+      }
+
+    })
+    .then(() => {
+
+      alert(
+        "Pemenang berhasil dikeluarkan."
+      );
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal mengeluarkan pemenang: " +
+        error.message
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   RANKING LISTENER
+========================================================= */
+
+db.ref("ranking")
+  .on("value", snapshot => {
+
+    const rankingBox =
+      document.getElementById(
+        "rankingBox"
+      );
+
+    const ranking = [];
+
+    snapshot.forEach(child => {
+
+      const d = child.val();
+
+      ranking.push({
+
+        id:child.key,
+
+        name:d.name || "-",
+
+        score:Number(
+          d.score || 0
+        )
+
+      });
+
+    });
+
+
+    ranking.sort(
+      (a,b) => b.score - a.score
+    );
+
+
+    if(!ranking.length){
+
+      rankingBox.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🏆</div>
+          Belum ada ranking
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    rankingBox.innerHTML =
+      ranking.map((item,index) => {
+
+        return `
+
+          <div class="rank-item">
+
+            <div class="rank-number">
+              #${index + 1}
+            </div>
+
+            <div class="rank-name">
+              ${escapeHTML(item.name)}
+            </div>
+
+            <div class="rank-score">
+              ${item.score}
+            </div>
+
+            <div class="rank-actions">
+
+              <button
+                type="button"
+                class="btn btn-delete"
+                onclick="deleteRanking('${item.id}')"
+              >
+                🗑
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+  });
+
+
+/* =========================================================
+   DELETE RANKING
+========================================================= */
+
+function deleteRanking(id){
+
+  if(!confirm(
+    "Hapus ranking ini?"
+  )){
+
+    return;
+
+  }
+
+  db.ref("ranking/" + id)
+    .remove()
+    .then(() => {
+
+      alert(
+        "Ranking berhasil dihapus!"
+      );
+
+    })
+    .catch(error => {
+
+      alert(
+        "Gagal menghapus ranking: " +
+        error.message
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   DEFAULT PANEL
+========================================================= */
+
+openPanel("pending");
 
 </script>
 
 </body>
-
 </html>
