@@ -1397,6 +1397,15 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
+  auth.setPersistence(
+firebase.auth.Auth.Persistence.LOCAL
+).catch(error=>{
+console.error(
+"Persistence error:",
+error
+);
+});
+
 
 /* ================================================= */
 /* GLOBAL */
@@ -1784,90 +1793,26 @@ getFirebaseError(error)
 /* ================================================= */
 /* AUTH STATE */
 /* ================================================= */
-
 auth.onAuthStateChanged(
 async function(user){
 
 if(!user){
 
+currentUser = null;
+currentAccount = null;
+currentRole = null;
+
+document
+.getElementById("panelPage")
+.style.display="none";
+
+document
+.getElementById("authPage")
+.style.display="flex";
+
 return;
 
 }
-
-
-try{
-
-let account = null;
-let username = null;
-
-
-/*
-Cari akun berdasarkan username
-*/
-
-const snap =
-await db
-.ref("admins")
-.once("value");
-
-const data =
-snap.val() || {};
-
-
-Object
-.keys(data)
-.forEach(key=>{
-
-if(
-data[key] &&
-data[key].email &&
-data[key].email.toLowerCase()
-===
-user.email.toLowerCase()
-){
-
-username = key;
-account = data[key];
-
-}
-
-});
-
-
-if(!account){
-
-await auth.signOut();
-return;
-
-}
-
-
-if(
-account.role !== "superadmin" &&
-account.status !== "approved"
-){
-
-await auth.signOut();
-return;
-
-}
-
-
-currentUser = user;
-currentAccount = account;
-currentRole = account.role;
-
-showPanel();
-
-}catch(error){
-
-console.error(error);
-
-}
-
-});
-
-
 /* ================================================= */
 /* SHOW PANEL */
 /* ================================================= */
