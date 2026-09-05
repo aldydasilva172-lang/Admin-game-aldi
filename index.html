@@ -1546,10 +1546,6 @@ return;
 
 try{
 
-/*
-Cek username terlebih dahulu
-*/
-
 const usernameSnap =
 await db
 .ref("admins/" + username)
@@ -1563,10 +1559,6 @@ return;
 }
 
 
-/*
-Buat akun Firebase Authentication
-*/
-
 const result =
 await auth
 .createUserWithEmailAndPassword(
@@ -1578,17 +1570,10 @@ const user =
 result.user;
 
 
-/*
-Kirim verifikasi email
-*/
-
 await user.sendEmailVerification();
-  await user.getIdToken(true);
 
+await user.getIdToken(true);
 
-/*
-Buat data operator pending
-*/
 
 await db
 .ref("admins/" + username)
@@ -1604,16 +1589,13 @@ createdAt:Date.now()
 });
 
 
-/*
-Logout agar belum bisa masuk panel
-*/
-
 await auth.signOut();
 
 
 showMessage(
 "✅ Pendaftaran berhasil. Silakan cek email untuk verifikasi. Setelah email diverifikasi, tunggu persetujuan Super Admin."
 );
+
 
 document
 .getElementById("signupPassword")
@@ -1668,10 +1650,6 @@ return;
 
 try{
 
-/*
-Cari username
-*/
-
 const snap =
 await db
 .ref("admins/" + username)
@@ -1695,10 +1673,6 @@ const email =
 account.email;
 
 
-/*
-Login Firebase
-*/
-
 const result =
 await auth
 .signInWithEmailAndPassword(
@@ -1709,10 +1683,6 @@ password
 const user =
 result.user;
 
-
-/*
-Cek email verification
-*/
 
 if(!user.emailVerified){
 
@@ -1727,18 +1697,10 @@ return;
 }
 
 
-/*
-Simpan data akun
-*/
-
 currentUser = user;
 currentAccount = account;
 currentRole = account.role;
 
-
-/*
-Cek status akun
-*/
 
 if(
 account.role !== "superadmin" &&
@@ -1784,6 +1746,7 @@ getFirebaseError(error)
 /* ================================================= */
 /* AUTH STATE */
 /* ================================================= */
+
 auth.onAuthStateChanged(
 async function(user){
 
@@ -1793,17 +1756,86 @@ currentUser = null;
 currentAccount = null;
 currentRole = null;
 
-document
-.getElementById("panelPage")
-.style.display="none";
+return;
 
-document
-.getElementById("authPage")
-.style.display="flex";
+}
+
+
+try{
+
+let account = null;
+let username = null;
+
+
+const snap =
+await db
+.ref("admins")
+.once("value");
+
+const data =
+snap.val() || {};
+
+
+Object
+.keys(data)
+.forEach(key=>{
+
+if(
+data[key] &&
+data[key].email &&
+data[key].email.toLowerCase()
+===
+user.email.toLowerCase()
+){
+
+username = key;
+account = data[key];
+
+}
+
+});
+
+
+if(!account){
+
+await auth.signOut();
 
 return;
 
 }
+
+
+if(
+account.role !== "superadmin" &&
+account.status !== "approved"
+){
+
+await auth.signOut();
+
+return;
+
+}
+
+
+currentUser = user;
+currentAccount = account;
+currentRole = account.role;
+
+
+showPanel();
+
+}catch(error){
+
+console.error(
+"AUTH STATE ERROR:",
+error
+);
+
+}
+
+});
+
+
 /* ================================================= */
 /* SHOW PANEL */
 /* ================================================= */
@@ -1839,10 +1871,6 @@ ${currentRole === "superadmin"
 }
 
 
-/*
-Operator tidak boleh melihat menu operator
-*/
-
 if(currentRole === "superadmin"){
 
 document
@@ -1865,10 +1893,6 @@ document
 
 }
 
-
-/*
-Aktifkan listener
-*/
 
 listenPlayers();
 listenGame();
@@ -2992,7 +3016,11 @@ emptyHTML(
 
 async function approveOperator(username){
 
-console.log("TERIMA OPERATOR:", username);
+console.log(
+"TERIMA OPERATOR:",
+username
+);
+
 
 if(currentRole !== "superadmin"){
 
@@ -3008,7 +3036,9 @@ return;
 try{
 
 await db
-.ref("admins/" + username)
+.ref(
+"admins/" + username
+)
 .update({
 
 role:"operator",
@@ -3029,16 +3059,21 @@ username +
 
 alert(
 "❌ Gagal menyetujui operator.\n\n" +
-error.code +
+(error.code || "") +
 "\n" +
-error.message
+(error.message || "")
 );
 
-console.error(error);
+console.error(
+"APPROVE OPERATOR ERROR:",
+error
+);
 
 }
 
 }
+
+
 /* ================================================= */
 /* REJECT OPERATOR */
 /* ================================================= */
@@ -3083,8 +3118,13 @@ alert(
 }catch(error){
 
 alert(
-"❌ Gagal menolak operator."
+"❌ Gagal menolak operator.\n\n" +
+(error.code || "") +
+"\n" +
+(error.message || "")
 );
+
+console.error(error);
 
 }
 
@@ -3146,8 +3186,8 @@ document
 
 function getFirebaseError(error){
 
-if(!error)return
-"Terjadi kesalahan.";
+if(!error)
+return "Terjadi kesalahan.";
 
 const code =
 error.code || "";
