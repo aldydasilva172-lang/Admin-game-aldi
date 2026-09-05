@@ -1397,15 +1397,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-  auth.setPersistence(
-firebase.auth.Auth.Persistence.LOCAL
-).catch(error=>{
-console.error(
-"Persistence error:",
-error
-);
-});
-
 
 /* ================================================= */
 /* GLOBAL */
@@ -3001,75 +2992,51 @@ emptyHTML(
 
 async function approveOperator(username){
 
-  console.log("TERIMA OPERATOR DIKLIK:", username);
+console.log("TERIMA OPERATOR:", username);
 
-  if(!auth.currentUser){
+if(currentRole !== "superadmin"){
 
-    alert("❌ Sesi login Firebase tidak ditemukan.\nSilakan logout lalu login kembali sebagai ALDI.");
+alert(
+"❌ Hanya Super Admin yang dapat melakukan ini."
+);
 
-    return;
-  }
+return;
 
-
-  alert(
-    "TERIMA OPERATOR\n\n" +
-    "Username: " + username +
-    "\n\nAUTH UID:\n" +
-    auth.currentUser.uid +
-    "\n\nEMAIL:\n" +
-    auth.currentUser.email
-  );
+}
 
 
-  if(currentRole !== "superadmin"){
+try{
 
-    alert(
-      "❌ Hanya Super Admin yang dapat melakukan ini."
-    );
+await db
+.ref("admins/" + username)
+.update({
 
-    return;
-  }
+role:"operator",
+status:"approved",
+approvedAt:Date.now(),
+approvedBy:"aldi"
 
-
-  try{
-
-    await db
-      .ref("admins/" + username)
-      .update({
-
-        role:"operator",
-        status:"approved",
-        approvedAt:Date.now(),
-        approvedBy:"aldi"
-
-      });
+});
 
 
-    alert(
-      "✅ Operator " +
-      username +
-      " berhasil disetujui."
-    );
+alert(
+"✅ Operator " +
+username +
+" berhasil disetujui."
+);
 
+}catch(error){
 
-  }catch(error){
+alert(
+"❌ Gagal menyetujui operator.\n\n" +
+error.code +
+"\n" +
+error.message
+);
 
-    console.error(
-      "APPROVE OPERATOR ERROR:",
-      error
-    );
+console.error(error);
 
-
-    alert(
-      "❌ Gagal menyetujui operator.\n\n" +
-      "Kode: " +
-      (error.code || "-") +
-      "\n\n" +
-      "Pesan:\n" +
-      (error.message || error)
-    );
-
-  }
+}
 
 }
 /* ================================================= */
