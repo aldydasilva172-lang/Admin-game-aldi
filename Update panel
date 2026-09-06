@@ -493,10 +493,54 @@ font-size:22px;
 color:#00eaff;
 }
 
-.reset-game-btn{
+
+/* ================================================= */
+/* BERI POIN PEMENANG */
+/* ================================================= */
+
+.winner-point-btn{
 width:100%;
 
 margin-top:17px;
+
+padding:13px;
+
+border:1px solid rgba(0,217,255,.22);
+
+border-radius:14px;
+
+background:
+linear-gradient(
+135deg,
+rgba(0,108,255,.75),
+rgba(0,217,255,.65)
+);
+
+color:#fff;
+
+font-weight:800;
+
+font-size:12px;
+
+box-shadow:
+0 9px 25px rgba(0,180,255,.14);
+
+transition:.2s;
+}
+
+.winner-point-btn:active{
+transform:scale(.98);
+}
+
+
+/* ================================================= */
+/* RESET GAME */
+/* ================================================= */
+
+.reset-game-btn{
+width:100%;
+
+margin-top:10px;
 
 padding:14px;
 
@@ -901,6 +945,24 @@ rgba(255,255,255,.07);
 
 border:
 1px solid rgba(255,255,255,.04);
+}
+
+
+/* ================================================= */
+/* BADGE PEMENANG */
+/* ================================================= */
+
+.winner-badge{
+background:
+rgba(0,217,255,.12);
+
+border:
+1px solid rgba(0,217,255,.25);
+
+color:#00eaff;
+
+box-shadow:
+0 0 15px rgba(0,217,255,.08);
 }
 
 .actions{
@@ -1870,7 +1932,19 @@ class="game-winner"
 Belum ada pemenang
 </div>
 
-<!-- TAMBAHAN: KELUARKAN PEMENANG -->
+
+<!-- TAMBAHAN: BERI POIN PEMENANG -->
+
+<button
+id="winnerPointBtn"
+class="winner-point-btn hidden"
+onclick="beriPoinPemenang()"
+>
+🏆 BERI POIN
+</button>
+
+
+<!-- KELUARKAN PEMENANG -->
 
 <button
 id="winnerRemoveBtn"
@@ -2751,6 +2825,8 @@ let currentRole = null;
 
 let playersData = {};
 
+let currentGameData = null;
+
 let rankingData = {};
 
 let operatorsData = {};
@@ -3178,6 +3254,8 @@ currentUser=null;
 currentAccount=null;
 
 currentRole=null;
+
+currentGameData=null;
 
 document
 .getElementById("panelPage")
@@ -3882,11 +3960,23 @@ if(p.status==="approved"){
 
 activeCount++;
 
+
+/*
+CEK APAKAH PEMAIN SEDANG MENANG
+*/
+
+const isWinner =
+currentGameData &&
+currentGameData.playerID === id;
+
+
 active.innerHTML +=
 playerHTML(
 id,
 name,
-"active"
+isWinner
+? "winner"
+: "active"
 );
 
 }else{
@@ -4062,6 +4152,60 @@ onclick="keluarkanPlayer('${id}')"
 
 }
 
+
+/*
+=================================================
+PEMAIN PEMENANG
+=================================================
+*/
+
+if(type==="winner"){
+
+return `
+<div class="item">
+
+<div class="item-main">
+
+<div>
+
+<div class="item-name">
+${name}
+</div>
+
+<div class="item-email">
+🏆 Pemain yang sedang menang
+</div>
+
+</div>
+
+<span class="badge winner-badge">
+🏆 PEMENANG
+</span>
+
+</div>
+
+<div class="actions">
+
+<button
+class="action orange"
+onclick="keluarkanPlayer('${id}')"
+>
+✕ KELUARKAN
+</button>
+
+</div>
+
+</div>
+`;
+
+}
+
+
+/*
+=================================================
+PEMAIN AKTIF BIASA
+=================================================
+*/
 
 return `
 <div class="item">
@@ -4272,6 +4416,24 @@ db.ref("game")
 const data=
 snapshot.val();
 
+
+/*
+SIMPAN DATA GAME
+AGAR TAB PEMAIN AKTIF
+BISA MENGETAHUI PEMENANG
+*/
+
+currentGameData =
+data || null;
+
+
+/*
+UPDATE TAMPILAN PEMAIN
+*/
+
+renderPlayers();
+
+
 const status=
 document.getElementById(
 "gameStatus"
@@ -4287,6 +4449,11 @@ document.getElementById(
 "winnerRemoveBtn"
 );
 
+const pointBtn=
+document.getElementById(
+"winnerPointBtn"
+);
+
 
 if(!data){
 
@@ -4297,6 +4464,10 @@ winner.innerText=
 "Belum ada pemenang";
 
 removeBtn.classList.add(
+"hidden"
+);
+
+pointBtn.classList.add(
 "hidden"
 );
 
@@ -4317,6 +4488,123 @@ data.player ||
 removeBtn.classList.remove(
 "hidden"
 );
+
+pointBtn.classList.remove(
+"hidden"
+);
+
+});
+
+}
+
+
+
+/* ================================================= */
+/* BERI POIN PEMENANG */
+/* ================================================= */
+
+function beriPoinPemenang(){
+
+/*
+AMBIL DATA GAME TERBARU
+*/
+
+db.ref("game")
+.once("value")
+.then(snapshot=>{
+
+const game =
+snapshot.val();
+
+
+if(!game){
+
+alert(
+"❌ Tidak ada pemenang."
+);
+
+return;
+
+}
+
+
+const playerName =
+game.player ||
+"Unknown";
+
+
+/*
+ISI NAMA PEMENANG
+*/
+
+const nameInput =
+document.getElementById(
+"scoreName"
+);
+
+if(nameInput){
+
+nameInput.value =
+playerName;
+
+}
+
+
+/*
+CARI TAB POIN
+*/
+
+const tabs =
+document.querySelectorAll(".tab");
+
+let pointTab =
+null;
+
+
+tabs.forEach(tab=>{
+
+if(
+tab.innerText
+.trim()
+.toLowerCase()
+==="poin"
+){
+
+pointTab=tab;
+
+}
+
+});
+
+
+/*
+BUKA TAB POIN
+*/
+
+openTab(
+"points",
+pointTab
+);
+
+
+/*
+FOKUS KE JUMLAH POIN
+*/
+
+setTimeout(()=>{
+
+const scoreInput =
+document.getElementById(
+"scoreValue"
+);
+
+if(scoreInput){
+
+scoreInput.focus();
+
+}
+
+},150);
 
 });
 
@@ -4543,37 +4831,92 @@ resetPlayers
 
 async function resetPlayers(){
 
-try{
+  try{
 
-await db
-.ref("players")
-.remove();
+    /*
+    =================================================
+    1. HAPUS SEMUA PLAYER
+    =================================================
+    */
 
-await db
-.ref("game")
-.remove();
+    await db
+      .ref("players")
+      .remove();
 
-await logActivity(
-"🗑️ Melakukan RESET SEMUA PEMAIN"
-);
 
-alert(
-"✅ Semua pemain berhasil di-reset."
-);
+    /*
+    =================================================
+    2. HAPUS SEMUA NAMA
+    =================================================
 
-}catch(error){
+    Transaction digunakan supaya penghapusan
+    playerNames diproses secara atomic.
+    */
 
-alert(
-"❌ Gagal reset pemain.\n\n"+
-error.code
-);
+    await db
+      .ref("playerNames")
+      .transaction(
+        function(){
+
+          return null;
+
+        }
+      );
+
+
+    /*
+    =================================================
+    3. HAPUS GAME AKTIF
+    =================================================
+    */
+
+    await db
+      .ref("game")
+      .remove();
+
+
+    /*
+    =================================================
+    4. CATAT RIWAYAT
+    =================================================
+    */
+
+    await logActivity(
+      "🗑️ Melakukan RESET SEMUA PEMAIN"
+    );
+
+
+    /*
+    =================================================
+    5. NOTIFIKASI
+    =================================================
+    */
+
+    alert(
+      "✅ Semua pemain berhasil di-reset.\n\n" +
+      "Nama pemain sekarang bisa digunakan kembali."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "RESET PLAYERS ERROR:",
+      error
+    );
+
+
+    alert(
+      "❌ Gagal reset pemain.\n\n" +
+      (error.code || "") +
+      "\n" +
+      (error.message || "")
+    );
+
+  }
 
 }
-
-}
-
-
-
+  
 /* ================================================= */
 /* RANKING */
 /* ================================================= */
