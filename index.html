@@ -21,11 +21,8 @@ rel="stylesheet"
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-<style>
 
-/* ================================================= */
-/* GLOBAL */
-/* ================================================= */
+<style>
 
 *{
 margin:0;
@@ -83,16 +80,20 @@ display:none !important;
 
 #authPage{
 min-height:100vh;
+
 display:flex;
 align-items:center;
 justify-content:center;
+
 padding:20px;
 }
 
 .auth-card{
 width:100%;
 max-width:430px;
+
 padding:34px 25px;
+
 border-radius:30px;
 
 background:
@@ -114,38 +115,58 @@ backdrop-filter:blur(24px);
 
 .auth-logo{
 text-align:center;
+
 font-family:Orbitron,sans-serif;
+
 font-size:25px;
 font-weight:800;
+
 letter-spacing:2px;
+
 margin-bottom:7px;
 }
 
 .auth-subtitle{
 text-align:center;
+
 font-size:11px;
+
 opacity:.55;
+
 letter-spacing:1px;
+
 margin-bottom:28px;
 }
 
 .auth-tabs{
 display:flex;
+
 gap:7px;
+
 padding:4px;
+
 margin-bottom:22px;
+
 background:rgba(0,0,0,.20);
+
 border:1px solid rgba(255,255,255,.06);
+
 border-radius:15px;
 }
 
 .auth-tabs button{
 flex:1;
+
 padding:11px;
+
 border:0;
+
 border-radius:11px;
+
 background:transparent;
+
 color:#888;
+
 transition:.25s;
 }
 
@@ -156,8 +177,11 @@ linear-gradient(
 #006cff,
 #00d9ff
 );
+
 color:#fff;
+
 font-weight:600;
+
 box-shadow:
 0 7px 20px rgba(0,160,255,.22);
 }
@@ -168,25 +192,37 @@ margin-bottom:14px;
 
 .field label{
 display:block;
+
 font-size:10px;
+
 opacity:.65;
+
 margin-bottom:6px;
+
 letter-spacing:.5px;
 }
 
 .field input{
 width:100%;
+
 padding:13px 14px;
+
 border-radius:13px;
+
 border:1px solid rgba(255,255,255,.10);
+
 background:rgba(0,0,0,.25);
+
 color:#fff;
+
 outline:none;
+
 transition:.25s;
 }
 
 .field input:focus{
 border-color:#00cfff;
+
 box-shadow:
 0 0 0 2px rgba(0,207,255,.08),
 0 0 20px rgba(0,207,255,.08);
@@ -194,8 +230,11 @@ box-shadow:
 
 .main-btn{
 width:100%;
+
 padding:14px;
+
 border:0;
+
 border-radius:14px;
 
 background:
@@ -206,8 +245,11 @@ linear-gradient(
 );
 
 color:#fff;
+
 font-weight:700;
+
 font-size:13px;
+
 margin-top:5px;
 
 box-shadow:
@@ -222,22 +264,35 @@ transform:scale(.98);
 
 .forgot{
 display:block;
+
 text-align:center;
+
 margin-top:14px;
+
 font-size:11px;
+
 color:#00d9ff;
+
 cursor:pointer;
 }
 
 .auth-message{
 margin-top:15px;
+
 padding:11px;
+
 border-radius:12px;
+
 background:rgba(255,255,255,.05);
+
 border:1px solid rgba(255,255,255,.05);
+
 font-size:11px;
+
 text-align:center;
+
 display:none;
+
 white-space:pre-line;
 }
 
@@ -257,7 +312,9 @@ display:none;
 
 .header{
 position:sticky;
+
 top:0;
+
 z-index:100;
 
 background:
@@ -275,18 +332,27 @@ box-shadow:
 
 .header-inner{
 max-width:1100px;
+
 margin:auto;
+
 padding:14px 16px;
+
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
 gap:12px;
 }
 
 .logo{
 font-family:Orbitron,sans-serif;
+
 font-size:16px;
+
 font-weight:800;
+
 letter-spacing:1px;
 }
 
@@ -296,26 +362,37 @@ color:#00d9ff;
 
 .user-info{
 text-align:right;
+
 font-size:9px;
+
 opacity:.75;
+
 line-height:1.5;
 }
 
 .user-role{
 color:#00d9ff;
+
 font-weight:600;
 }
 
 .logout-btn{
 margin-left:8px;
+
 padding:8px 11px;
+
 border-radius:10px;
+
 border:
 1px solid rgba(255,255,255,.09);
+
 background:
 rgba(255,255,255,.045);
+
 color:#fff;
+
 font-size:10px;
+
 transition:.2s;
 }
 
@@ -330,7 +407,9 @@ transform:scale(.95);
 
 .container{
 max-width:1100px;
+
 margin:auto;
+
 padding:18px 14px 55px;
 }
 
@@ -341,8 +420,11 @@ padding:18px 14px 55px;
 
 .game-card{
 position:relative;
+
 overflow:hidden;
+
 padding:20px;
+
 border-radius:23px;
 
 background:
@@ -362,9 +444,12 @@ inset 0 1px rgba(255,255,255,.05);
 
 .game-card::before{
 content:"";
+
 position:absolute;
+
 width:180px;
 height:180px;
+
 right:-90px;
 top:-90px;
 
@@ -380,20 +465,27 @@ pointer-events:none;
 
 .game-title{
 font-family:Orbitron,sans-serif;
+
 font-size:10px;
+
 opacity:.55;
+
 letter-spacing:1px;
+
 margin-bottom:8px;
 }
 
 .game-status{
 font-size:21px;
+
 font-weight:700;
 }
 
 .game-winner{
 margin-top:7px;
+
 font-size:22px;
+
 color:#00eaff;
 }
 
@@ -404,9 +496,13 @@ color:#00eaff;
 
 .winner-point-btn{
 width:100%;
+
 margin-top:17px;
+
 padding:13px;
+
 border:1px solid rgba(0,217,255,.22);
+
 border-radius:14px;
 
 background:
@@ -417,7 +513,9 @@ rgba(0,217,255,.65)
 );
 
 color:#fff;
+
 font-weight:800;
+
 font-size:12px;
 
 box-shadow:
@@ -437,9 +535,13 @@ transform:scale(.98);
 
 .reset-game-btn{
 width:100%;
+
 margin-top:10px;
+
 padding:14px;
+
 border:0;
+
 border-radius:14px;
 
 background:
@@ -450,7 +552,9 @@ linear-gradient(
 );
 
 color:#fff;
+
 font-weight:800;
+
 font-size:13px;
 
 box-shadow:
@@ -464,15 +568,24 @@ box-shadow:
 
 .winner-remove-btn{
 width:100%;
+
 margin-top:10px;
+
 padding:12px;
+
 border:1px solid rgba(233,30,67,.25);
+
 border-radius:13px;
+
 background:
 rgba(233,30,67,.14);
+
 color:#ff5475;
+
 font-weight:700;
+
 font-size:11px;
+
 transition:.2s;
 }
 
@@ -487,16 +600,22 @@ transform:scale(.98);
 
 .status-bar{
 display:grid;
+
 grid-template-columns:
 repeat(3,1fr);
+
 gap:9px;
+
 margin:14px 0 15px;
 }
 
 .status-card{
 position:relative;
+
 overflow:hidden;
+
 padding:14px 8px;
+
 border-radius:17px;
 
 background:
@@ -521,10 +640,14 @@ cursor:pointer;
 
 .status-card::after{
 content:"";
+
 position:absolute;
+
 left:15%;
 right:15%;
+
 bottom:-18px;
+
 height:35px;
 
 background:
@@ -558,28 +681,39 @@ box-shadow:
 
 .status-icon{
 font-size:15px;
+
 margin-bottom:4px;
 }
 
 .status-number{
 font-family:Orbitron,sans-serif;
+
 font-size:21px;
+
 font-weight:700;
+
 line-height:1.2;
 }
 
 .status-label{
 font-size:8px;
+
 opacity:.55;
+
 margin-top:4px;
+
 letter-spacing:.6px;
 }
 
 .status-arrow{
 position:absolute;
+
 top:7px;
+
 right:8px;
+
 font-size:8px;
+
 opacity:.25;
 }
 
@@ -590,8 +724,11 @@ opacity:.25;
 
 .tabs-wrap{
 position:sticky;
+
 top:58px;
+
 z-index:80;
+
 padding:7px 0 9px;
 
 background:
@@ -608,9 +745,13 @@ backdrop-filter:blur(10px);
 
 .tabs{
 display:flex;
+
 gap:7px;
+
 overflow-x:auto;
+
 padding:3px 1px 5px;
+
 scrollbar-width:none;
 }
 
@@ -620,9 +761,13 @@ display:none;
 
 .tab{
 position:relative;
+
 flex:0 0 auto;
+
 padding:10px 14px;
+
 border-radius:12px;
+
 border:
 1px solid rgba(255,255,255,.07);
 
@@ -630,21 +775,33 @@ background:
 rgba(255,255,255,.035);
 
 color:#888;
+
 font-size:10px;
+
 font-weight:600;
+
 transition:.22s;
 }
 
 .tab::after{
 content:"";
+
 position:absolute;
+
 left:50%;
+
 bottom:-4px;
+
 width:0;
+
 height:2px;
+
 border-radius:5px;
+
 background:#00d9ff;
+
 transform:translateX(-50%);
+
 transition:.22s;
 }
 
@@ -675,6 +832,7 @@ width:18px;
 
 .section{
 display:none;
+
 animation:
 sectionIn .25s ease;
 }
@@ -687,11 +845,13 @@ display:block;
 
 from{
 opacity:0;
+
 transform:translateY(5px);
 }
 
 to{
 opacity:1;
+
 transform:translateY(0);
 }
 
@@ -699,8 +859,11 @@ transform:translateY(0);
 
 .section-title{
 font-family:Orbitron,sans-serif;
+
 font-size:13px;
+
 letter-spacing:.4px;
+
 margin:10px 0 12px;
 }
 
@@ -711,12 +874,15 @@ margin:10px 0 12px;
 
 .list{
 display:flex;
+
 flex-direction:column;
+
 gap:9px;
 }
 
 .item{
 padding:15px;
+
 border-radius:17px;
 
 background:
@@ -737,60 +903,90 @@ transition:.2s;
 
 .item-main{
 display:flex;
+
 justify-content:space-between;
+
 gap:10px;
+
 align-items:center;
 }
 
 .item-name{
 font-weight:600;
+
 font-size:13px;
 }
 
 .item-email{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:3px;
+
 word-break:break-all;
 }
 
 .badge{
 display:inline-block;
+
 padding:4px 8px;
+
 border-radius:8px;
+
 font-size:8px;
+
 background:
 rgba(255,255,255,.07);
+
 border:
 1px solid rgba(255,255,255,.04);
 }
 
+
+/* ================================================= */
+/* BADGE PEMENANG */
+/* ================================================= */
+
 .winner-badge{
 background:
 rgba(0,217,255,.12);
+
 border:
 1px solid rgba(0,217,255,.25);
+
 color:#00eaff;
+
 box-shadow:
 0 0 15px rgba(0,217,255,.08);
 }
 
 .actions{
 display:flex;
+
 flex-wrap:wrap;
+
 gap:7px;
+
 margin-top:12px;
 }
 
 .action{
 border:0;
+
 border-radius:10px;
+
 padding:9px 11px;
+
 font-size:9px;
+
 font-weight:600;
+
 color:#fff;
+
 background:
 rgba(255,255,255,.08);
+
 transition:.18s;
 }
 
@@ -816,9 +1012,13 @@ background:#f57c00;
 
 .empty{
 padding:32px 15px;
+
 text-align:center;
+
 opacity:.4;
+
 font-size:11px;
+
 border-radius:16px;
 
 background:
@@ -835,6 +1035,7 @@ border:
 
 .points-box{
 padding:18px;
+
 border-radius:19px;
 
 background:
@@ -850,21 +1051,31 @@ border:
 
 .points-box label{
 display:block;
+
 font-size:10px;
+
 opacity:.55;
+
 margin-bottom:6px;
 }
 
 .points-box input{
 width:100%;
+
 padding:12px;
+
 border-radius:12px;
+
 border:
 1px solid rgba(255,255,255,.09);
+
 background:
 rgba(0,0,0,.25);
+
 color:#fff;
+
 outline:none;
+
 margin-bottom:10px;
 }
 
@@ -874,14 +1085,21 @@ border-color:#00d9ff;
 
 .ranking-item{
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 padding:13px;
+
 border-radius:14px;
+
 background:
 rgba(255,255,255,.04);
+
 border:
 1px solid rgba(255,255,255,.05);
+
 margin-bottom:7px;
 
 transition:
@@ -893,6 +1111,7 @@ border-color .18s;
 .ranking-item:hover{
 background:
 rgba(255,255,255,.065);
+
 border-color:
 rgba(0,210,255,.15);
 }
@@ -903,20 +1122,27 @@ transform:scale(.98);
 
 .rank-left{
 display:flex;
+
 gap:10px;
+
 align-items:center;
 }
 
 .rank-number{
 font-family:Orbitron,sans-serif;
+
 font-size:11px;
+
 opacity:.55;
+
 width:25px;
 }
 
 .rank-score{
 font-family:Orbitron,sans-serif;
+
 color:#00d9ff;
+
 font-size:13px;
 }
 
@@ -927,10 +1153,15 @@ font-size:13px;
 
 .operator-summary{
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
 padding:15px;
+
 margin-bottom:12px;
+
 border-radius:17px;
 
 background:
@@ -946,12 +1177,15 @@ border:
 
 .operator-summary-title{
 font-weight:600;
+
 font-size:12px;
 }
 
 .operator-summary-desc{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:3px;
 }
 
@@ -966,59 +1200,86 @@ font-size:22px;
 
 .history-item{
 padding:15px;
+
 border-radius:17px;
+
 background:
 rgba(255,255,255,.045);
+
 border:
 1px solid rgba(255,255,255,.06);
+
 margin-bottom:9px;
 }
 
 .history-top{
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
 gap:10px;
 }
 
 .history-user{
 font-weight:600;
+
 font-size:12px;
 }
 
 .history-time{
 font-size:8px;
+
 opacity:.4;
+
 text-align:right;
 }
 
 .history-action{
 font-size:10px;
+
 margin-top:6px;
+
 line-height:1.5;
+
 opacity:.75;
 }
 
 .history-role{
 display:inline-block;
+
 margin-top:7px;
+
 padding:4px 8px;
+
 border-radius:8px;
+
 font-size:7px;
+
 background:
 rgba(0,217,255,.09);
+
 color:#00d9ff;
 }
 
 .history-clear{
 width:100%;
+
 margin-bottom:12px;
+
 padding:12px;
+
 border:0;
+
 border-radius:12px;
+
 background:#d71945;
+
 color:#fff;
+
 font-weight:700;
+
 font-size:10px;
 }
 
@@ -1029,6 +1290,7 @@ font-size:10px;
 
 .settings-intro{
 padding:16px;
+
 border-radius:18px;
 
 background:
@@ -1046,75 +1308,104 @@ margin-bottom:11px;
 
 .settings-intro-title{
 font-family:Orbitron,sans-serif;
+
 font-size:12px;
 }
 
 .settings-intro-desc{
 font-size:9px;
+
 opacity:.45;
+
 margin-top:4px;
 }
 
 .setting-card{
 position:relative;
+
 padding:15px;
+
 border-radius:16px;
+
 background:
 rgba(255,255,255,.038);
+
 border:
 1px solid rgba(255,255,255,.06);
+
 margin-bottom:8px;
+
 transition:.2s;
 }
 
 .setting-card.open{
 background:
 rgba(255,255,255,.055);
+
 border-color:
 rgba(0,210,255,.18);
 }
 
 .setting-head{
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
+
 gap:10px;
+
 cursor:pointer;
 }
 
 .setting-left{
 display:flex;
+
 align-items:center;
+
 gap:11px;
 }
 
 .setting-icon{
 width:35px;
+
 height:35px;
+
 display:flex;
+
 align-items:center;
+
 justify-content:center;
+
 border-radius:11px;
+
 background:
 rgba(255,255,255,.06);
+
 font-size:15px;
 }
 
 .setting-title{
 font-weight:600;
+
 font-size:11px;
 }
 
 .setting-desc{
 font-size:8px;
+
 opacity:.42;
+
 margin-top:3px;
+
 line-height:1.45;
 }
 
 .setting-arrow{
 font-size:10px;
+
 opacity:.4;
+
 transition:.2s;
 }
 
@@ -1124,8 +1415,11 @@ transform:rotate(180deg);
 
 .setting-content{
 display:none;
+
 padding-top:12px;
+
 margin-top:12px;
+
 border-top:
 1px solid rgba(255,255,255,.06);
 }
@@ -1136,13 +1430,20 @@ display:block;
 
 .setting-btn{
 width:100%;
+
 padding:11px;
+
 border-radius:11px;
+
 border:0;
+
 color:#fff;
+
 background:
 rgba(255,255,255,.08);
+
 font-size:10px;
+
 font-weight:600;
 }
 
@@ -1156,8 +1457,11 @@ background:#006cff;
 
 .setting-small-note{
 font-size:8px;
+
 opacity:.4;
+
 line-height:1.5;
+
 margin-bottom:9px;
 }
 
@@ -1168,33 +1472,47 @@ margin-bottom:9px;
 
 .point-modal-name{
 font-size:16px;
+
 font-weight:700;
+
 margin-bottom:4px;
 }
 
 .point-modal-score{
 font-family:Orbitron,sans-serif;
+
 font-size:12px;
+
 color:#00d9ff;
 }
 
 .point-edit-input{
 width:100%;
+
 padding:13px;
+
 border-radius:12px;
+
 border:
 1px solid rgba(255,255,255,.10);
+
 background:
 rgba(0,0,0,.28);
+
 color:#fff;
+
 outline:none;
+
 font-family:Poppins,sans-serif;
+
 font-size:14px;
+
 margin-bottom:10px;
 }
 
 .point-edit-input:focus{
 border-color:#00d9ff;
+
 box-shadow:
 0 0 0 2px rgba(0,217,255,.08);
 }
@@ -1206,11 +1524,17 @@ box-shadow:
 
 .modal{
 position:fixed;
+
 inset:0;
+
 z-index:500;
+
 display:none;
+
 align-items:center;
+
 justify-content:center;
+
 padding:20px;
 
 background:
@@ -1226,8 +1550,11 @@ display:flex;
 
 .modal-box{
 width:100%;
+
 max-width:420px;
+
 padding:22px;
+
 border-radius:22px;
 
 background:
@@ -1251,12 +1578,14 @@ modalIn .2s ease;
 
 from{
 opacity:0;
+
 transform:scale(.96)
 translateY(5px);
 }
 
 to{
 opacity:1;
+
 transform:scale(1)
 translateY(0);
 }
@@ -1265,28 +1594,39 @@ translateY(0);
 
 .modal-title{
 font-family:Orbitron,sans-serif;
+
 font-size:14px;
+
 margin-bottom:15px;
 }
 
 .modal-text{
 font-size:11px;
+
 line-height:1.6;
+
 opacity:.65;
+
 margin-bottom:15px;
 }
 
 .modal-actions{
 display:flex;
+
 gap:8px;
 }
 
 .modal-actions button{
 flex:1;
+
 padding:12px;
+
 border-radius:12px;
+
 border:0;
+
 color:#fff;
+
 background:
 rgba(255,255,255,.08);
 }
@@ -1341,6 +1681,7 @@ font-size:7px;
 
 .tab{
 padding:9px 12px;
+
 font-size:9px;
 }
 
@@ -1357,6 +1698,7 @@ font-size:19px;
 </style>
 
 </head>
+
 
 <body>
 
@@ -1562,7 +1904,9 @@ Logout
 <div class="container">
 
 
+<!-- ================================================= -->
 <!-- GAME -->
+<!-- ================================================= -->
 
 <div class="game-card">
 
@@ -1584,6 +1928,7 @@ class="game-winner"
 Belum ada pemenang
 </div>
 
+
 <button
 id="winnerPointBtn"
 class="winner-point-btn hidden"
@@ -1591,6 +1936,7 @@ onclick="beriPoinPemenang()"
 >
 🏆 BERI POIN
 </button>
+
 
 <button
 id="winnerRemoveBtn"
@@ -1611,9 +1957,12 @@ onclick="confirmResetGame()"
 
 
 
+<!-- ================================================= -->
 <!-- STATUS BAR -->
+<!-- ================================================= -->
 
 <div class="status-bar">
+
 
 <div
 id="statusPending"
@@ -1621,9 +1970,13 @@ class="status-card active-status"
 onclick="openStatusTab('pending')"
 >
 
-<span class="status-arrow">›</span>
+<span class="status-arrow">
+›
+</span>
 
-<div class="status-icon">⏳</div>
+<div class="status-icon">
+⏳
+</div>
 
 <div
 id="pendingCount"
@@ -1639,15 +1992,20 @@ MENUNGGU
 </div>
 
 
+
 <div
 id="statusActive"
 class="status-card"
 onclick="openStatusTab('active')"
 >
 
-<span class="status-arrow">›</span>
+<span class="status-arrow">
+›
+</span>
 
-<div class="status-icon">🟢</div>
+<div class="status-icon">
+🟢
+</div>
 
 <div
 id="activeCount"
@@ -1663,15 +2021,20 @@ AKTIF
 </div>
 
 
+
 <div
 id="statusSpam"
 class="status-card"
 onclick="openStatusTab('spam')"
 >
 
-<span class="status-arrow">›</span>
+<span class="status-arrow">
+›
+</span>
 
-<div class="status-icon">🚨</div>
+<div class="status-icon">
+🚨
+</div>
 
 <div
 id="spamCount"
@@ -1690,7 +2053,9 @@ SPAM
 
 
 
+<!-- ================================================= -->
 <!-- TABS -->
+<!-- ================================================= -->
 
 <div class="tabs-wrap">
 
@@ -1753,7 +2118,9 @@ onclick="openTab('settings',this)"
 
 
 
+<!-- ================================================= -->
 <!-- PENDING -->
+<!-- ================================================= -->
 
 <section
 id="section-pending"
@@ -1773,7 +2140,9 @@ class="list"
 
 
 
+<!-- ================================================= -->
 <!-- ACTIVE -->
+<!-- ================================================= -->
 
 <section
 id="section-active"
@@ -1793,7 +2162,9 @@ class="list"
 
 
 
+<!-- ================================================= -->
 <!-- SPAM -->
+<!-- ================================================= -->
 
 <section
 id="section-spam"
@@ -1813,7 +2184,9 @@ class="list"
 
 
 
+<!-- ================================================= -->
 <!-- POINTS -->
+<!-- ================================================= -->
 
 <section
 id="section-points"
@@ -1882,7 +2255,9 @@ text-align:center;
 
 
 
+<!-- ================================================= -->
 <!-- OPERATORS -->
+<!-- ================================================= -->
 
 <section
 id="section-operators"
@@ -1922,7 +2297,9 @@ class="list"
 
 
 
+<!-- ================================================= -->
 <!-- HISTORY -->
+<!-- ================================================= -->
 
 <section
 id="section-history"
@@ -1949,7 +2326,9 @@ class="list"
 
 
 
+<!-- ================================================= -->
 <!-- SETTINGS -->
+<!-- ================================================= -->
 
 <section
 id="section-settings"
@@ -1959,6 +2338,7 @@ class="section"
 <div class="section-title">
 ⚙️ PENGATURAN
 </div>
+
 
 <div class="settings-intro">
 
@@ -2072,7 +2452,7 @@ Menghapus seluruh pemain dan status approval.
 <div class="setting-content">
 
 <div class="setting-small-note">
-Semua pemain, status approval, dan game aktif akan dihapus.
+Semua pemain, status approval, nama yang sudah digunakan, dan game aktif akan dihapus.
 </div>
 
 <button
@@ -2194,6 +2574,7 @@ LOGOUT
 
 </div>
 
+
 </section>
 
 </div>
@@ -2202,7 +2583,9 @@ LOGOUT
 
 
 
+<!-- ================================================= -->
 <!-- CONFIRM MODAL -->
+<!-- ================================================= -->
 
 <div
 id="modal"
@@ -2246,7 +2629,9 @@ YA
 
 
 
+<!-- ================================================= -->
 <!-- POINT ACTION MODAL -->
+<!-- ================================================= -->
 
 <div
 id="pointModal"
@@ -2268,6 +2653,7 @@ class="modal-text"
 >
 Pilih tindakan untuk pemain.
 </div>
+
 
 <div
 id="pointActionMenu"
@@ -2305,6 +2691,7 @@ BATAL
 </div>
 
 </div>
+
 
 <div
 id="pointEditForm"
@@ -2392,9 +2779,6 @@ appId:
 };
 
 firebase.initializeApp(firebaseConfig);
-
-console.log("🔥 FIREBASE PROJECT:", firebaseConfig.projectId);
-console.log("🔥 FIREBASE API KEY:", firebaseConfig.apiKey);
 
 const auth =
 firebase.auth();
@@ -2680,45 +3064,51 @@ const user =
 result.user;
 
 
+/* ================================================= */
+/* SIMPAN DATA OPERATOR */
+/* ================================================= */
+
+await db
+.ref("admins/" + username)
+.set({
+
+username:username,
+
+email:email,
+
+role:"operator",
+
+status:"pending",
+
+uid:user.uid,
+
+createdAt:Date.now()
+
+});
+
+
 /*
 =================================================
-SIMPAN DATA OPERATOR
+OPERATOR ACCESS
 =================================================
+
+Status awal pending.
+Operator belum mempunyai izin reset.
 */
 
-await db.ref().update({
+await db
+.ref("operatorAccess/" + user.uid)
+.set({
 
-  ["admins/" + username]: {
+uid:user.uid,
 
-    username:username,
+username:username,
 
-    email:email,
+role:"operator",
 
-    role:"operator",
+status:"pending",
 
-    status:"pending",
-
-    uid:user.uid,
-
-    createdAt:Date.now()
-
-  },
-
-  ["operatorAccess/" + user.uid]: {
-
-    username:username,
-
-    email:email,
-
-    role:"operator",
-
-    status:"pending",
-
-    uid:user.uid,
-
-    createdAt:Date.now()
-
-  }
+createdAt:Date.now()
 
 });
 
@@ -3312,6 +3702,8 @@ button.classList.add(
 
 }
 
+
+/* STATUS ACTIVE */
 
 document
 .querySelectorAll(".status-card")
@@ -4028,10 +4420,13 @@ db.ref("game")
 const data=
 snapshot.val();
 
+
 currentGameData =
 data || null;
 
+
 renderPlayers();
+
 
 const status=
 document.getElementById(
@@ -4388,7 +4783,7 @@ function confirmResetPlayers(){
 
 openConfirm(
 "RESET SEMUA PEMAIN",
-"Semua data pemain dan status approval akan dihapus. Tindakan ini tidak bisa dibatalkan.",
+"Semua data pemain, nama yang sudah digunakan, dan status approval akan dihapus. Tindakan ini tidak bisa dibatalkan.",
 resetPlayers
 );
 
@@ -4413,12 +4808,8 @@ await db
 
 /*
 =================================================
-2. HAPUS SEMUA NAMA PLAYER
+2. AMBIL SEMUA NAMA
 =================================================
-
-Tidak menggunakan transaction pada parent
-playerNames karena Rules memberikan izin
-pada masing-masing child.
 */
 
 const nameSnap =
@@ -4426,23 +4817,30 @@ await db
 .ref("playerNames")
 .once("value");
 
-
 const nameData =
 nameSnap.val() || {};
 
 
+/*
+=================================================
+3. HAPUS SETIAP NAMA
+=================================================
+
+Dilakukan melalui root update supaya
+Rules pada masing-masing playerNames/{nama}
+tetap berlaku.
+*/
+
 const updates = {};
 
-
 Object.keys(nameData).forEach(
-key=>{
+key => {
 
 updates[
-"playerNames/"+key
-]=null;
+"playerNames/" + key
+] = null;
 
-}
-);
+});
 
 
 if(
@@ -4458,7 +4856,7 @@ await db
 
 /*
 =================================================
-3. HAPUS GAME AKTIF
+4. HAPUS GAME AKTIF
 =================================================
 */
 
@@ -4469,7 +4867,7 @@ await db
 
 /*
 =================================================
-4. CATAT RIWAYAT
+5. CATAT RIWAYAT
 =================================================
 */
 
@@ -4480,7 +4878,7 @@ await logActivity(
 
 /*
 =================================================
-5. NOTIFIKASI
+6. NOTIFIKASI
 =================================================
 */
 
@@ -5442,71 +5840,53 @@ return;
 
 /*
 =================================================
-APPROVE ADMIN + OPERATOR ACCESS
+UPDATE DATA ADMIN
 =================================================
 */
 
-const updates={};
+await operatorRef.update({
 
+role:"operator",
 
-updates[
-"admins/"+username+"/role"
-]="operator";
+status:"approved",
 
+approvedAt:Date.now(),
 
-updates[
-"admins/"+username+"/status"
-]="approved";
+approvedBy:SUPER_USERNAME
 
-
-updates[
-"admins/"+username+"/approvedAt"
-]=Date.now();
-
-
-updates[
-"admins/"+username+"/approvedBy"
-]=SUPER_USERNAME;
+});
 
 
 /*
 =================================================
-OPERATOR ACCESS
+AKTIFKAN OPERATOR ACCESS
 =================================================
 */
 
 if(operator.uid){
 
-updates[
-"operatorAccess/"+operator.uid+"/username"
-]=username;
+await db
+.ref(
+"operatorAccess/"+operator.uid
+)
+.update({
 
-updates[
-"operatorAccess/"+operator.uid+"/email"
-]=operator.email;
+uid:operator.uid,
 
-updates[
-"operatorAccess/"+operator.uid+"/uid"
-]=operator.uid;
+username:
+operator.username || username,
 
-updates[
-"operatorAccess/"+operator.uid+"/role"
-]="operator";
+role:"operator",
 
-updates[
-"operatorAccess/"+operator.uid+"/status"
-]="approved";
+status:"approved",
 
-updates[
-"operatorAccess/"+operator.uid+"/approvedAt"
-]=Date.now();
+approvedAt:Date.now(),
+
+approvedBy:SUPER_USERNAME
+
+});
 
 }
-
-
-await db
-.ref()
-.update(updates);
 
 
 await logActivity(
@@ -5582,46 +5962,45 @@ return;
 
 try{
 
-const operatorSnap=
+const operatorSnap =
 await db
 .ref("admins/"+username)
 .once("value");
 
-if(!operatorSnap.exists()){
-
-alert(
-"❌ Data operator tidak ditemukan."
-);
-
-return;
-
-}
-
-
-const operator=
+const operator =
 operatorSnap.val();
 
 
-const updates={};
+await db
+.ref("admins/"+username)
+.update({
+
+status:"rejected"
+
+});
 
 
-updates[
-"admins/"+username+"/status"
-]="rejected";
+/*
+Jika Operator ditolak,
+operatorAccess juga dibuat nonaktif.
+*/
 
-
-if(operator.uid){
-
-updates[
-"operatorAccess/"+operator.uid+"/status"
-]="rejected";
-
-}
-
+if(
+operator &&
+operator.uid
+){
 
 await db
-.ref()
-.update(updates);
+.ref(
+"operatorAccess/"+operator.uid
+)
+.update({
+
+status:"rejected"
+
+});
+
+}
 
 
 await logActivity(
@@ -5635,11 +6014,6 @@ alert(
 );
 
 }catch(error){
-
-console.error(
-"REJECT OPERATOR ERROR:",
-error
-);
 
 alert(
 "❌ Gagal menolak operator.\n\n"+
