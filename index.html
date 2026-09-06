@@ -1933,8 +1933,6 @@ Belum ada pemenang
 </div>
 
 
-<!-- TAMBAHAN: BERI POIN PEMENANG -->
-
 <button
 id="winnerPointBtn"
 class="winner-point-btn hidden"
@@ -1943,8 +1941,6 @@ onclick="beriPoinPemenang()"
 🏆 BERI POIN
 </button>
 
-
-<!-- KELUARKAN PEMENANG -->
 
 <button
 id="winnerRemoveBtn"
@@ -2764,7 +2760,7 @@ onclick="saveEditedPoint()"
 const firebaseConfig = {
 
 apiKey:
-"AIzaSyD36RSQ5epRBSbeI9JnEkI2UevOg921xrI",
+"AIzaSyD36RSQ5epBRSbeI9JnEkI2UevOg921xrI",
 
 authDomain:
 "game-aldi.firebaseapp.com",
@@ -3072,23 +3068,57 @@ const user =
 result.user;
 
 
-/* SIMPAN DATA OPERATOR */
+/*
+=================================================
+SIMPAN DATA OPERATOR
+=================================================
+*/
 
-await db
-.ref("admins/" + username)
-.set({
+await db.ref().update({
 
-username:username,
+["admins/" + username]: {
 
-email:email,
+username:
+username,
 
-role:"operator",
+email:
+email,
 
-status:"pending",
+role:
+"operator",
 
-uid:user.uid,
+status:
+"pending",
 
-createdAt:Date.now()
+uid:
+user.uid,
+
+createdAt:
+Date.now()
+
+},
+
+["operatorAccess/" + user.uid]: {
+
+username:
+username,
+
+email:
+email,
+
+role:
+"operator",
+
+status:
+"pending",
+
+uid:
+user.uid,
+
+createdAt:
+Date.now()
+
+}
 
 });
 
@@ -3456,6 +3486,11 @@ if(currentRole==="superadmin"){
 listenOperators();
 
 listenHistory();
+
+/*
+SINKRONISASI OPERATOR LAMA
+*/
+syncOperatorAccess();
 
 }
 
@@ -3961,10 +3996,6 @@ if(p.status==="approved"){
 activeCount++;
 
 
-/*
-CEK APAKAH PEMAIN SEDANG MENANG
-*/
-
 const isWinner =
 currentGameData &&
 currentGameData.playerID === id;
@@ -4153,12 +4184,6 @@ onclick="keluarkanPlayer('${id}')"
 }
 
 
-/*
-=================================================
-PEMAIN PEMENANG
-=================================================
-*/
-
 if(type==="winner"){
 
 return `
@@ -4200,12 +4225,6 @@ onclick="keluarkanPlayer('${id}')"
 
 }
 
-
-/*
-=================================================
-PEMAIN AKTIF BIASA
-=================================================
-*/
 
 return `
 <div class="item">
@@ -4416,20 +4435,8 @@ db.ref("game")
 const data=
 snapshot.val();
 
-
-/*
-SIMPAN DATA GAME
-AGAR TAB PEMAIN AKTIF
-BISA MENGETAHUI PEMENANG
-*/
-
 currentGameData =
 data || null;
-
-
-/*
-UPDATE TAMPILAN PEMAIN
-*/
 
 renderPlayers();
 
@@ -4505,10 +4512,6 @@ pointBtn.classList.remove(
 
 function beriPoinPemenang(){
 
-/*
-AMBIL DATA GAME TERBARU
-*/
-
 db.ref("game")
 .once("value")
 .then(snapshot=>{
@@ -4533,10 +4536,6 @@ game.player ||
 "Unknown";
 
 
-/*
-ISI NAMA PEMENANG
-*/
-
 const nameInput =
 document.getElementById(
 "scoreName"
@@ -4549,10 +4548,6 @@ playerName;
 
 }
 
-
-/*
-CARI TAB POIN
-*/
 
 const tabs =
 document.querySelectorAll(".tab");
@@ -4577,19 +4572,11 @@ pointTab=tab;
 });
 
 
-/*
-BUKA TAB POIN
-*/
-
 openTab(
 "points",
 pointTab
 );
 
-
-/*
-FOKUS KE JUMLAH POIN
-*/
 
 setTimeout(()=>{
 
@@ -4673,18 +4660,10 @@ playerName
 
 try{
 
-/*
-HAPUS GAME TERLEBIH DAHULU
-*/
-
 await db
 .ref("game")
 .remove();
 
-
-/*
-KEMBALIKAN PEMAIN KE MENUNGGU
-*/
 
 if(playerID){
 
@@ -4700,10 +4679,6 @@ spam:false
 
 }
 
-
-/*
-CATAT RIWAYAT
-*/
 
 await logActivity(
 "✕ Mengeluarkan pemenang: " +
@@ -4831,92 +4806,123 @@ resetPlayers
 
 async function resetPlayers(){
 
-  try{
+try{
 
-    /*
-    =================================================
-    1. HAPUS SEMUA PLAYER
-    =================================================
-    */
+/*
+=================================================
+1. HAPUS SEMUA PLAYER
+=================================================
+*/
 
-    await db
-      .ref("players")
-      .remove();
-
-
-    /*
-    =================================================
-    2. HAPUS SEMUA NAMA
-    =================================================
-
-    Transaction digunakan supaya penghapusan
-    playerNames diproses secara atomic.
-    */
-
-    await db
-      .ref("playerNames")
-      .transaction(
-        function(){
-
-          return null;
-
-        }
-      );
+await db
+.ref("players")
+.remove();
 
 
-    /*
-    =================================================
-    3. HAPUS GAME AKTIF
-    =================================================
-    */
+/*
+=================================================
+2. AMBIL SEMUA NAMA
+=================================================
+*/
 
-    await db
-      .ref("game")
-      .remove();
+const nameSnap =
+await db
+.ref("playerNames")
+.once("value");
 
+const nameData =
+nameSnap.val() || {};
 
-    /*
-    =================================================
-    4. CATAT RIWAYAT
-    =================================================
-    */
-
-    await logActivity(
-      "🗑️ Melakukan RESET SEMUA PEMAIN"
-    );
+const updates = {};
 
 
-    /*
-    =================================================
-    5. NOTIFIKASI
-    =================================================
-    */
+/*
+=================================================
+3. HAPUS SATU PER SATU NAMA
+=================================================
+*/
 
-    alert(
-      "✅ Semua pemain berhasil di-reset.\n\n" +
-      "Nama pemain sekarang bisa digunakan kembali."
-    );
+Object.keys(nameData)
+.forEach(key=>{
 
+updates[
+"playerNames/"+key
+] = null;
 
-  }catch(error){
-
-    console.error(
-      "RESET PLAYERS ERROR:",
-      error
-    );
+});
 
 
-    alert(
-      "❌ Gagal reset pemain.\n\n" +
-      (error.code || "") +
-      "\n" +
-      (error.message || "")
-    );
+/*
+=================================================
+4. EKSEKUSI DELETE
+=================================================
+*/
 
-  }
+if(
+Object.keys(updates).length > 0
+){
+
+await db
+.ref()
+.update(updates);
 
 }
-  
+
+
+/*
+=================================================
+5. HAPUS GAME
+=================================================
+*/
+
+await db
+.ref("game")
+.remove();
+
+
+/*
+=================================================
+6. CATAT RIWAYAT
+=================================================
+*/
+
+await logActivity(
+"🗑️ Melakukan RESET SEMUA PEMAIN"
+);
+
+
+/*
+=================================================
+7. NOTIFIKASI
+=================================================
+*/
+
+alert(
+"✅ Semua pemain berhasil di-reset.\n\n"+
+"Nama pemain sekarang bisa digunakan kembali."
+);
+
+
+}catch(error){
+
+console.error(
+"RESET PLAYERS ERROR:",
+error
+);
+
+alert(
+"❌ Gagal reset pemain.\n\n"+
+(error.code || "")+
+"\n"+
+(error.message || "")
+);
+
+}
+
+}
+
+
+
 /* ================================================= */
 /* RANKING */
 /* ================================================= */
@@ -5848,15 +5854,40 @@ return;
 }
 
 
-await operatorRef.update({
+/*
+=================================================
+APPROVE ADMIN + OPERATOR ACCESS
+=================================================
+*/
 
-role:"operator",
+await db.ref().update({
 
-status:"approved",
+["admins/" + username + "/role"]:
+"operator",
 
-approvedAt:Date.now(),
+["admins/" + username + "/status"]:
+"approved",
 
-approvedBy:SUPER_USERNAME
+["admins/" + username + "/approvedAt"]:
+Date.now(),
+
+["admins/" + username + "/approvedBy"]:
+SUPER_USERNAME,
+
+["operatorAccess/" + operator.uid + "/username"]:
+username,
+
+["operatorAccess/" + operator.uid + "/email"]:
+operator.email,
+
+["operatorAccess/" + operator.uid + "/uid"]:
+operator.uid,
+
+["operatorAccess/" + operator.uid + "/role"]:
+"operator",
+
+["operatorAccess/" + operator.uid + "/status"]:
+"approved"
 
 });
 
@@ -5934,13 +5965,40 @@ return;
 
 try{
 
+const snap =
 await db
-.ref("admins/"+username)
-.update({
+.ref("admins/" + username)
+.once("value");
 
-status:"rejected"
+const operator =
+snap.val();
 
-});
+const updates = {
+
+["admins/" + username + "/status"]:
+"rejected"
+
+};
+
+
+if(
+operator &&
+operator.uid
+){
+
+updates[
+"operatorAccess/" +
+operator.uid +
+"/status"
+] =
+"rejected";
+
+}
+
+
+await db
+.ref()
+.update(updates);
 
 
 await logActivity(
@@ -5960,6 +6018,109 @@ alert(
 (error.code || "")+
 "\n"+
 (error.message || "")
+);
+
+}
+
+}
+
+
+
+/* ================================================= */
+/* SINKRONISASI OPERATOR LAMA */
+/* ================================================= */
+
+async function syncOperatorAccess(){
+
+if(currentRole !== "superadmin"){
+
+return;
+
+}
+
+
+try{
+
+const snap =
+await db
+.ref("admins")
+.once("value");
+
+const admins =
+snap.val() || {};
+
+const updates = {};
+
+let count = 0;
+
+
+Object.values(admins)
+.forEach(operator=>{
+
+if(
+operator &&
+operator.uid &&
+operator.role === "operator"
+){
+
+updates[
+"operatorAccess/" +
+operator.uid
+] = {
+
+username:
+operator.username || "",
+
+email:
+operator.email || "",
+
+role:
+"operator",
+
+status:
+operator.status || "pending",
+
+uid:
+operator.uid
+
+};
+
+count++;
+
+}
+
+});
+
+
+if(
+Object.keys(updates).length === 0
+){
+
+console.log(
+"Tidak ada Operator untuk disinkronkan."
+);
+
+return;
+
+}
+
+
+await db
+.ref()
+.update(updates);
+
+
+console.log(
+"✅ Operator berhasil disinkronkan:",
+count
+);
+
+
+}catch(error){
+
+console.error(
+"SYNC OPERATOR ERROR:",
+error
 );
 
 }
@@ -6033,8 +6194,6 @@ return;
 
 }
 
-
-/* BATASI 200 RIWAYAT TERBARU */
 
 arr
 .slice(0,200)
