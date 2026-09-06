@@ -4831,112 +4831,92 @@ resetPlayers
 
 async function resetPlayers(){
 
-try{
+  try{
 
-/*
-AMBIL SEMUA PLAYER
-AGAR PLAYER NAMES JUGA BISA DIHAPUS
-*/
+    /*
+    =================================================
+    1. HAPUS SEMUA PLAYER
+    =================================================
+    */
 
-const playersSnap =
-await db
-.ref("players")
-.once("value");
-
-const players =
-playersSnap.val() || {};
+    await db
+      .ref("players")
+      .remove();
 
 
-/*
-SIAPKAN UPDATE SEKALIGUS
-*/
+    /*
+    =================================================
+    2. HAPUS SEMUA NAMA
+    =================================================
 
-const updates = {};
+    Transaction digunakan supaya penghapusan
+    playerNames diproses secara atomic.
+    */
 
+    await db
+      .ref("playerNames")
+      .transaction(
+        function(){
 
-/*
-HAPUS SEMUA PEMAIN
-*/
+          return null;
 
-Object.keys(players).forEach(id=>{
-
-updates[
-"players/"+id
-] = null;
-
-});
-
-
-/*
-HAPUS SEMUA KUNCI NAMA
-*/
-
-const namesSnap =
-await db
-.ref("playerNames")
-.once("value");
-
-const names =
-namesSnap.val() || {};
+        }
+      );
 
 
-Object.keys(names).forEach(key=>{
+    /*
+    =================================================
+    3. HAPUS GAME AKTIF
+    =================================================
+    */
 
-updates[
-"playerNames/"+key
-] = null;
-
-});
-
-
-/*
-HAPUS GAME AKTIF
-*/
-
-updates["game"] = null;
+    await db
+      .ref("game")
+      .remove();
 
 
-/*
-JALANKAN SEKALIGUS
-*/
+    /*
+    =================================================
+    4. CATAT RIWAYAT
+    =================================================
+    */
 
-await db
-.ref()
-.update(updates);
-
-
-/*
-CATAT RIWAYAT
-*/
-
-await logActivity(
-"🗑️ Melakukan RESET SEMUA PEMAIN"
-);
+    await logActivity(
+      "🗑️ Melakukan RESET SEMUA PEMAIN"
+    );
 
 
-alert(
-"✅ Semua pemain berhasil di-reset.\n\n"+
-"Nama pemain sekarang bisa digunakan kembali."
-);
+    /*
+    =================================================
+    5. NOTIFIKASI
+    =================================================
+    */
 
-}catch(error){
+    alert(
+      "✅ Semua pemain berhasil di-reset.\n\n" +
+      "Nama pemain sekarang bisa digunakan kembali."
+    );
 
-console.error(
-"RESET PLAYERS ERROR:",
-error
-);
 
-alert(
-"❌ Gagal reset pemain.\n\n"+
-(error.code || "")+
-"\n"+
-(error.message || "")
-);
+  }catch(error){
+
+    console.error(
+      "RESET PLAYERS ERROR:",
+      error
+    );
+
+
+    alert(
+      "❌ Gagal reset pemain.\n\n" +
+      (error.code || "") +
+      "\n" +
+      (error.message || "")
+    );
+
+  }
 
 }
-
-}
-
+  
 /* ================================================= */
 /* RANKING */
 /* ================================================= */
